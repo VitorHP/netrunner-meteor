@@ -1,0 +1,28 @@
+/* CSS declarations go here */
+
+.spacer {
+  height: 80px;
+}
+
+.card {
+  height: 150px;
+}
+
+.card--ice {
+  transform: rotate(90deg);
+}
+
+.rig__program-row,
+.rig__hardware-row,
+.rig__resource-row {
+  text-align: right;
+}
+
+.remote-servers {
+  text-align: right;
+}
+
+.remote-server {
+  display: inline-block;
+  margin-left: 50px;
+}
