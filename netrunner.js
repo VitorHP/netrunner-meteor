@@ -3,11 +3,11 @@ if (Meteor.isClient) {
   Session.setDefault('counter', 0);
 
   Template.card.helpers({
-    src: "images/cards/core/Netrunner-accelerated-beta-test-01055.png"
+    src: "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01001.jpg"
   })
 
   Template.ice.helpers({
-    src: "images/cards/core/Netrunner-accelerated-beta-test-01055.png"
+    src: "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01001.jpg"
   })
 }
 

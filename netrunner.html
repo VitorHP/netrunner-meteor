@@ -4,8 +4,6 @@
 </head>
 
 <body>
-  <h1>Welcome to Meteor!</h1>
-
   <div class="container">
     {{> corporationArea}}
     <div class="row">
@@ -64,6 +62,9 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    {{> hand}}
+  </div>
 </template>
 
 <template name="corporationArea">
@@ -100,6 +101,9 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    {{> hand}}
+  </div>
 </template>
 
 <template name="remoteServer">
@@ -112,5 +116,15 @@
     </div>
   </div>
 </template>
+
+<template name="hand">
+  <div class="hand">
+      {{> card}}
+      {{> card}}
+      {{> card}}
+      {{> card}}
+  </div>
+</template>
+
 
 
