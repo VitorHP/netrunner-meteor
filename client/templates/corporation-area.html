@@ -1,0 +1,56 @@
+
+<template name="ice">
+  <img src="{{src}}" class="card card--ice">
+</template>
+
+
+<template name="corporationArea">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="corporation-area row">
+        <div class="remote-servers col-md-6">
+          {{> remoteServer}}
+          {{> remoteServer}}
+        </div>
+        <div class="remote-servers col-md-6">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="identity">
+                {{> card}}
+              </div>
+              <div class="root">
+                {{> card}}
+              </div>
+            </div>
+            <div class="rd col-md-4">
+              {{> card}}
+            </div>
+            <div class="col-md-4">
+              <div class="archives">
+                {{> card}}
+              </div>
+              <div class="score">
+                {{> card}}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    {{> hand}}
+  </div>
+</template>
+
+<template name="remoteServer">
+  <div class="remote-server">
+    <div class="remote-server__ice">
+      {{> ice}}
+    </div>
+    <div class="remote-server__server">
+      {{> card}}
+    </div>
+  </div>
+</template>
+
