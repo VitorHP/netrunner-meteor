@@ -1,0 +1,69 @@
+agenda:
+  accelerated_beta_test:
+    on: score
+    power:
+      - look cards on rnd
+      - install
+      - rez with no cost
+asset:
+  adonis_campaign:
+    on: turn start
+    setup:
+      - 12 credits on the card
+    power:
+      - 3 credits to the player
+    teardown:
+      - when there are no credits left on the card
+  aggressive_secretary:
+    on: access
+    cost: 2
+    can_be_advanced:
+    power:
+      - trash 1 program for each advancement token
+ice:
+  Heimdall 1.0
+    on: access
+    caveat: runner can spend click to break subroutine
+    power:
+      - do 1 net damage
+      - end the run
+      - end the run
+  rototurret
+    on: access
+    power:
+      - trash 1 program
+      - end the run
+  viktor 1.0
+    caveat: runner can spend click to break subroutine
+    power:
+      - do 1 brain damage
+      - end the run
+  Ichi 1.0
+    caveat: runner can spend click to break subroutine
+    power:
+      - trash 1 program
+      - trace
+        - if successfull give runner 1 tag and 1 brain damage
+identity:
+  haas_bioroid:
+    power:
+      - first time you install a card each turn gain 1 credit
+operation:
+  shipment_from_mirrormorph:
+    - immediatelly install up to three cards
+      - no click cost
+      - normal credit cost
+  biotic labor:
+    power:
+      - gain 2 clicks
+  archived memories:
+    power:
+      - add one card from archives to HQ
+  corporate troubleshooter:
+    cost: x credits
+    power: a piece of ice protecting this server has +X stregth
+    teardown:
+      - turn end
+  experiential data:
+    power:
+      - all ice protecting this server has +1 strength

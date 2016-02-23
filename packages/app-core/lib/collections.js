@@ -19,7 +19,6 @@ Runner.schema = new SimpleSchema({
   _id: { type: String },
   deckId: { type: String },
   backgroundImgSrc: { type: String, defaultValue: "images/cards/background.png" },
-  cardsInHand: { type: [Number], defaultValue: [] },
   clicks: { type: Number, defaultValue: 0 },
   credits: { type: Number, defaultValue: 0 },
   stack: { type: [Number], defaultValue: [] },
@@ -46,6 +45,18 @@ Runner.helpers({
 
   background() {
     return { imgSrc: this.backgroundImgSrc }
+  },
+
+  click(amount) {
+    if (amount > this.clicks) return false
+
+    return this.clicks = this.clicks - 1
+  },
+
+  draw(){
+    if (this.stackSize() === 0) return false
+
+    return this.hand.push(this.stack.splice(0, 1)[0])
   }
 })
 
@@ -54,7 +65,6 @@ Corp = new Mongo.Collection('corp');
 Corp.schema = new SimpleSchema({
   _id: { type: String },
   deckId: { type: String },
-  cardsInHand: { type: [Number], defaultValue: [] },
   clicks: { type: Number, defaultValue: 0 },
   credits: { type: Number, defaultValue: 0 },
   stack: { type: [Number], defaultValue: [] },

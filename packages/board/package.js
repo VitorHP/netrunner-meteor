@@ -28,6 +28,8 @@ Package.onUse(function(api) {
   ], ['server']);
 
   api.addFiles([
+    'client/lib/_modules.js',
+    'client/lib/actions.js',
     'client/lib/helper.js',
     'client/templates/runner-area.html',
     'client/templates/runner-area.js',
@@ -38,7 +40,6 @@ Package.onUse(function(api) {
     'client/templates/board.js',
     'client/templates/hand.js',
   ], ['client']);
-
 });
 
 Package.onTest(function(api) {
