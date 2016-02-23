@@ -1,0 +1,11 @@
+<template name="actionList">
+  <ul class="actionList">
+    {{#each item in actions }}
+      <li>{{> action action=item }}</li>
+    {{/each }}
+  </ul>
+</template>
+
+<template name="action">
+  <button class="btn btn-default js-action-btn">{{ action.label }}</button>
+</template>
