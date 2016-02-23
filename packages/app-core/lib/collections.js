@@ -57,6 +57,16 @@ Runner.helpers({
     if (this.stackSize() === 0) return false
 
     return this.hand.push(this.stack.splice(0, 1)[0])
+  },
+
+  receiveCredits(amount) {
+    return this.credits = this.credits + amount
+  },
+
+  payCredits(amount) {
+    if (amount > this.credits) return false
+
+    return this.credits = this.credits - amount
   }
 })
 

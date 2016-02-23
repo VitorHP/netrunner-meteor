@@ -13,10 +13,17 @@ let _updateRunner = (runner) => {
   });
 }
 
-let drawCard = (runner) => {
+Modules.actions.drawCard = (runner) => {
   if (!(runner.click(1) === false)) {
     runner.draw()
     _updateRunner(runner)
   }
 }
-Modules.actions.drawCard = drawCard;
+
+Modules.actions.receiveCredits = (target, amount) => {
+  target.receiveCredits(amount)
+}
+
+Modules.actions.payCredits = (target, amount) => {
+  target.payCredits(amount)
+}
