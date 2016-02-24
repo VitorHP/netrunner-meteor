@@ -25,9 +25,8 @@ Package.onUse(function(api) {
     'es5-shim',
     'ecmascript',
 
-
-    'dburles:collection-helpers',
-    'aldeed:simple-schema',
+    'dburles:collection-helpers@1.0.4',
+    'aldeed:simple-schema@1.5.3',
     'kadira:blaze-layout',
     'kadira:flow-router',
     'reywood:publish-composite',

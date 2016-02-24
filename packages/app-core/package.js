@@ -13,8 +13,6 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.2.1');
   api.use([
-    'mongo',
-    'ecmascript',
     'netrunner:app-lib'
   ]);
   api.addFiles(['app-core.js', 'lib/collections.js'], ["server", "client"]);
@@ -22,8 +20,14 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
-  api.use('ecmascript');
-  api.use('tinytest');
-  api.use('netrunner:app-core');
-  api.addFiles('app-core-tests.js');
+  api.use([
+    'mike:mocha-package@0.5.7', 
+    'practicalmeteor:chai@2.1.0_1'
+  ]);
+
+  api.use([
+    'aldeed:simple-schema@1.5.3',
+    'dburles:collection-helpers@1.0.4',
+    'netrunner:app-core',
+  ]);
 });

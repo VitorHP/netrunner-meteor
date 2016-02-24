@@ -21,8 +21,8 @@ Runner.schema = new SimpleSchema({
   backgroundImgSrc: { type: String, defaultValue: "images/cards/background.png" },
   clicks: { type: Number, defaultValue: 0 },
   credits: { type: Number, defaultValue: 0 },
-  stack: { type: [Number], defaultValue: [] },
-  heap: { type: [Number], defaultValue: [] },
+  deckCards: { type: [Number], defaultValue: [] },
+  discard: { type: [Number], defaultValue: [] },
   hand: { type: [Number] },
   identityCardId: { type: Number, defaultValue: 0 },
   programs: { type: [Number], defaultValue: [] },
@@ -31,42 +31,26 @@ Runner.schema = new SimpleSchema({
 })
 
 Runner.helpers({
-  stackCards() {
-    return Cards.find({ cardId: { "$in": this.stack } }).fetch()
+  deckCards() {
+    return Cards.find({ cardId: { "$in": this.deckCards } }).fetch()
   },
 
   identity() {
     return Cards.findOne({ cardId: this.identityCardId })
   },
 
-  stackSize() {
-    return this.stack.length
+  deckSize() {
+    return this.deckCards.length
   },
 
   background() {
     return { imgSrc: this.backgroundImgSrc }
   },
 
-  click(amount) {
-    if (amount > this.clicks) return false
-
-    return this.clicks = this.clicks - 1
-  },
-
-  draw(){
-    if (this.stackSize() === 0) return false
-
-    return this.hand.push(this.stack.splice(0, 1)[0])
-  },
-
   receiveCredits(amount) {
-    return this.credits = this.credits + amount
   },
 
   payCredits(amount) {
-    if (amount > this.credits) return false
-
-    return this.credits = this.credits - amount
   }
 })
 

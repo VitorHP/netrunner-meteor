@@ -43,8 +43,17 @@ Package.onUse(function(api) {
 });
 
 Package.onTest(function(api) {
-  api.use('ecmascript');
-  api.use('tinytest');
-  api.use('netrunner:board');
-  api.addFiles('board-tests.js');
+  api.use([
+    'mike:mocha-package@0.5.7', 
+    'practicalmeteor:chai@2.1.0_1',
+    'netrunner:board',
+  ]);
+
+  api.addFiles([
+    'client/lib/_modules.js',
+    'client/lib/actions.js',
+    'tests/client/lib/actions-spec.js'
+  ], ["client"]);
+
+  api.export("Modules")
 });

@@ -13,17 +13,37 @@ let _updateRunner = (runner) => {
   });
 }
 
-Modules.actions.drawCard = (runner) => {
-  if (!(runner.click(1) === false)) {
-    runner.draw()
-    _updateRunner(runner)
-  }
+// public
+
+let cardsCount = (target) => {
+  return target.deckCards.length
 }
 
-Modules.actions.receiveCredits = (target, amount) => {
-  target.receiveCredits(amount)
+let click = (target, amount) => {
+  if (amount > target.clicks) return false
+
+  return target.clicks = target.clicks - 1
 }
 
-Modules.actions.payCredits = (target, amount) => {
-  target.payCredits(amount)
+let drawCard = (target) => {
+  if (click(target, 1)  === false)    return false
+  if (cardsCount(target) === 0) return false
+
+  target.hand.push(target.deckCards.splice(0, 1)[0])
 }
+
+let receiveCredits = (target, amount) => {
+  target.credits = target.credits + amount
+}
+
+let payCredits = (target, amount) => {
+  if (amount > target.credits) return false
+
+  return target.credits = target.credits - amount
+}
+
+Modules.actions.cardsCount     = cardsCount;
+Modules.actions.click          = click;
+Modules.actions.drawCard       = drawCard;
+Modules.actions.receiveCredits = receiveCredits;
+Modules.actions.payCredits     = payCredits;
