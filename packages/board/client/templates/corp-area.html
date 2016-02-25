@@ -1,29 +1,27 @@
 
-<template name="ice">
-  <img src="{{src}}" class="card card--ice">
-</template>
-
-
-<template name="corporationArea">
+<template name="corpArea">
   <div class="row">
     <div class="col-md-12">
-      <div class="corporation-area row">
+      <div class="corp-area row">
         <div class="remote-servers col-md-6">
-          {{> remoteServer}}
-          {{> remoteServer}}
         </div>
-        <div class="remote-servers col-md-6">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12">
+              {{> actionList actions=actions }}
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-4">
               <div class="identity">
-                {{> card}}
+                {{> card card=corp.identity}}
               </div>
               <div class="root">
                 {{> card}}
               </div>
             </div>
-            <div class="rd col-md-4">
-              {{> card}}
+            <div class="rnd col-md-4">
+              {{> deck size=corp.deckSize background=corp.background }}
             </div>
             <div class="col-md-4">
               <div class="archives">
@@ -39,7 +37,7 @@
     </div>
   </div>
   <div class="row">
-    {{> hand}}
+    {{> hand cardIds=corp.hand }}
   </div>
 </template>
 
@@ -52,5 +50,9 @@
       {{> card}}
     </div>
   </div>
+</template>
+
+<template name="ice">
+  <img src="{{src}}" class="card card--ice">
 </template>
 

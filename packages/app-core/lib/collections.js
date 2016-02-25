@@ -30,7 +30,7 @@ Runner.schema = new SimpleSchema({
   resources: { type: [Number], defaultValue: [] }
 })
 
-Runner.helpers({
+var _commonHelpers = {
   deckCards() {
     return Cards.find({ cardId: { "$in": this.deckCards } }).fetch()
   },
@@ -46,23 +46,20 @@ Runner.helpers({
   background() {
     return { imgSrc: this.backgroundImgSrc }
   },
+}
 
-  receiveCredits(amount) {
-  },
-
-  payCredits(amount) {
-  }
-})
+Runner.helpers(_commonHelpers)
 
 Corp = new Mongo.Collection('corp');
 
 Corp.schema = new SimpleSchema({
   _id: { type: String },
   deckId: { type: String },
+  backgroundImgSrc: { type: String, defaultValue: "images/cards/background.png" },
   clicks: { type: Number, defaultValue: 0 },
   credits: { type: Number, defaultValue: 0 },
-  stack: { type: [Number], defaultValue: [] },
-  heap: { type: [Number], defaultValue: [] },
+  deckCards: { type: [Number], defaultValue: [] },
+  discard: { type: [Number], defaultValue: [] },
   identityCardId: { type: Number, defaultValue: 0 },
   servers: { type: [Object], defaultValue: [] },
   hand: { type: [Number] },
@@ -70,3 +67,5 @@ Corp.schema = new SimpleSchema({
   "servers.$.ices": { type: [Object] },
   "servers.$.ices.$.cardId": { type: Number }
 })
+
+Corp.helpers(_commonHelpers)

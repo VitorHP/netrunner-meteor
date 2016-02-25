@@ -8,7 +8,10 @@ Template.runnerArea.helpers({
         label: "Draw cards",
         perform() {
           let runner = instance.data.runner
-          actions.drawCard(runner)
+
+          actions.common.drawCard(runner)
+          actions.common.click(runner, 1)
+          actions.common._updateRunner(runner)
         }
       }
     ]

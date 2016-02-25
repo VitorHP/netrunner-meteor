@@ -1,49 +1,55 @@
 Modules.actions = {}
 
-let _updateRunner = (runner) => {
-  return Meteor.call('Runner.methods.update', {
-    runnerId: runner._id,
-    newRunner: runner
-  }, (err, res) => {
-    if (err) {
-      alert(err);
-    } else {
-      console.log("Mama mia!")
-    }
-  });
+Modules.actions.common = {
+  _updateRunner (runner) {
+    return Meteor.call('Runner.methods.update', {
+      runnerId: runner._id,
+      newRunner: runner
+    }, (err, res) => {
+      if (err) {
+        alert(err);
+      } else {
+        console.log("Mama mia!")
+      }
+    });
+  },
+
+  _updateCorp (corp) {
+    return Meteor.call('Corp.methods.update', {
+      corpId: corp._id,
+      newCorp: corp
+    }, (err, res) => {
+      if (err) {
+        alert(err);
+      } else {
+        console.log("Mama mia!")
+      }
+    });
+  },
+
+  cardsCount (target) {
+    return target.deckCards.length
+  },
+
+  click (target, amount) {
+    if (amount > target.clicks) return false
+
+    return target.clicks = target.clicks - 1
+  },
+
+  drawCard (target) {
+    if (this.cardsCount(target) === 0) return false
+
+    target.hand.push(target.deckCards.splice(0, 1)[0])
+  },
+
+  receiveCredits (target, amount) {
+    target.credits = target.credits + amount
+  },
+
+  payCredits (target, amount) {
+    if (amount > target.credits) return false
+
+    return target.credits = target.credits - amount
+  }
 }
-
-// public
-
-let cardsCount = (target) => {
-  return target.deckCards.length
-}
-
-let click = (target, amount) => {
-  if (amount > target.clicks) return false
-
-  return target.clicks = target.clicks - 1
-}
-
-let drawCard = (target) => {
-  if (click(target, 1)  === false)    return false
-  if (cardsCount(target) === 0) return false
-
-  target.hand.push(target.deckCards.splice(0, 1)[0])
-}
-
-let receiveCredits = (target, amount) => {
-  target.credits = target.credits + amount
-}
-
-let payCredits = (target, amount) => {
-  if (amount > target.credits) return false
-
-  return target.credits = target.credits - amount
-}
-
-Modules.actions.cardsCount     = cardsCount;
-Modules.actions.click          = click;
-Modules.actions.drawCard       = drawCard;
-Modules.actions.receiveCredits = receiveCredits;
-Modules.actions.payCredits     = payCredits;
