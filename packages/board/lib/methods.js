@@ -17,5 +17,15 @@ Meteor.methods({
     const corp = Corp.findOne(corpId);
 
     Corp.update(corpId, newCorp);
+  },
+
+  'Game.methods.update'({ gameId, newGame }) {
+
+    new SimpleSchema({ gameId: { type: String } }).validate({gameId});
+    Game.schema.validate(newGame)
+
+    const game = Game.findOne(gameId);
+
+    Game.update(gameId, newGame);
   }
 });

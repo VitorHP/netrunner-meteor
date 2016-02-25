@@ -16,7 +16,7 @@ Package.onUse(function(api) {
     'netrunner:app-lib'
   ]);
   api.addFiles(['app-core.js', 'lib/collections.js'], ["server", "client"]);
-  api.export(["Runner", "Cards", "Decks", "Corp"], ["server", "client"]);
+  api.export(["Runner", "Cards", "Decks", "Corp", "Game"], ["server", "client"]);
 });
 
 Package.onTest(function(api) {

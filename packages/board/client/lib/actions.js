@@ -27,6 +27,19 @@ Modules.actions.common = {
     });
   },
 
+  _updateGame (game) {
+    return Meteor.call('Game.methods.update', {
+      gameId: game._id,
+      newGame: game
+    }, (err, res) => {
+      if (err) {
+        alert(err);
+      } else {
+        console.log("Mama mia!")
+      }
+    });
+  },
+
   cardsCount (target) {
     return target.deckCards.length
   },
@@ -51,5 +64,9 @@ Modules.actions.common = {
     if (amount > target.credits) return false
 
     return target.credits = target.credits - amount
+  },
+
+  shiftTurn (target) {
+    target.turnOwner = target.turnOwner == "corp" ? "runner" : "corp"
   }
 }

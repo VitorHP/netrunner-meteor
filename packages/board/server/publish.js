@@ -1,32 +1,32 @@
 
-Meteor.publishComposite('Runner.runner', function(deckName){
+Meteor.publishComposite('Game.game', function(deckName){
 
   return {
     find () {
-      return Runner.find({ _id: "7MGuiovynhY2TgsbJ" })
+      return Game.find({ _id: "7MGuiovynhY2TgsbJ" })
     },
     children: [{
-      find(runner) {
-        let cardIds = Decks.findOne(runner.deckId).cardIds
+      find (game) {
+        return Corp.find({ _id: game.corpId })
+      },
+      children: [{
+        find(corp) {
+          let cardIds = Decks.findOne(corp.deckId).cardIds
 
-        return Cards.find({ cardId: { "$in": cardIds } })
-      }
-    }]
-  }
-})
+          return Cards.find({ cardId: { "$in": cardIds } })
+        }
+      }]
+    },{
+      find (game) {
+        return Runner.find({ _id: game.runnerId })
+      },
+      children: [{
+        find(runner) {
+          let cardIds = Decks.findOne(runner.deckId).cardIds
 
-Meteor.publishComposite('Corp.corp', function(deckName){
-
-  return {
-    find () {
-      return Corp.find({ _id: "7MGuiovynhY2TgsbJ" })
-    },
-    children: [{
-      find(corp) {
-        let cardIds = Decks.findOne(corp.deckId).cardIds
-
-        return Cards.find({ cardId: { "$in": cardIds } })
-      }
+          return Cards.find({ cardId: { "$in": cardIds } })
+        }
+      }]
     }]
   }
 })

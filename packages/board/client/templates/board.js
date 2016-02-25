@@ -1,7 +1,6 @@
 Template.board.onCreated(function() {
   this.autorun(() => {
-    Meteor.subscribe('Runner.runner');
-    Meteor.subscribe('Corp.corp');
+    Meteor.subscribe('Game.game');
   });
 });
 
@@ -12,5 +11,9 @@ Template.board.helpers({
 
   corp() {
     return Corp.findOne({ _id: "7MGuiovynhY2TgsbJ" })
+  },
+
+  game() {
+    return Game.findOne({ _id: "7MGuiovynhY2TgsbJ" })
   }
 })

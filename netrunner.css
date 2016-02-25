@@ -1,6 +1,26 @@
 /* CSS declarations go here */
+.corp-area,
+.runner-area {
+  padding: 20px;
+}
 
-.spacer {
+.corp-area {
+  border: 1px solid #800080;
+}
+
+.corp-area--active {
+  background-color: #c3a2c3;
+}
+
+.runner-area {
+  border: 1px solid #004d00;
+}
+
+.runner-area--active {
+  background-color: #96bb96;
+}
+
+.board__spacer {
   height: 80px;
 }
 
@@ -10,16 +30,6 @@
 
 .card--ice {
   transform: rotate(90deg);
-}
-
-.rig__program-row,
-.rig__hardware-row,
-.rig__resource-row {
-  text-align: right;
-}
-
-.remote-servers {
-  text-align: right;
 }
 
 .remote-server {
