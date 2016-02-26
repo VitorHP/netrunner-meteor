@@ -33,6 +33,8 @@ Package.onUse(function(api) {
     'client/lib/helper.js',
     'client/templates/runner-area.html',
     'client/templates/runner-area.js',
+    'client/templates/card.html',
+    'client/templates/card.js',
     'client/templates/corp-area.html',
     'client/templates/corp-area.js',
     'client/templates/action.html',
