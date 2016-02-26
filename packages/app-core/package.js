@@ -15,13 +15,21 @@ Package.onUse(function(api) {
   api.use([
     'netrunner:app-lib'
   ]);
-  api.addFiles(['app-core.js', 'lib/collections.js'], ["server", "client"]);
+  api.addFiles([
+    'app-core.js',
+    'lib/collections.js',
+  ], ["server", "client"]);
+
+  api.addFiles([
+    'server/publish.js'
+  ], ["server"]);
+
   api.export(["Runner", "Cards", "Decks", "Corp", "Game"], ["server", "client"]);
 });
 
 Package.onTest(function(api) {
   api.use([
-    'mike:mocha-package@0.5.7', 
+    'mike:mocha-package@0.5.7',
     'practicalmeteor:chai@2.1.0_1'
   ]);
 

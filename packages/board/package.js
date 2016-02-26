@@ -24,10 +24,6 @@ Package.onUse(function(api) {
   ], ['client', 'server']);
 
   api.addFiles([
-    'server/publish.js',
-  ], ['server']);
-
-  api.addFiles([
     'client/lib/_modules.js',
     'client/lib/actions.js',
     'client/lib/helper.js',
@@ -49,6 +45,7 @@ Package.onTest(function(api) {
   api.use([
     'mike:mocha-package@0.5.7', 
     'practicalmeteor:chai@2.1.0_1',
+    'practicalmeteor:sinon@1.14.1_2',
     'netrunner:board',
   ]);
 

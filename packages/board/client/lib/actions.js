@@ -40,20 +40,22 @@ Modules.actions.common = {
     });
   },
 
-  cardsCount (target) {
-    return target.deckCards.length
-  },
-
   click (target, amount) {
     if (amount > target.clicks) return false
 
-    return target.clicks = target.clicks - 1
+    return target.clicks = target.clicks - amount
   },
 
   drawCard (target) {
-    if (this.cardsCount(target) === 0) return false
+    if (target.deckCards.length === 0) return false
 
     target.hand.push(target.deckCards.splice(0, 1)[0])
+  },
+
+  trashCard (target, targetCollection, cardId) {
+    let targetIndex = targetCollection.indexOf(cardId)
+
+    target.discard.push(targetCollection.splice(targetIndex, 1)[0])
   },
 
   receiveCredits (target, amount) {
