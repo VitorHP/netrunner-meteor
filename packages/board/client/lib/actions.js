@@ -70,5 +70,9 @@ Modules.actions.common = {
 
   shiftTurn (target) {
     target.turnOwner = target.turnOwner == "corp" ? "runner" : "corp"
+  },
+
+  hasClicks (target) {
+    return (target || {}).clicks > 0
   }
 }

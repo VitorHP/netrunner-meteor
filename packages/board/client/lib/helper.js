@@ -9,3 +9,12 @@ Template.registerHelper("debug", function(optionalValue) {
     console.log(optionalValue); 
   } 
 });
+
+Helper = {}
+
+Helper.log = function (data) {
+  console.log("#########################")
+  console.log(data)
+  console.log("#########################")
+}
+

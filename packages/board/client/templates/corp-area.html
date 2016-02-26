@@ -12,7 +12,6 @@
                 {{> card card=corp.identity}}
               </div>
               <div class="root">
-                {{> card placeholder }}
               </div>
             </div>
             <div class="col-md-4">
@@ -20,34 +19,26 @@
                 {{> deck size=corp.deckSize background=corp.background }}
               </div>
               <div class="root">
-                {{> card placeholder }}
               </div>
             </div>
             <div class="col-md-4">
               <div class="archives">
-                {{> card placeholder }}
               </div>
               <div class="root">
-                {{> card placeholder }}
               </div>
             </div>
           </div>
           <div class="row">
             <div class="col-md-8">
               <div class="score">
-                {{> card placeholder }}
-                {{> card placeholder }}
               </div>
             </div>
             <div class="col-md-4">
-              <div class="col-md-12">
-                {{> actionList actions=actions }}
-              </div>
+              {{> actionList actions=actions }}
             </div>
           </div>
         </div>
         <div class="remote-servers col-md-6">
-          {{> remoteServer server=remoteServersPlaceholder }}
         </div>
       </div>
     </div>
