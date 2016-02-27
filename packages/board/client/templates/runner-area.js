@@ -1,5 +1,5 @@
 const instance = Template.instance()
-const actions  = Modules.actions
+const actions  = Actions
 
 Template.runnerArea.helpers({
   actions() {

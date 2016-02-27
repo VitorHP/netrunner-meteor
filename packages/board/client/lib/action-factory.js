@@ -38,12 +38,12 @@ ActionFactory = {
         label: "End Turn",
         requirementParams: [player],
         requirement: function(player) {
-          return !Modules.actions.common.hasClicks(player)
+          return !Actions.common.hasClicks(player)
         },
         performParams: ['game'],
         perform(game) {
-          Modules.actions.common.shiftTurn(game)
-          Modules.actions.common._updateGame(game)
+          Actions.common.shiftTurn(game)
+          Actions.common._updateGame(game)
         }
       },
 
@@ -51,13 +51,13 @@ ActionFactory = {
         label: "Draw card",
         requirementParams: [player],
         requirement: function(player) {
-          return Modules.actions.common.hasClicks(player)
+          return Actions.common.hasClicks(player)
         },
         performParams: [player],
         perform(player) {
-          Modules.actions.common.drawCard(player)
-          Modules.actions.common.click(player, 1)
-          Modules.actions.common._updateCorp(player)
+          Actions.common.drawCard(player)
+          Actions.common.click(player, 1)
+          Actions.common._updateCorp(player)
         }
       },
     ], data)

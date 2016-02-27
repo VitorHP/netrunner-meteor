@@ -1,4 +1,4 @@
-describe("Modules.actions.common", function() {
+describe("Actions.common", function() {
   var runner, game, corp;
 
   beforeEach(function() {
@@ -37,28 +37,28 @@ describe("Modules.actions.common", function() {
   })
 
   subject = function() {
-    return Modules.actions.common
+    return Actions.common
   }
 
-  it ("Modules.actions#drawCard removes a card from the deck and places it on the runner's hand", function() {
+  it ("Actions.common#drawCard removes a card from the deck and places it on the runner's hand", function() {
     subject().drawCard(runner)
 
     expect(runner.deckCards.length).to.equal(1)
   })
 
-  it ("Modules.actions#click reduces the target clicks by the amount specified", function() {
+  it ("Actions.common#click reduces the target clicks by the amount specified", function() {
     subject().click(runner, 2)
 
     expect(runner.clicks).to.equal(0)
   })
 
-  it ("Modules.actions#receiveCredits increases the target credits by the amount specified", function() {
+  it ("Actions.common#receiveCredits increases the target credits by the amount specified", function() {
     subject().receiveCredits(runner, 2)
 
     expect(runner.credits).to.equal(3)
   })
 
-  describe("Modules.actions#payCredits", function() {
+  describe("Actions.common#payCredits", function() {
     it ("decreases the target credits by the amount specified", function() {
       subject().payCredits(runner, 1)
 

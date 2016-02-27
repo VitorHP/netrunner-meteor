@@ -24,7 +24,6 @@ Package.onUse(function(api) {
   ], ['client', 'server']);
 
   api.addFiles([
-    'client/lib/_modules.js',
     'client/lib/actions.js',
     'client/lib/action-factory.js',
     'client/lib/helper.js',
@@ -51,10 +50,9 @@ Package.onTest(function(api) {
   ]);
 
   api.addFiles([
-    'client/lib/_modules.js',
     'client/lib/actions.js',
     'tests/client/lib/actions-spec.js'
   ], ["client"]);
 
-  api.export("Modules")
+  api.export("Actions")
 });

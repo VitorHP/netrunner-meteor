@@ -1,6 +1,6 @@
-Modules.actions = {}
+Actions = {}
 
-Modules.actions.common = {
+Actions.common = {
   _updateRunner (runner) {
     return Meteor.call('Runner.methods.update', {
       runnerId: runner._id,
