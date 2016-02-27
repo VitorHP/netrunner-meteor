@@ -10,7 +10,8 @@ Cards = new Mongo.Collection('cards');
 Cards.schema = new SimpleSchema({
   name: { type: String },
   imgSrc: { type: String },
-  cardId: { type: Number }
+  cardId: { type: Number },
+  faction: { type: String, allowedValues: ["corp", "runner"] }
 })
 
 Runner = new Mongo.Collection('runner');

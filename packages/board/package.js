@@ -24,7 +24,11 @@ Package.onUse(function(api) {
   ], ['client', 'server']);
 
   api.addFiles([
-    'client/lib/actions.js',
+    'client/lib/_actions.js',
+    'client/lib/actions-common.js',
+    'client/lib/actions-corp.js',
+    'client/lib/actions-runner.js',
+    'client/lib/actions-global.js',
     'client/lib/action-factory.js',
     'client/lib/helper.js',
     'client/templates/runner-area.html',
@@ -50,8 +54,8 @@ Package.onTest(function(api) {
   ]);
 
   api.addFiles([
-    'client/lib/actions.js',
-    'tests/client/lib/actions-spec.js'
+    'client/lib/actions-common.js',
+    'tests/client/lib/actions-common-spec.js'
   ], ["client"]);
 
   api.export("Actions")

@@ -1,5 +1,3 @@
-Actions = {}
-
 Actions.common = {
   _updateRunner (runner) {
     return Meteor.call('Runner.methods.update', {
@@ -25,6 +23,10 @@ Actions.common = {
         console.log("Mama mia!")
       }
     });
+  },
+
+  _updatePlayer(player) {
+    player.identity().faction == "corp" ? Actions.common._updateCorp(player) : Actions.common._updateRunner(player)
   },
 
   _updateGame (game) {

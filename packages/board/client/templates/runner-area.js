@@ -3,18 +3,7 @@ const actions  = Actions
 
 Template.runnerArea.helpers({
   actions() {
-    return [
-      {
-        label: "Draw cards",
-        perform() {
-          let runner = instance.data.runner
-
-          actions.common.drawCard(runner)
-          actions.common.click(runner, 1)
-          actions.common._updateRunner(runner)
-        }
-      }
-    ]
+    return ActionFactory.runnerActions(Template.instance().data)
   },
 
   active (turnOwner) {
