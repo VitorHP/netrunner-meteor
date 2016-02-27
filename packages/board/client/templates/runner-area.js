@@ -8,9 +8,5 @@ Template.runnerArea.helpers({
 
   active (turnOwner) {
     return turnOwner == "runner" ? "runner-area--active" : ""
-  },
-
-  placeholder () {
-    return { imgSrc: "images/cards/runner-background.png" }
   }
 })
