@@ -39,5 +39,9 @@ ActionFactory = {
     let player = "runner"
 
     return this.allowedActions(Actions.global(player).concat(Actions.runner(player)), data)
+  },
+
+  cardActions(card) {
+    return this.allowedActions(Actions.cards(card), {})
   }
 }

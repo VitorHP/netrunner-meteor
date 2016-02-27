@@ -70,11 +70,21 @@ Actions.common = {
     return target.credits = target.credits - amount
   },
 
+  hasClicks (target) {
+    return (target || {}).clicks > 0
+  },
+
+  // Game
+
   shiftTurn (target) {
     target.turnOwner = target.turnOwner == "corp" ? "runner" : "corp"
   },
 
-  hasClicks (target) {
-    return (target || {}).clicks > 0
+  // Cards
+
+  isOfType(card, type) {
+    let types = type instanceof Array ? type : [type]
+
+    return types.some(function(t) { return t == card.type })
   }
 }

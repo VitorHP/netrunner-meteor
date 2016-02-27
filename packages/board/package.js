@@ -33,10 +33,12 @@ Package.onUse(function(api) {
     'client/lib/actions-corp.js',
     'client/lib/actions-runner.js',
     'client/lib/actions-global.js',
+    'client/lib/actions-cards.js',
     'client/lib/action-factory.js',
     'client/lib/helper.js',
     'client/templates/runner-area.html',
     'client/templates/runner-area.js',
+    'client/templates/deck.html',
     'client/templates/card.html',
     'client/templates/card.js',
     'client/templates/corp-area.html',
@@ -58,9 +60,9 @@ Package.onTest(function(api) {
   ]);
 
   api.addFiles([
+    'client/lib/_actions.js',
     'client/lib/actions-common.js',
     'tests/client/lib/actions-common-spec.js'
   ], ["client"]);
 
-  api.export("Actions")
 });

@@ -34,6 +34,15 @@ describe("Actions.common", function() {
       "corpId" : "7MGuiovynhY2TgsbJ",
       "turnOwner" : "corp"
     }
+    card = {
+      "_id" : "3gRNkaG99J5goYjKD",
+      "name" : "Noise - Hacker Extraordinaire",
+      "faction" : "runner",
+      "factionName" : "criminal",
+      "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01001.jpg",
+      "cardId" : 1,
+      "type" : "identity"
+    }
   })
 
   subject = function() {
@@ -106,6 +115,11 @@ describe("Actions.common", function() {
     subject()._updateGame(game)
 
     expect(spies.call).to.have.been.calledWith('Game.methods.update', { gameId: game._id, newGame: game })
+  })
+
+  it ("Actions.common#isOfType returns true if card.type is of one of the types specified", function() {
+    expect(subject().isOfType(card, "identity")).to.equal(true)
+    expect(subject().isOfType(card, ["identity", "program"])).to.equal(true)
   })
 
 })

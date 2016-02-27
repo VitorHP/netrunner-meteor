@@ -7,7 +7,7 @@
             <div class="heap col-md-4">
             </div>
             <div class="stack col-md-4">
-              {{> deck size=runner.deckSize background=runner.background }}
+              {{> deck size=runner.deckSize background=runner.backgroundImgSrc }}
             </div>
             <div class="identity col-md-4">
               {{> card card=runner.identity}}
@@ -50,11 +50,3 @@
   </div>
 </template>
 
-<template name="deck">
-  <div class="deck">
-    <div class="deck__cards">
-      {{> card card=background }}
-    </div>
-    <span class="deck__cards-count">{{ size }}</span>
-  </div>
-</template>

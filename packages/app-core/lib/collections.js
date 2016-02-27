@@ -46,11 +46,7 @@ var _commonHelpers = {
 
   deckSize() {
     return this.deckCards.length
-  },
-
-  background() {
-    return { imgSrc: this.backgroundImgSrc }
-  },
+  }
 }
 
 Runner.helpers(_commonHelpers)
