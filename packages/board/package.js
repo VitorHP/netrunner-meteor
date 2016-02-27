@@ -24,6 +24,10 @@ Package.onUse(function(api) {
   ], ['client', 'server']);
 
   api.addFiles([
+    'server/seeds.js'
+  ], ['client', 'server']);
+
+  api.addFiles([
     'client/lib/_actions.js',
     'client/lib/actions-common.js',
     'client/lib/actions-corp.js',

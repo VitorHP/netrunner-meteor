@@ -2,7 +2,9 @@ Decks = new Mongo.Collection('decks')
 
 Decks.schema = new SimpleSchema({
   name: { type: String },
+  faction: { type: String, allowedValues: ["corp", "runner"] },
   cardIds: { type: [Number], defaultValue: [] },
+  identityCardId: { type: Number },
 })
 
 Cards = new Mongo.Collection('cards');
@@ -11,7 +13,9 @@ Cards.schema = new SimpleSchema({
   name: { type: String },
   imgSrc: { type: String },
   cardId: { type: Number },
-  faction: { type: String, allowedValues: ["corp", "runner"] }
+  faction: { type: String, allowedValues: ["corp", "runner"] },
+  factionName: { type: String, allowedValues: ["haas-bioroid", "criminal"] },
+  type: { type: String, allowedValues: ["agenda", "program", "identity"] }
 })
 
 Runner = new Mongo.Collection('runner');
@@ -75,7 +79,7 @@ Game = new Mongo.Collection('game')
 
 Game.schema = new SimpleSchema({
   _id: { type: String },
-  turnOwner: { type: String, defaultValue: "corp" },
+  turnOwner: { type: String, defaultValue: "corp", allowedValues: ["corp", "runner"] },
   runnerId: { type: String },
   corpId: { type: String }
 })
