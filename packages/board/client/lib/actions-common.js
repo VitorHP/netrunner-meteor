@@ -86,5 +86,17 @@ Actions.common = {
     let types = type instanceof Array ? type : [type]
 
     return types.some(function(t) { return t == card.type })
-  }
+  },
+
+  isCorpCard(card) {
+    return card.faction === "corp"
+  },
+
+  isRunnerCard(card) {
+    return !Actions.common.isCorpCard(card)
+  },
+
+  isUnrezzed(card, type) {
+    return card.active === false
+  },
 }

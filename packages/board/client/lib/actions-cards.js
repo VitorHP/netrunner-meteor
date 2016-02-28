@@ -41,6 +41,15 @@ Actions.cards = function(card){
       perform(){
 
       }
+    },
+    {
+      label: "Rezz",
+      requirement() {
+        return Actions.common.isCorpCard(card)
+      },
+      perform() {
+
+      }
     }
   ]
 }
