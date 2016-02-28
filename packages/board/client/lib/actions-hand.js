@@ -2,15 +2,13 @@ Actions.hand = function() {
   return [
     {
       label: "Install",
-      requirementParams: ["player", "card"],
-      requirement(player, card) {
-        return Actions.common.isOfType(card, ["agenda", "program"])
+      requirement() {
+        return Actions.common.isOfType(this.card, ["agenda", "program"])
       },
-      performParams: ["player", "card"],
-      perform(player, card) {
-        Actions.common.removeFromHand(player, card)
-        Actions.common.installCard(player, card)
-        Actions.common._updatePlayer(player)
+      perform() {
+        Actions.common.removeFromHand(this.player, this.card)
+        Actions.common.installCard(this.player, this.card)
+        Actions.common._updatePlayer(this.player)
       }
     }
   ]

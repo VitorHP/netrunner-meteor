@@ -1,27 +1,21 @@
 
-function extractParams (params, data) {
-  return (params || [] ).map(function(param){
-    return data[param]
-  })
-}
-
-function wrapPerform (fn, params) {
+function wrapPerform (fn, data) {
   return function() {
-    return fn.apply(undefined, params)
+    return fn.apply(data)
   }
 }
 
 ActionFactory = {
 
-  // Data can contain Runner, Corp or Game collections
+  // wraps the perform function with 'this' being the data context of the Template
   allowedActions (actionList, data) {
     return actionList.reduce(function(memo, action){
       rFn = action.requirement || function() { return true }
 
-      if (rFn.apply(undefined, extractParams(action.requirementParams, data)))
+      if (rFn.apply(data))
         memo.push({
           label: action.label,
-          perform: wrapPerform(action.perform, extractParams(action.performParams, data))
+          perform: wrapPerform(action.perform, data)
         })
 
       return memo

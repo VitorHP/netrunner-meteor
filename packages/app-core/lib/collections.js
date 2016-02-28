@@ -95,4 +95,3 @@ Game.schema = new SimpleSchema({
   runnerId: { type: String },
   corpId: { type: String }
 })
-

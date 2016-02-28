@@ -2,42 +2,36 @@ Actions.global = function(player) {
   return [
     {
       label: "End Turn",
-      requirementParams: [player],
-      requirement: function(player) {
-        return !Actions.common.hasClicks(player)
+      requirement: function() {
+        return !Actions.common.hasClicks(this.player)
       },
-      performParams: ['game'],
-      perform(game) {
-        Actions.common.shiftTurn(game)
-        Actions.common._updateGame(game)
+      perform() {
+        Actions.common.shiftTurn(this.game)
+        Actions.common._updateGame(this.game)
       }
     },
 
     {
       label: "Draw card",
-      requirementParams: [player],
-      requirement: function(player) {
-        return Actions.common.hasClicks(player)
+      requirement: function() {
+        return Actions.common.hasClicks(this.player)
       },
-      performParams: [player],
-      perform(player) {
-        Actions.common.drawCard(player)
-        Actions.common.click(player, 1)
-        Actions.common._updatePlayer(player)
+      perform() {
+        Actions.common.drawCard(this.player)
+        Actions.common.click(this.player, 1)
+        Actions.common._updatePlayer(this.player)
       }
     },
 
     {
       label: "Receive 1 Credit",
-      requirementParams: [player],
-      requirement: function(player) {
-        return Actions.common.hasClicks(player)
+      requirement: function() {
+        return Actions.common.hasClicks(this.player)
       },
-      performParams: [player],
-      perform(player) {
+      perform() {
         Actions.common.receiveCredits(1)
-        Actions.common.click(player, 1)
-        Actions.common._updatePlayer(player)
+        Actions.common.click(this.player, 1)
+        Actions.common._updatePlayer(this.player)
       }
     },
 
