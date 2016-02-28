@@ -30,9 +30,12 @@ Runner.schema = new SimpleSchema({
   discard: { type: [Number], defaultValue: [] },
   hand: { type: [Number] },
   identityCardId: { type: Number, defaultValue: 0 },
-  programs: { type: [Number], defaultValue: [] },
-  hardwares: { type: [Number], defaultValue: [] },
-  resources: { type: [Number], defaultValue: [] }
+  programs: { type: [Object], defaultValue: [] },
+  hardwares: { type: [Object], defaultValue: [] },
+  resources: { type: [Object], defaultValue: [] },
+  "programs.$.cardId": { type: Number },
+  "hardware.$.cardId": { type: Number },
+  "resources.$.cardId": { type: Number },
 })
 
 var _commonHelpers = {
@@ -64,7 +67,8 @@ Corp.schema = new SimpleSchema({
   identityCardId: { type: Number, defaultValue: 0 },
   servers: { type: [Object], defaultValue: [] },
   hand: { type: [Number] },
-  "servers.$.cardId": { type: Number },
+  "servers.$.cards": { type: [Object] },
+  "servers.$.cards.$.cardId": { type: Number },
   "servers.$.ices": { type: [Object] },
   "servers.$.ices.$.cardId": { type: Number }
 })

@@ -96,7 +96,4 @@ Actions.common = {
     return !Actions.common.isCorpCard(card)
   },
 
-  isUnrezzed(card, type) {
-    return card.active === false
-  },
 }

@@ -33,7 +33,6 @@ Package.onUse(function(api) {
     'client/lib/actions-corp.js',
     'client/lib/actions-runner.js',
     'client/lib/actions-global.js',
-    'client/lib/actions-cards.js',
     'client/lib/action-factory.js',
     'client/lib/helper.js',
     'client/templates/runner-area.html',
