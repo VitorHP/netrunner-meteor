@@ -49,6 +49,18 @@ var _commonHelpers = {
 
   deckSize() {
     return this.deckCards.length
+  },
+
+  handCards() {
+    return Cards.find({ cardId: { "$in": this.hand } }).fetch()
+  },
+
+  programCards() {
+    let cardIds = this.programs.map(function(program){
+      return program.cardId
+    })
+
+    return Cards.find({ cardId: { "$in": cardIds } }).fetch()
   }
 }
 
@@ -83,3 +95,4 @@ Game.schema = new SimpleSchema({
   runnerId: { type: String },
   corpId: { type: String }
 })
+

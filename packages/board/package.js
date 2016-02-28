@@ -33,20 +33,22 @@ Package.onUse(function(api) {
     'client/lib/actions-corp.js',
     'client/lib/actions-runner.js',
     'client/lib/actions-global.js',
+    'client/lib/actions-hand.js',
     'client/lib/action-factory.js',
     'client/lib/helper.js',
     'client/templates/runner-area.html',
     'client/templates/runner-area.js',
     'client/templates/deck.html',
     'client/templates/card.html',
-    'client/templates/card.js',
     'client/templates/corp-area.html',
     'client/templates/corp-area.js',
     'client/templates/action.html',
     'client/templates/action.js',
     'client/templates/board.html',
     'client/templates/board.js',
+    'client/templates/hand.html',
     'client/templates/hand.js',
+    'client/templates/hand-item.js',
   ], ['client']);
 });
 

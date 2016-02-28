@@ -28,6 +28,9 @@
         </div>
         <div class="rig col-md-6">
           <div class="rig__program-row">
+            {{#each item in runner.programCards }}
+              {{> card card=item }}
+            {{/each}}
           </div>
           <div class="rig__hardware-row">
           </div>
@@ -38,15 +41,6 @@
     </div>
   </div>
   <div class="row">
-    {{> hand cardIds=runner.hand }}
+    {{> hand player=runner }}
   </div>
 </template>
-
-<template name="hand">
-  <div class="hand">
-    {{#each item in cards }}
-      {{> card card=item }}
-    {{/each }}
-  </div>
-</template>
-

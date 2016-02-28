@@ -41,4 +41,8 @@ ActionFactory = {
     return this.allowedActions(Actions.global(player).concat(Actions.runner(player)), data)
   },
 
+  handActions(data) {
+    return this.allowedActions(Actions.hand(), data)
+  }
+
 }

@@ -1,6 +1,3 @@
-const instance = Template.instance()
-const actions  = Actions
-
 Template.runnerArea.helpers({
   actions() {
     return ActionFactory.runnerActions(Template.instance().data)

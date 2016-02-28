@@ -1,10 +1,3 @@
 <template name="card">
-  <span class="dropup">
-    <img src="{{card.imgSrc}}" class="card" data-toggle="dropdown">
-    <ul class="dropdown-menu">
-      {{#each item in (actions card) }}
-        <li><a>{{item.label}}</a></li>
-      {{/each}}
-    </ul>
-  </span>
+  <img src="{{card.imgSrc}}" class="card">
 </template>

@@ -96,4 +96,21 @@ Actions.common = {
     return !Actions.common.isCorpCard(card)
   },
 
+  installCard(player, card) {
+    let fns = {
+      program(player, card) {
+        player.programs.push({
+          cardId: card.cardId
+        })
+      }
+    }
+
+    fns[card.type](player, card)
+  },
+
+  removeFromHand(player, card) {
+    let cardIndex = player.hand.indexOf(card.cardId)
+
+    return player.hand.splice(cardIndex, 1)
+  }
 }

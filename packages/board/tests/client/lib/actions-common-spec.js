@@ -122,4 +122,12 @@ describe("Actions.common", function() {
     expect(subject().isOfType(card, ["identity", "program"])).to.equal(true)
   })
 
+  it ("Actions.common#installCard install a card on a player area", function(){
+    let cardDouble = { cardId: 42, type: "program" }
+
+    subject().installCard(runner, cardDouble)
+
+    expect(runner.programs[0].cardId).to.eq(42)
+  })
+
 })
