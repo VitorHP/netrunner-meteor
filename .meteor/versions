@@ -50,6 +50,7 @@ mongo-id@1.0.1
 netrunner:app-core@0.0.1
 netrunner:app-lib@0.0.1
 netrunner:board@0.0.1
+netrunner:choice-modal@0.0.1
 npm-mongo@1.4.39_1
 observe-sequence@1.0.7
 ordered-dict@1.0.4
