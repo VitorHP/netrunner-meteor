@@ -1,5 +1,5 @@
 Package.describe({
-  name: 'netrunner:choice-modal',
+  name: 'netrunner:modals',
   version: '0.0.1',
   // Brief, one-line summary of the package.
   summary: '',
@@ -12,24 +12,24 @@ Package.describe({
 
 Package.onUse(function(api) {
   api.versionsFrom('1.2.1');
-
   api.use('netrunner:app-lib');
 
   api.addFiles([
-    'choice-modal.js',
+    'modals.js',
   ], ["client", "server"])
 
   api.addFiles([
-    'client/templates/choice-modal.html',
-    'client/templates/choice-modal.js',
+    'client/templates/modal.html',
+    'client/templates/modal.js',
+    'client/templates/modal-choice.html',
   ], ["client"])
 
-  api.export("ChoiceModal", ["client"])
+  api.export("Modals", ["client"])
 });
 
 Package.onTest(function(api) {
   api.use('ecmascript');
   api.use('tinytest');
-  api.use('netrunner:choice-modal');
-  api.addFiles('choice-modal-tests.js');
+  api.use('netrunner:modals');
+  api.addFiles('modals-tests.js');
 });

@@ -1,2 +1,0 @@
-Template.choiceModal.events({
-})

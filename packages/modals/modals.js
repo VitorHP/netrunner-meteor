@@ -1,13 +1,14 @@
 // Write your package code here!
-ChoiceModal = {
+
+Modals = {
   show(choices) {
     let parentNode = document.body
 
-    let view = Blaze.renderWithData(Template["choiceModal"], choices, parentNode)
+    let view = Blaze.renderWithData(Template["modal"], choices, parentNode)
 
     let domRange = view._domrange // TODO: Don't violate against the public API.
 
-    let $modal = domRange.$('.choice-modal')
+    let $modal = domRange.$('.modal')
 
     $modal.on('shown.bs.modal', function(event){
       $modal.find('[autofocus]').focus()

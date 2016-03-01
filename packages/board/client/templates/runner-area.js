@@ -7,3 +7,9 @@ Template.runnerArea.helpers({
     return turnOwner == "runner" ? "runner-area--active" : ""
   }
 })
+
+Template.runnerArea.events({
+  "click .js-modal-btn": function() {
+    Modals.show()
+  }
+})
