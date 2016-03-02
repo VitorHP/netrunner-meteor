@@ -4,6 +4,9 @@
     <div class="col-md-12">
       <div class="corp-area {{active(game.turnOwner)}} row">
         <div class="remote-servers col-md-6">
+          {{#each server in corp.remoteServers }}
+            {{> remoteServer server=server }}
+          {{/each }}
         </div>
         <div class="central-servers col-md-6">
           <div class="row">
@@ -56,7 +59,9 @@
       {{/each }}
     </ul>
     <div class="remote-server__server">
-      {{> card card=server.card }}
+      {{#each item in server.cards }}
+        <li>{{ item.cardId }}</li>
+      {{/each }}
     </div>
   </div>
 </template>

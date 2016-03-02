@@ -10,7 +10,7 @@ Decks.schema = new SimpleSchema({
 Cards = new Mongo.Collection('cards');
 
 Cards.schema = new SimpleSchema({
-  name: { type: String },
+  title: { type: String },
   imgSrc: { type: String },
   cardId: { type: Number },
   faction: { type: String, allowedValues: ["corp", "runner"] },
@@ -62,6 +62,7 @@ var _commonHelpers = {
 
     return Cards.find({ cardId: { "$in": cardIds } }).fetch()
   }
+
 }
 
 Runner.helpers(_commonHelpers)
@@ -77,12 +78,14 @@ Corp.schema = new SimpleSchema({
   deckCards: { type: [Number], defaultValue: [] },
   discard: { type: [Number], defaultValue: [] },
   identityCardId: { type: Number, defaultValue: 0 },
-  servers: { type: [Object], defaultValue: [] },
   hand: { type: [Number] },
-  "servers.$.cards": { type: [Object] },
-  "servers.$.cards.$.cardId": { type: Number },
-  "servers.$.ices": { type: [Object] },
-  "servers.$.ices.$.cardId": { type: Number }
+  "remoteServers.$.serverId": { type: Number },
+  "remoteServers.$.cards": { type: [Object] },
+  "remoteServers.$.cards.$.cardId": { type: Number },
+  "remoteServers.$.cards.$.rezzed": { type: Boolean },
+  "remoteServers.$.ices": { type: [Object] },
+  "remoteServers.$.ices.$.cardId": { type: Number },
+  "remoteServers.$.ices.$.rezzed": { type: Boolean }
 })
 
 Corp.helpers(_commonHelpers)

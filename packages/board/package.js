@@ -20,7 +20,6 @@ Package.onUse(function(api) {
 
   api.addFiles([
     'board.js',
-    'lib/methods.js'
   ], ['client', 'server']);
 
   api.addFiles([

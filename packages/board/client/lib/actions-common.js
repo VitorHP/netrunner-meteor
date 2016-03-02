@@ -1,5 +1,7 @@
 Actions.common = {
+  // DB
   _updateRunner (runner) {
+    debugger
     return Meteor.call('Runner.methods.update', {
       runnerId: runner._id,
       newRunner: runner
@@ -41,6 +43,8 @@ Actions.common = {
       }
     });
   },
+
+  //common
 
   click (target, amount) {
     if (amount > target.clicks) return false
@@ -96,16 +100,37 @@ Actions.common = {
     return !Actions.common.isCorpCard(card)
   },
 
-  installCard(player, card) {
+  _installProgram(player, card) {
+    player.programs.push({
+      cardId: card.cardId
+    })
+  },
+
+  _findOrInitializeServer(player, serverId) {
+    let server = player.remoteServers.find(function(s) { return s.serverId === serverId })
+
+    if (server)
+      return server
+
+    player.remoteServers.push({ serverId: player.remoteServers.length, cards: [], ices: [] })
+
+    return player.remoteServers[player.remoteServers.length - 1]
+  },
+
+  _installAgenda(player, card, options) {
+    Actions.common._findOrInitializeServer(player, options).cards.push({
+      cardId: card.cardId,
+      rezzed: options.rezzed
+    })
+  },
+
+  installCard(player, card, options) {
     let fns = {
-      program(player, card) {
-        player.programs.push({
-          cardId: card.cardId
-        })
-      }
+      program: Actions.common._installProgram,
+      agenda: Actions.common._installAgenda
     }
 
-    fns[card.type](player, card)
+    fns[card.type](player, card, options)
   },
 
   removeFromHand(player, card) {

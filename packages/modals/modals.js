@@ -1,23 +1,31 @@
 // Write your package code here!
 
 Modals = {
-  show(choices) {
-    let parentNode = document.body
+  choiceModal(choices) {
+    return new Promise(function(resolve, reject){
+      let dataContext = { templateName: "modalChoice", choices: choices }
 
-    let view = Blaze.renderWithData(Template["modal"], choices, parentNode)
+      let parentNode = document.body
 
-    let domRange = view._domrange // TODO: Don't violate against the public API.
+      let view = Blaze.renderWithData(Template["modal"], dataContext, parentNode)
 
-    let $modal = domRange.$('.modal')
+      let domRange = view._domrange // TODO: Don't violate against the public API.
 
-    $modal.on('shown.bs.modal', function(event){
-      $modal.find('[autofocus]').focus()
+      let $modal = domRange.$('.modal')
+
+      let res;
+
+      $modal.on('shown.bs.modal', function(event){
+        $modal.find('[autofocus]').focus()
+      })
+
+      $modal.on('hidden.bs.modal', function(event){
+        resolve(1)
+        Blaze.remove(view)
+      })
+
+      $modal.modal()
+
     })
-
-    $modal.on('hidden.bs.modal', function(event){
-      Blaze.remove(view)
-    })
-
-    $modal.modal()
   }
 }

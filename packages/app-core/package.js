@@ -17,6 +17,7 @@ Package.onUse(function(api) {
   ]);
   api.addFiles([
     'app-core.js',
+    'lib/methods.js',
     'lib/collections.js',
   ], ["server", "client"]);
 

@@ -61,7 +61,7 @@ Corp.insert({
   "discard" : [],
   "hand" : [55],
   "identityCardId" : 54,
-  "servers" : []
+  "remoteServers" : []
 })
 
 // Cards
