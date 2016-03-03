@@ -11,7 +11,7 @@ describe("Actions.common", function() {
       "deckCards" : [2, 3],
       "discard" : [],
       "hand" : [],
-      "identityCardId" : 1,
+      "identityCardCode" : 1,
       "programs" : [],
       "hardwares" : [],
       "resources" : []
@@ -25,7 +25,7 @@ describe("Actions.common", function() {
       "deckCards" : [],
       "discard" : [],
       "hand" : [2, 3],
-      "identityCardId" : 1,
+      "identityCardCode" : 1,
       "servers" : []
     }
     game = {
@@ -40,7 +40,7 @@ describe("Actions.common", function() {
       "faction" : "runner",
       "factionName" : "criminal",
       "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01001.jpg",
-      "cardId" : 1,
+      "code" : 1,
       "type" : "identity"
     }
   })
@@ -123,11 +123,11 @@ describe("Actions.common", function() {
   })
 
   it ("Actions.common#installCard install a card on a player area", function(){
-    let cardDouble = { cardId: 42, type: "program" }
+    let cardDouble = { code: 42, type: "program" }
 
     subject().installCard(runner, cardDouble)
 
-    expect(runner.programs[0].cardId).to.eq(42)
+    expect(runner.programs[0].code).to.eq(42)
   })
 
 })

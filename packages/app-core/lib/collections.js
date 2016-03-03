@@ -3,8 +3,8 @@ Decks = new Mongo.Collection('decks')
 Decks.schema = new SimpleSchema({
   name: { type: String },
   faction: { type: String, allowedValues: ["corp", "runner"] },
-  cardIds: { type: [Number], defaultValue: [] },
-  identityCardId: { type: Number },
+  cardCodes: { type: [Number], defaultValue: [] },
+  identityCardCode: { type: Number },
 })
 
 Cards = new Mongo.Collection('cards');
@@ -12,10 +12,17 @@ Cards = new Mongo.Collection('cards');
 Cards.schema = new SimpleSchema({
   title: { type: String },
   imgSrc: { type: String },
-  cardId: { type: Number },
+  code: { type: Number },
+  side: { type: String, allowedValues: ["corp", "runner"] },
   faction: { type: String, allowedValues: ["corp", "runner"] },
   factionName: { type: String, allowedValues: ["haas-bioroid", "criminal"] },
   type: { type: String, allowedValues: ["agenda", "program", "identity"] }
+})
+
+Cards.helpers({
+  backImgSrc() {
+    return this.size === "runner" ? "/images/cards/runner-background.png" : "/images/cards/corp-background.png"
+  }
 })
 
 Runner = new Mongo.Collection('runner');
@@ -29,22 +36,26 @@ Runner.schema = new SimpleSchema({
   deckCards: { type: [Number], defaultValue: [] },
   discard: { type: [Number], defaultValue: [] },
   hand: { type: [Number] },
-  identityCardId: { type: Number, defaultValue: 0 },
+  identityCardCode: { type: Number, defaultValue: 0 },
   programs: { type: [Object], defaultValue: [] },
   hardwares: { type: [Object], defaultValue: [] },
   resources: { type: [Object], defaultValue: [] },
-  "programs.$.cardId": { type: Number },
-  "hardware.$.cardId": { type: Number },
-  "resources.$.cardId": { type: Number },
+  "programs.$.cardCode": { type: Number },
+  "hardware.$.cardCode": { type: Number },
+  "resources.$.cardCode": { type: Number },
 })
+
+function cardList(cardCodes) {
+  return Cards.find({ code: { "$in": cardCodes } }).fetch()
+}
 
 var _commonHelpers = {
   deckCards() {
-    return Cards.find({ cardId: { "$in": this.deckCards } }).fetch()
+    return cardList(this.deckCards)
   },
 
   identity() {
-    return Cards.findOne({ cardId: this.identityCardId })
+    return Cards.findOne({ code: this.identityCardCode })
   },
 
   deckSize() {
@@ -52,16 +63,8 @@ var _commonHelpers = {
   },
 
   handCards() {
-    return Cards.find({ cardId: { "$in": this.hand } }).fetch()
+    return cardList(this.hand)
   },
-
-  programCards() {
-    let cardIds = this.programs.map(function(program){
-      return program.cardId
-    })
-
-    return Cards.find({ cardId: { "$in": cardIds } }).fetch()
-  }
 
 }
 
@@ -77,14 +80,14 @@ Corp.schema = new SimpleSchema({
   credits: { type: Number, defaultValue: 0 },
   deckCards: { type: [Number], defaultValue: [] },
   discard: { type: [Number], defaultValue: [] },
-  identityCardId: { type: Number, defaultValue: 0 },
+  identityCardCode: { type: Number, defaultValue: 0 },
   hand: { type: [Number] },
   "remoteServers.$.serverId": { type: Number },
   "remoteServers.$.cards": { type: [Object] },
-  "remoteServers.$.cards.$.cardId": { type: Number },
+  "remoteServers.$.cards.$.cardCode": { type: Number },
   "remoteServers.$.cards.$.rezzed": { type: Boolean },
   "remoteServers.$.ices": { type: [Object] },
-  "remoteServers.$.ices.$.cardId": { type: Number },
+  "remoteServers.$.ices.$.cardCode": { type: Number },
   "remoteServers.$.ices.$.rezzed": { type: Boolean }
 })
 

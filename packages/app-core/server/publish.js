@@ -11,9 +11,9 @@ Meteor.publishComposite('Game.game', function(deckName){
       },
       children: [{
         find(corp) {
-          let cardIds = Decks.findOne(corp.deckId).cardIds
+          let cardCodes = Decks.findOne(corp.deckId).cardCodes
 
-          return Cards.find({ cardId: { "$in": cardIds } })
+          return Cards.find({ code: { "$in": cardCodes } })
         }
       }]
     },{
@@ -22,9 +22,9 @@ Meteor.publishComposite('Game.game', function(deckName){
       },
       children: [{
         find(runner) {
-          let cardIds = Decks.findOne(runner.deckId).cardIds
+          let cardCodes = Decks.findOne(runner.deckId).cardCodes
 
-          return Cards.find({ cardId: { "$in": cardIds } })
+          return Cards.find({ code: { "$in": cardCodes } })
         }
       }]
     }]

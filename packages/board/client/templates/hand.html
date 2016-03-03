@@ -1,12 +1,12 @@
 <template name="hand">
   <div class="hand">
-    {{#each item in player.handCards }}
-      {{> handItem card=item player=player }}
+    {{#each card in player.handCards }}
+      {{> handItem card=card player=player }}
     {{/each }}
   </div>
 </template>
 
 <template name="handItem">
-  {{> card card=card }}
+  {{> card card=card rezzed=true }}
   {{> actionList actions=(actions) }}
 </template>

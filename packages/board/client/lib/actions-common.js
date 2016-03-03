@@ -1,7 +1,6 @@
 Actions.common = {
   // DB
   _updateRunner (runner) {
-    debugger
     return Meteor.call('Runner.methods.update', {
       runnerId: runner._id,
       newRunner: runner
@@ -58,8 +57,8 @@ Actions.common = {
     target.hand.push(target.deckCards.splice(0, 1)[0])
   },
 
-  trashCard (target, targetCollection, cardId) {
-    let targetIndex = targetCollection.indexOf(cardId)
+  trashCard (target, targetCollection, cardCode) {
+    let targetIndex = targetCollection.indexOf(cardCode)
 
     target.discard.push(targetCollection.splice(targetIndex, 1)[0])
   },
@@ -102,7 +101,7 @@ Actions.common = {
 
   _installProgram(player, card) {
     player.programs.push({
-      cardId: card.cardId
+      cardCode: card.code
     })
   },
 
@@ -119,7 +118,7 @@ Actions.common = {
 
   _installAgenda(player, card, options) {
     Actions.common._findOrInitializeServer(player, options).cards.push({
-      cardId: card.cardId,
+      cardCode: card.code,
       rezzed: options.rezzed
     })
   },
@@ -134,7 +133,7 @@ Actions.common = {
   },
 
   removeFromHand(player, card) {
-    let cardIndex = player.hand.indexOf(card.cardId)
+    let cardIndex = player.hand.indexOf(card.code)
 
     return player.hand.splice(cardIndex, 1)
   }

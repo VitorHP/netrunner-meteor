@@ -39,6 +39,7 @@ Package.onUse(function(api) {
     'client/templates/runner-area.js',
     'client/templates/deck.html',
     'client/templates/card.html',
+    'client/templates/card.js',
     'client/templates/corp-area.html',
     'client/templates/corp-area.js',
     'client/templates/action.html',
