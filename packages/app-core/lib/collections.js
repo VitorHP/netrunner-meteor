@@ -75,7 +75,7 @@ Corp = new Mongo.Collection('corp');
 Corp.schema = new SimpleSchema({
   _id: { type: String },
   deckId: { type: String },
-  backgroundImgSrc: { type: String, defaultValue: "images/cards/background.png" },
+  backgroundImgSrc: { type: String, defaultValue: "/images/cards/corp-background.png" },
   clicks: { type: Number, defaultValue: 0 },
   credits: { type: Number, defaultValue: 0 },
   deckCards: { type: [Number], defaultValue: [] },
@@ -91,7 +91,27 @@ Corp.schema = new SimpleSchema({
   "remoteServers.$.ices.$.rezzed": { type: Boolean }
 })
 
-Corp.helpers(_commonHelpers)
+var _corpHelpers = {
+  remoteServersCards() {
+    let serverCard = function(serverCard){ 
+      return {
+        card: Cards.findOne({ 'code': serverCard.cardCode }),
+        rezzed: serverCard.rezzed
+      }
+    }
+
+    return this.remoteServers.reduce((memo, server) => {
+      memo.push({
+        ices: server.ices.map(serverCard),
+        cards: server.cards.map(serverCard)
+      })
+
+      return memo
+    }, [])
+  }
+}
+
+Corp.helpers(_.extend(_commonHelpers, _corpHelpers))
 
 Game = new Mongo.Collection('game')
 

@@ -4,7 +4,7 @@
     <div class="col-md-12">
       <div class="corp-area {{active(game.turnOwner)}} row">
         <div class="remote-servers col-md-6">
-          {{#each server in corp.remoteServers }}
+          {{#each server in corp.remoteServersCards }}
             {{> remoteServer server=server }}
           {{/each }}
         </div>
@@ -55,14 +55,14 @@
   <div class="remote-server">
     <ul class="list-unstyled remote-server__ices">
       {{#each item in server.ices }}
-        <li>{{> ice code=item }}</li>
+        <li>{{> ice card=item }}</li>
       {{/each }}
     </ul>
-    <div class="remote-server__server">
+    <ul class="list-unstyled remote-server__server">
       {{#each item in server.cards }}
-        <li>{{ item.cardCode }}</li>
+        <li>{{> card card=item.card rezzed=item.rezzed }}</li>
       {{/each }}
-    </div>
+    </ul>
   </div>
 </template>
 

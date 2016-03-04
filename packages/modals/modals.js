@@ -20,7 +20,8 @@ Modals = {
       })
 
       $modal.on('hidden.bs.modal', function(event){
-        resolve(1)
+        resolve($modal.find('modal-choice__option:checked').value)
+
         Blaze.remove(view)
       })
 

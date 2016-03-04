@@ -1,10 +1,12 @@
 <template name="modalChoice">
-  {{#each item in choices }}
-    <div class="radio">
-      <label>
-        <input type="radio" name="optionsRadios" id="optionsRadios{{@index}}" value="{{item.value}}" checked={{isFirst item choices}}>
-        {{ item.label }}
-      </label>
-    </div>
-  {{/each}}
+  <div class="modal-choice">
+    {{#each item in choices }}
+      <div class="radio">
+        <label>
+          <input class="modal-choice__option" type="radio" name="option" id="option{{@index}}" value="{{item.value}}" checked={{isFirst item choices}}>
+          {{ item.label }}
+        </label>
+      </div>
+    {{/each}}
+  </div>
 </template>
