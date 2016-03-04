@@ -22,6 +22,7 @@ Package.onUse(function(api) {
     'client/templates/modal.html',
     'client/templates/modal.js',
     'client/templates/modal-choice.html',
+    'client/templates/modal-choice.js',
   ], ["client"])
 
   api.export("Modals", ["client"])
