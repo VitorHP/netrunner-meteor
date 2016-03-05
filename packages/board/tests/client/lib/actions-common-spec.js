@@ -122,12 +122,69 @@ describe("Actions.common", function() {
     expect(subject().isOfType(card, ["identity", "program"])).to.equal(true)
   })
 
-  it ("Actions.common#installCard install a card on a player area", function(){
-    let cardDouble = { code: 42, type_code: "program" }
+  describe("Actions.common#installCard", function(){
+    it ("installs a program in the runner's program area", function(){
+      let cardDouble = { code: 42, type_code: "program" }
 
-    subject().installCard(runner, cardDouble)
+      subject().installCard(runner, cardDouble)
 
-    expect(runner.programs[0].cardCode).to.eq(42)
+      expect(runner.programs[0].cardCode).to.eq(42)
+    })
+
+    it ("installs a rezzed agenda on a corp's new remote server", function(){
+      let cardDouble = { code: 42, type_code: "agenda" }
+
+      expect(corp.remoteServers.length).to.eq(0)
+
+      subject().installCard(corp, cardDouble, { rezzed: true, serverId: "new-server" })
+
+      expect(corp.remoteServers.length).to.eq(1)
+      expect(corp.remoteServers[0].cards[0].cardCode).to.eq(42)
+      expect(corp.remoteServers[0].cards[0].rezzed).to.eq(true)
+    })
+
+    it ("installs a unrezzed agenda on a corp's new remote server", function(){
+      let cardDouble = { code: 42, type_code: "agenda" }
+
+      expect(corp.remoteServers.length).to.eq(0)
+
+      subject().installCard(corp, cardDouble, { rezzed: false, serverId: "new-server" })
+
+      expect(corp.remoteServers.length).to.eq(1)
+      expect(corp.remoteServers[0].cards[0].cardCode).to.eq(42)
+      expect(corp.remoteServers[0].cards[0].rezzed).to.eq(false)
+    })
+
+    it ("installs a card on a corp's existing remote server", function(){
+      let cardDouble = { code: 42, type_code: "agenda" }
+
+      subject().installCard(corp, cardDouble, { rezzed: false, serverId: "new-server" })
+
+      expect(corp.remoteServers.length).to.eq(1)
+
+      subject().installCard(corp, cardDouble, { rezzed: false, serverId: 0 })
+
+      expect(corp.remoteServers.length).to.eq(1)
+      expect(corp.remoteServers[0].cards.length).to.eq(2)
+    })
+
+    it ("installs a card on a corp's new remote server", function(){
+      let cardDouble = { code: 42, type_code: "ice" }
+
+      subject().installCard(corp, cardDouble, { rezzed: false, serverId: "new-server" })
+
+      expect(corp.remoteServers[0].ices.length).to.eq(1)
+      expect(corp.remoteServers[0].ices[0].cardCode).to.eq(42)
+    })
   })
 
+  it ("Actions.common#removeFromHand removes a card from the player's hand", function(){
+    let cardDouble = { code: 2 }
+
+    expect(corp.hand).to.include(2)
+
+    subject().removeFromHand(corp, cardDouble)
+
+    expect(corp.hand).to.not.include(2)
+  })
 })
