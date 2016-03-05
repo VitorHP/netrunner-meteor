@@ -68,7 +68,15 @@ var _commonHelpers = {
 
 }
 
-Runner.helpers(_commonHelpers)
+var _runnerHelpers = {
+  programCards() {
+    return this.programs.map(function(c) {
+      return { card: Cards.findOne({ 'code': c.cardCode }) }
+    })
+  }
+}
+
+Runner.helpers(_.extend(_commonHelpers, _runnerHelpers))
 
 Corp = new Mongo.Collection('corp');
 

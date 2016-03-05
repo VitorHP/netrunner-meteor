@@ -28,8 +28,8 @@
         </div>
         <div class="rig col-md-6">
           <div class="rig__program-row">
-            {{#each program in runner.programs }}
-              {{ program.cardCode }}
+            {{#each program in runner.programCards }}
+              {{> card card=program.card }}
             {{/each}}
           </div>
           <div class="rig__hardware-row">

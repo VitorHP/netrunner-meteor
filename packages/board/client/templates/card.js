@@ -6,6 +6,6 @@ Template.card.helpers({
   },
 
   classes(card) {
-    return card.type === "ice" ? "card--ice" : ""
+    return card && (card.type === "ice") ? "card--ice" : ""
   }
 })
