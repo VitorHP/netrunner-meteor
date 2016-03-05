@@ -37,8 +37,10 @@ describe("Actions.common", function() {
     card = {
       "_id" : "3gRNkaG99J5goYjKD",
       "title" : "Noise - Hacker Extraordinaire",
-      "faction" : "runner",
-      "factionName" : "criminal",
+      "side" : "Runner",
+      "side_code" : "runner",
+      "faction" : "Criminal",
+      "faction_code" : "Criminal",
       "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01001.jpg",
       "code" : 1,
       "type_code" : "identity"

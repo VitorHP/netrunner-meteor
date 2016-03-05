@@ -18,7 +18,7 @@ Decks.insert({
   "name" : "Haas Bioroid",
   "identityCardCode" : 54,
   "cardCodes" : [54, 55, 63],
-  "faction" : "corp"
+  "side_code" : "corp"
 })
 
 Decks.insert({
@@ -26,7 +26,7 @@ Decks.insert({
   "name" : "Noise",
   "identityCardCode" : 1,
   "cardCodes" : [1, 7],
-  "faction" : "runner"
+  "side_code" : "runner"
 })
 
 // Runner
@@ -75,9 +75,10 @@ Cards.remove("56dafef188583c47259f9dd1")
 Cards.insert({
   "_id" : "3gRNkaG99J5goYjKD",
   "title" : "Noise - Hacker Extraordinaire",
-  "side" : "runner",
-  "faction" : "runner",
-  "factionName" : "criminal",
+  "side" : "Runner",
+  "side_code" : "runner",
+  "faction" : "Criminal",
+  "faction_code" : "Criminal",
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01001.jpg",
   "code" : 1,
   "type_code" : "identity"
@@ -86,9 +87,10 @@ Cards.insert({
 Cards.insert({
   "_id" : "tzJTsy5LxBj7FNhhc",
   "title" : "Corroder",
-  "side" : "runner",
-  "faction" : "runner",
-  "factionName" : "criminal",
+  "side" : "Runner",
+  "side_code" : "runner",
+  "faction" : "Criminal",
+  "faction_code" : "Criminal",
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01007.jpg",
   "code" : 7,
   "type_code" : "program"
@@ -97,9 +99,10 @@ Cards.insert({
 Cards.insert({
   "_id" : "8dXPsvfXFmCeHHnHf",
   "title" : "Haas-Bioroid - Engineering the future",
-  "side" : "corp",
-  "faction" : "corp",
-  "factionName" : "haas-bioroid",
+  "side" : "Corp",
+  "side_code" : "corp",
+  "faction" : "Haas-Bioroid",
+  "faction_code" : "haas-bioroid",
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01054.jpg",
   "code" : 54,
   "type_code" : "identity"
@@ -108,9 +111,10 @@ Cards.insert({
 Cards.insert({
   "_id" : "56d1aef3d330b6eba537beaa",
   "title" : "Accelerated Beta Test",
-  "side" : "corp",
-  "faction" : "corp",
-  "factionName" : "haas-bioroid",
+  "side" : "Corp",
+  "side_code" : "corp",
+  "faction" : "Haas-Bioroid",
+  "faction_code" : "haas-bioroid",
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01055.jpg",
   "code" : 55,
   "type_code" : "agenda"
@@ -119,9 +123,10 @@ Cards.insert({
 Cards.insert({
   "_id" : "56dafef188583c47259f9dd1",
   "title": "Viktor 1.0",
-  "side": "corp",
-  "faction": "haas-bioroid",
-  "factionName": "Haas-bioroid",
+  "side" : "Corp",
+  "side_code" : "corp",
+  "faction" : "Haas-Bioroid",
+  "faction_code" : "haas-bioroid",
   "imgSrc" : "/images/cards/core/bc0f047c-01b1-427f-a439-d451eda01063.jpg",
   "code": 63,
   "type_code": "ice",

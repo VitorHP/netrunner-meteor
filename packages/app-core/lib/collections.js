@@ -2,7 +2,7 @@ Decks = new Mongo.Collection('decks')
 
 Decks.schema = new SimpleSchema({
   name: { type: String },
-  faction: { type: String, allowedValues: ["corp", "runner"] },
+  side_code: { type: String, allowedValues: ["corp", "runner"] },
   cardCodes: { type: [Number], defaultValue: [] },
   identityCardCode: { type: Number },
 })
@@ -13,10 +13,11 @@ Cards.schema = new SimpleSchema({
   title: { type: String },
   imgSrc: { type: String },
   code: { type: Number },
-  side: { type: String, allowedValues: ["corp", "runner"] },
-  faction: { type: String, allowedValues: ["corp", "runner"] },
-  factionName: { type: String, allowedValues: ["haas-bioroid", "criminal"] },
-  type_code: { type: String, allowedValues: ["agenda", "program", "identity"] }
+  side: { type: String, allowedValues: ["Corp", "Runner"] },
+  side_code: { type: String, allowedValues: ["corp", "runner"] },
+  faction: { type: String, allowedValues: ["Haas-Bioroid", "Criminal"] },
+  faction_code: { type: String, allowedValues: ["haas-bioroid", "criminal"] },
+  type_code: { type: String, allowedValues: ["agenda", "program", "identity", "ice"] }
 })
 
 Cards.helpers({

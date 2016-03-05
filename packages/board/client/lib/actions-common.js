@@ -27,7 +27,7 @@ Actions.common = {
   },
 
   _updatePlayer(player) {
-    player.identity().faction == "corp" ? Actions.common._updateCorp(player) : Actions.common._updateRunner(player)
+    player.identity().side_code == "corp" ? Actions.common._updateCorp(player) : Actions.common._updateRunner(player)
   },
 
   _updateGame (game) {
@@ -92,7 +92,7 @@ Actions.common = {
   },
 
   isCorpCard(card) {
-    return card.faction === "corp"
+    return card.side_code === "corp"
   },
 
   isRunnerCard(card) {
