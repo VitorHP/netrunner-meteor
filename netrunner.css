@@ -45,6 +45,11 @@
   text-align: center;
 }
 
+.hand__item {
+  display: inline-block;
+  vertical-align: top;
+}
+
 .deck__cards-count {
   position: absolute;
   display: inline-block;

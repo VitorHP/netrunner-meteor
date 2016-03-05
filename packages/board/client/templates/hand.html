@@ -7,6 +7,8 @@
 </template>
 
 <template name="handItem">
-  {{> card card=card rezzed=true }}
-  {{> actionList actions=(actions) }}
+  <div class="hand__item">
+    {{> card card=card rezzed=true }}
+    {{> actionList actions=(actions) }}
+  </div>
 </template>

@@ -55,7 +55,7 @@
   <div class="remote-server">
     <ul class="list-unstyled remote-server__ices">
       {{#each item in server.ices }}
-        <li>{{> ice card=item }}</li>
+        <li>{{> card card=item.card rezzed=item.rezzed }}</li>
       {{/each }}
     </ul>
     <ul class="list-unstyled remote-server__server">
@@ -65,8 +65,3 @@
     </ul>
   </div>
 </template>
-
-<template name="ice">
-  <img src="{{card.imgSrc}}" class="card card--ice">
-</template>
-

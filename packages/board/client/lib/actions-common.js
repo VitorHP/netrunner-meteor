@@ -105,8 +105,9 @@ Actions.common = {
     })
   },
 
-  _findOrInitializeServer(player, serverId) {
-    let server = player.remoteServers.find(function(s) { return s.serverId === serverId })
+  _findOrInitializeServer(player, options) {
+    //TODO: Comparison with == can maybe lead to problems later?
+    let server = player.remoteServers.find(function(s) { return s.serverId == options.serverId })
 
     if (server)
       return server
@@ -123,10 +124,18 @@ Actions.common = {
     })
   },
 
+  _installIce(player, card, options) {
+    Actions.common._findOrInitializeServer(player, options).ices.push({
+      cardCode: card.code,
+      rezzed: options.rezzed
+    })
+  },
+
   installCard(player, card, options) {
     let fns = {
       program: Actions.common._installProgram,
-      agenda: Actions.common._installAgenda
+      agenda: Actions.common._installAgenda,
+      ice: Actions.common._installIce
     }
 
     fns[card.type](player, card, options)
@@ -138,3 +147,4 @@ Actions.common = {
     return player.hand.splice(cardIndex, 1)
   }
 }
+

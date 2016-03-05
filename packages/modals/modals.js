@@ -20,7 +20,8 @@ Modals = {
       })
 
       $modal.on('hidden.bs.modal', function(event){
-        resolve($modal.find('modal-choice__option:checked').value)
+        //TODO: Why do I have to access value as an attribute?
+        resolve($modal.find('.modal-choice__option:checked').attr("value"))
 
         Blaze.remove(view)
       })

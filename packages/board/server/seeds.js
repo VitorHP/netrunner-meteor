@@ -17,7 +17,7 @@ Decks.insert({
   "_id" : "sfHfp6WobMieubfYZ",
   "name" : "Haas Bioroid",
   "identityCardCode" : 54,
-  "cardCodes" : [54, 55],
+  "cardCodes" : [54, 55, 63],
   "faction" : "corp"
 })
 
@@ -59,7 +59,7 @@ Corp.insert({
   "credits" : 0,
   "deckCards" : [],
   "discard" : [],
-  "hand" : [55],
+  "hand" : [55, 63],
   "identityCardCode" : 54,
   "remoteServers" : []
 })
@@ -70,6 +70,7 @@ Cards.remove("3gRNkaG99J5goYjKD")
 Cards.remove("tzJTsy5LxBj7FNhhc")
 Cards.remove("8dXPsvfXFmCeHHnHf")
 Cards.remove("56d1aef3d330b6eba537beaa")
+Cards.remove("56dafef188583c47259f9dd1")
 
 Cards.insert({
   "_id" : "3gRNkaG99J5goYjKD",
@@ -113,4 +114,15 @@ Cards.insert({
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01055.jpg",
   "code" : 55,
   "type" : "agenda"
+})
+
+Cards.insert({
+  "_id" : "56dafef188583c47259f9dd1",
+  "name": "Viktor 1.0",
+  "side": "corp",
+  "faction": "haas-bioroid",
+  "factionName": "Haas-bioroid",
+  "imgSrc" : "/images/cards/core/bc0f047c-01b1-427f-a439-d451eda01063.jpg",
+  "code": 63,
+  "type": "ice",
 })

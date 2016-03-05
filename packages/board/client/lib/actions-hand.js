@@ -3,7 +3,7 @@ Actions.hand = function() {
     {
       label: "Install",
       requirement() {
-        return Actions.common.isOfType(this.card, ["agenda"])
+        return Actions.common.isOfType(this.card, ["agenda", "ice"])
       },
       perform() {
         let rezzed
@@ -15,7 +15,7 @@ Actions.hand = function() {
             rezzed = data
 
             serverChoices = _this.player.remoteServers.reduce(function(memo, server, index) {
-              memo.push({ label: "Server #" + index, value: server.serverId })
+              memo.push({ label: "Server #" + index, value: index })
 
               return memo
             }, [{ label: "New Server", value: "new-server" }])
@@ -26,7 +26,8 @@ Actions.hand = function() {
             server = data
 
             Actions.common.removeFromHand(_this.player, _this.card)
-            Actions.common.installCard(_this.player, _this.card, { rezzed: rezzed == true })
+            //TODO: comparison with == can maybe lead to problems later?
+            Actions.common.installCard(_this.player, _this.card, { rezzed: Boolean(rezzed) == true, serverId: server })
             Actions.common._updatePlayer(_this.player)
           })
       }

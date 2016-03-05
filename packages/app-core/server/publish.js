@@ -30,3 +30,4 @@ Meteor.publishComposite('Game.game', function(deckName){
     }]
   }
 })
+
