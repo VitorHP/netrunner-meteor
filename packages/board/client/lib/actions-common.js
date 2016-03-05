@@ -85,10 +85,10 @@ Actions.common = {
 
   // Cards
 
-  isOfType(card, type) {
-    let types = type instanceof Array ? type : [type]
+  isOfType(card, type_code) {
+    let type_codes = type_code instanceof Array ? type_code : [type_code]
 
-    return types.some(function(t) { return t == card.type })
+    return type_codes.some(function(t) { return t == card.type_code })
   },
 
   isCorpCard(card) {
@@ -138,7 +138,7 @@ Actions.common = {
       ice: Actions.common._installIce
     }
 
-    fns[card.type](player, card, options)
+    fns[card.type_code](player, card, options)
   },
 
   removeFromHand(player, card) {

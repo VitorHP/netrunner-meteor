@@ -16,7 +16,7 @@ Cards.schema = new SimpleSchema({
   side: { type: String, allowedValues: ["corp", "runner"] },
   faction: { type: String, allowedValues: ["corp", "runner"] },
   factionName: { type: String, allowedValues: ["haas-bioroid", "criminal"] },
-  type: { type: String, allowedValues: ["agenda", "program", "identity"] }
+  type_code: { type: String, allowedValues: ["agenda", "program", "identity"] }
 })
 
 Cards.helpers({

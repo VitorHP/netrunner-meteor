@@ -74,55 +74,55 @@ Cards.remove("56dafef188583c47259f9dd1")
 
 Cards.insert({
   "_id" : "3gRNkaG99J5goYjKD",
-  "name" : "Noise - Hacker Extraordinaire",
+  "title" : "Noise - Hacker Extraordinaire",
   "side" : "runner",
   "faction" : "runner",
   "factionName" : "criminal",
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01001.jpg",
   "code" : 1,
-  "type" : "identity"
+  "type_code" : "identity"
 })
 
 Cards.insert({
   "_id" : "tzJTsy5LxBj7FNhhc",
-  "name" : "Corroder",
+  "title" : "Corroder",
   "side" : "runner",
   "faction" : "runner",
   "factionName" : "criminal",
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01007.jpg",
   "code" : 7,
-  "type" : "program"
+  "type_code" : "program"
 })
 
 Cards.insert({
   "_id" : "8dXPsvfXFmCeHHnHf",
-  "name" : "Haas-Bioroid - Engineering the future",
+  "title" : "Haas-Bioroid - Engineering the future",
   "side" : "corp",
   "faction" : "corp",
   "factionName" : "haas-bioroid",
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01054.jpg",
   "code" : 54,
-  "type" : "identity"
+  "type_code" : "identity"
 })
 
 Cards.insert({
   "_id" : "56d1aef3d330b6eba537beaa",
-  "name" : "Accelerated Beta Test",
+  "title" : "Accelerated Beta Test",
   "side" : "corp",
   "faction" : "corp",
   "factionName" : "haas-bioroid",
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01055.jpg",
   "code" : 55,
-  "type" : "agenda"
+  "type_code" : "agenda"
 })
 
 Cards.insert({
   "_id" : "56dafef188583c47259f9dd1",
-  "name": "Viktor 1.0",
+  "title": "Viktor 1.0",
   "side": "corp",
   "faction": "haas-bioroid",
   "factionName": "Haas-bioroid",
   "imgSrc" : "/images/cards/core/bc0f047c-01b1-427f-a439-d451eda01063.jpg",
   "code": 63,
-  "type": "ice",
+  "type_code": "ice",
 })

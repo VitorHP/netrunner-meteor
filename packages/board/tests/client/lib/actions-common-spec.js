@@ -26,7 +26,7 @@ describe("Actions.common", function() {
       "discard" : [],
       "hand" : [2, 3],
       "identityCardCode" : 1,
-      "servers" : []
+      "remoteServers" : []
     }
     game = {
       "_id" : "7MGuiovynhY2TgsbJ",
@@ -36,12 +36,12 @@ describe("Actions.common", function() {
     }
     card = {
       "_id" : "3gRNkaG99J5goYjKD",
-      "name" : "Noise - Hacker Extraordinaire",
+      "title" : "Noise - Hacker Extraordinaire",
       "faction" : "runner",
       "factionName" : "criminal",
       "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01001.jpg",
       "code" : 1,
-      "type" : "identity"
+      "type_code" : "identity"
     }
   })
 
@@ -117,17 +117,17 @@ describe("Actions.common", function() {
     expect(spies.call).to.have.been.calledWith('Game.methods.update', { gameId: game._id, newGame: game })
   })
 
-  it ("Actions.common#isOfType returns true if card.type is of one of the types specified", function() {
+  it ("Actions.common#isOfType returns true if card.type_code is of one of the types specified", function() {
     expect(subject().isOfType(card, "identity")).to.equal(true)
     expect(subject().isOfType(card, ["identity", "program"])).to.equal(true)
   })
 
   it ("Actions.common#installCard install a card on a player area", function(){
-    let cardDouble = { code: 42, type: "program" }
+    let cardDouble = { code: 42, type_code: "program" }
 
     subject().installCard(runner, cardDouble)
 
-    expect(runner.programs[0].code).to.eq(42)
+    expect(runner.programs[0].cardCode).to.eq(42)
   })
 
 })
