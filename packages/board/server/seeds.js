@@ -25,7 +25,7 @@ Decks.insert({
   "_id" : "56d1aef3d330b6eba537beaa",
   "name" : "Noise",
   "identityCardCode" : 1,
-  "cardCodes" : [1, 7],
+  "cardCodes" : [1, 7, 23, 31],
   "side_code" : "runner"
 })
 
@@ -41,10 +41,10 @@ Runner.insert({
   "credits" : 0,
   "deckCards" : [],
   "discard" : [],
-  "hand" : [7],
+  "hand" : [7, 23, 31],
   "identityCardCode" : 1,
   "programs" : [],
-  "hardwares" : [],
+  "hardware" : [],
   "resources" : []
 })
 
@@ -71,6 +71,8 @@ Cards.remove("tzJTsy5LxBj7FNhhc")
 Cards.remove("8dXPsvfXFmCeHHnHf")
 Cards.remove("56d1aef3d330b6eba537beaa")
 Cards.remove("56dafef188583c47259f9dd1")
+Cards.remove("56db38b58820a734731a09ab")
+Cards.remove("56db38c78820a734731a09ac")
 
 Cards.insert({
   "_id" : "3gRNkaG99J5goYjKD",
@@ -94,6 +96,28 @@ Cards.insert({
   "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01007.jpg",
   "code" : 7,
   "type_code" : "program"
+})
+
+Cards.insert({
+  "_id": "56db38b58820a734731a09ab",
+  "title": "Lemuria Codecracker",
+  "type": "Hardware",
+  "type_code": "hardware",
+  "faction": "Criminal",
+  "faction_code": "criminal",
+  "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01023.jpg",
+  "code": 23
+})
+
+Cards.insert({
+  "_id": "56db38c78820a734731a09ac",
+  "title": "Data Dealer",
+  "type": "Resource",
+  "type_code": "resource",
+  "faction": "Criminal",
+  "faction_code": "criminal",
+  "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01031.jpg",
+  "code": 31
 })
 
 Cards.insert({

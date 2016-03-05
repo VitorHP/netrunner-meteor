@@ -13,7 +13,7 @@ describe("Actions.common", function() {
       "hand" : [],
       "identityCardCode" : 1,
       "programs" : [],
-      "hardwares" : [],
+      "hardware" : [],
       "resources" : []
     }
     corp = {
@@ -82,20 +82,20 @@ describe("Actions.common", function() {
     })
   })
 
-  it ("Module.actions#shiftTurn changes the turn to the other player", function() {
+  it ("Actions.common#shiftTurn changes the turn to the other player", function() {
     subject().shiftTurn(game)
     expect(game.turnOwner).to.equal("runner")
     subject().shiftTurn(game)
     expect(game.turnOwner).to.equal("corp")
   })
 
-  it ("Module.actions#trashCard discards a card from somewhere into the player's discard pile", function() {
+  it ("Actions.common#trashCard discards a card from somewhere into the player's discard pile", function() {
     subject().trashCard(corp, corp.hand, 2)
     expect(corp.hand).to.not.include(2)
     expect(corp.discard).to.include(2)
   })
 
-  it ("Module.actions#_updateRunner calls an update for the runner", function() {
+  it ("Actions.common#_updateRunner calls an update for the runner", function() {
     spies.create('call', Meteor, 'call')
 
     subject()._updateRunner(runner)
@@ -103,7 +103,7 @@ describe("Actions.common", function() {
     expect(spies.call).to.have.been.calledWith('Runner.methods.update', { runnerId: runner._id, newRunner: runner })
   })
 
-  it ("Module.actions#_updateCorp calls an update for the runner", function() {
+  it ("Actions.common#_updateCorp calls an update for the runner", function() {
     spies.create('call', Meteor, 'call')
 
     subject()._updateCorp(corp)
@@ -111,7 +111,7 @@ describe("Actions.common", function() {
     expect(spies.call).to.have.been.calledWith('Corp.methods.update', { corpId: corp._id, newCorp: corp })
   })
 
-  it ("Module.actions#_updateGame calls an update for the runner", function() {
+  it ("Actions.common#_updateGame calls an update for the game", function() {
     spies.create('call', Meteor, 'call')
 
     subject()._updateGame(game)
@@ -131,6 +131,22 @@ describe("Actions.common", function() {
       subject().installCard(runner, cardDouble)
 
       expect(runner.programs[0].cardCode).to.eq(42)
+    })
+
+    it ("installs a hardware in the runner's hardware area", function(){
+      let cardDouble = { code: 42, type_code: "hardware" }
+
+      subject().installCard(runner, cardDouble)
+
+      expect(runner.hardware[0].cardCode).to.eq(42)
+    })
+
+    it ("installs a resource in the runner's resource area", function(){
+      let cardDouble = { code: 42, type_code: "resource" }
+
+      subject().installCard(runner, cardDouble)
+
+      expect(runner.resources[0].cardCode).to.eq(42)
     })
 
     it ("installs a rezzed agenda on a corp's new remote server", function(){

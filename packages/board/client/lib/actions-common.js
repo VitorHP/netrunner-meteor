@@ -105,6 +105,18 @@ Actions.common = {
     })
   },
 
+  _installHardware(player, card) {
+    player.hardware.push({
+      cardCode: card.code
+    })
+  },
+
+  _installResource(player, card) {
+    player.resources.push({
+      cardCode: card.code
+    })
+  },
+
   _findOrInitializeServer(player, options) {
     //TODO: Comparison with == can maybe lead to problems later?
     let server = player.remoteServers.find(function(s) { return s.serverId == options.serverId })
@@ -134,6 +146,9 @@ Actions.common = {
   installCard(player, card, options) {
     let fns = {
       program: Actions.common._installProgram,
+      hardware: Actions.common._installHardware,
+      resource: Actions.common._installResource,
+
       agenda: Actions.common._installAgenda,
       ice: Actions.common._installIce
     }

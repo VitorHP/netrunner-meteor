@@ -35,7 +35,7 @@ Actions.hand = function() {
     {
       label: "Install",
       requirement() {
-        return Actions.common.isOfType(this.card, ["program"])
+        return Actions.common.isOfType(this.card, ["program", "hardware", "resource"])
       },
       perform() {
         Actions.common.removeFromHand(this.player, this.card)

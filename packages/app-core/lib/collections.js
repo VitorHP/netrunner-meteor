@@ -39,7 +39,7 @@ Runner.schema = new SimpleSchema({
   hand: { type: [Number] },
   identityCardCode: { type: Number, defaultValue: 0 },
   programs: { type: [Object], defaultValue: [] },
-  hardwares: { type: [Object], defaultValue: [] },
+  hardware: { type: [Object], defaultValue: [] },
   resources: { type: [Object], defaultValue: [] },
   "programs.$.cardCode": { type: Number },
   "hardware.$.cardCode": { type: Number },
@@ -69,11 +69,21 @@ var _commonHelpers = {
 
 }
 
+function rigCards(collection) {
+  return collection.map(function(c) {
+    return { card: Cards.findOne({ 'code': c.cardCode }) }
+  })
+}
+
 var _runnerHelpers = {
   programCards() {
-    return this.programs.map(function(c) {
-      return { card: Cards.findOne({ 'code': c.cardCode }) }
-    })
+    return rigCards(this.programs)
+  },
+  hardwareCards() {
+    return rigCards(this.hardware)
+  },
+  resourceCards() {
+    return rigCards(this.resources)
   }
 }
 

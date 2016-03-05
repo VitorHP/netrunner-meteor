@@ -33,8 +33,14 @@
             {{/each}}
           </div>
           <div class="rig__hardware-row">
+            {{#each hardware in runner.hardwareCards }}
+              {{> card card=hardware.card }}
+            {{/each}}
           </div>
           <div class="rig__resource-row">
+            {{#each resource in runner.resourceCards }}
+              {{> card card=resource.card }}
+            {{/each}}
           </div>
         </div>
       </div>
