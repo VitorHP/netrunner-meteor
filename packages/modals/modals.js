@@ -1,33 +1,52 @@
 // Write your package code here!
 
+function loadModal(data, callbacks = []){
+  return new Promise(function(resolve, reject){
+    let parentNode = document.body
+
+    let view = Blaze.renderWithData(Template["modal"], data, parentNode)
+
+    let domRange = view._domrange // TODO: Don't violate against the public API.
+
+    let $modal = domRange.$('.modal')
+
+    $modal.on('shown.bs.modal', function(event){
+      $modal.find('[autofocus]').focus()
+    })
+
+    $modal.on('hidden.bs.modal', function(event){
+      Blaze.remove(view)
+    })
+
+    callbacks.forEach(function(c){
+      $modal.on(c.event, function(){
+        c.fn($modal, resolve, reject)
+      })
+    })
+
+    $modal.modal()
+  })
+}
+
 Modals = {
   choiceModal(choices) {
-    return new Promise(function(resolve, reject){
-      let dataContext = { templateName: "modalChoice", choices: choices }
+    let dataContext = { templateName: "modalChoice", choices: choices }
+    let callbacks   = [
+      {
+        event: "hidden.bs.modal",
+        fn: function($modal, resolve, reject){
+          //TODO: Why do I have to access value as an attribute?
+          resolve($modal.find('.modal-choice__option:checked').attr("value"))
+        }
+      }
+    ]
 
-      let parentNode = document.body
+    return loadModal(dataContext, callbacks)
+  },
 
-      let view = Blaze.renderWithData(Template["modal"], dataContext, parentNode)
+  revealModal(cards, cardsRevealed) {
+    let dataContext = { templateName: "modalReveal", cards: cards }
 
-      let domRange = view._domrange // TODO: Don't violate against the public API.
-
-      let $modal = domRange.$('.modal')
-
-      let res;
-
-      $modal.on('shown.bs.modal', function(event){
-        $modal.find('[autofocus]').focus()
-      })
-
-      $modal.on('hidden.bs.modal', function(event){
-        //TODO: Why do I have to access value as an attribute?
-        resolve($modal.find('.modal-choice__option:checked').attr("value"))
-
-        Blaze.remove(view)
-      })
-
-      $modal.modal()
-
-    })
+    return loadModal(dataContext)
   }
 }

@@ -1,5 +1,5 @@
 Template.modal.helpers({
   templateName() {
-    return "modalChoice"
+    return Template.instance().data.templateName
   }
 })
