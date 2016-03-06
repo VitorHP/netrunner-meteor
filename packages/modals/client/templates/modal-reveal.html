@@ -1,7 +1,9 @@
 <template name="modalReveal">
   <div class="modal-reveal">
-    {{#each item in cards }}
-      {{> card card=item }}
+    {{#each item in (wrappedCards cards) }}
+      <div class="modal-reveal__card" data-index="{{@index}}">
+        {{> card card=item.card rezzed=item.revealed }}
+      </div>
     {{/each}}
   </div>
 </template>

@@ -63,3 +63,7 @@
   margin-left: -25px;
   margin-top: -25px;
 }
+
+.modal-reveal__card {
+  display: inline-block;
+}

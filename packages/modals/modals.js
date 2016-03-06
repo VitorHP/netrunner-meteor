@@ -44,8 +44,10 @@ Modals = {
     return loadModal(dataContext, callbacks)
   },
 
-  revealModal(cards, cardsRevealed) {
-    let dataContext = { templateName: "modalReveal", cards: cards }
+  revealModal(cards, cardsToReveal=0) {
+    let dataContext = { templateName: "modalReveal",
+                        cards: cards,
+                        cardsToReveal: cardsToReveal }
 
     return loadModal(dataContext)
   }
