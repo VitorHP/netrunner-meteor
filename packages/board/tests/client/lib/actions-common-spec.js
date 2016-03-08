@@ -205,4 +205,16 @@ describe("Actions.common", function() {
 
     expect(corp.hand).to.not.include(2)
   })
+
+  it ("Actions.common#isCorpCard returns true if it's a corp card", function(){
+    let cardDouble = { code: 2, side_code: "corp" }
+
+    expect(subject().isCorpCard(cardDouble)).to.eql(true)
+  })
+
+  it ("Actions.common#isRunnerCard returns true if it's a runner card", function(){
+    let cardDouble = { code: 2, side_code: "runner" }
+
+    expect(subject().isRunnerCard(cardDouble)).to.eql(true)
+  })
 })

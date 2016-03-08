@@ -3,7 +3,7 @@ Actions.corp = function (player) {
     {
       label: "Play an operation",
       perform() {
-
+        Modals.revealModal(this.corp.handCards(), 1)
       }
     },
     {
