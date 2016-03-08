@@ -20,3 +20,4 @@ netrunner:app-lib
 netrunner:app-core
 netrunner:board
 netrunner:modals
+netrunner:zoom
