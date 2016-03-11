@@ -19,6 +19,7 @@ Package.onUse(function(api) {
     'app-core.js',
     'lib/methods.js',
     'lib/collections.js',
+    'lib/collections/game.js',
   ], ["server", "client"]);
 
   api.addFiles([

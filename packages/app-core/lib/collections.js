@@ -132,11 +132,3 @@ var _corpHelpers = {
 
 Corp.helpers(_.extend(_commonHelpers, _corpHelpers))
 
-Game = new Mongo.Collection('game')
-
-Game.schema = new SimpleSchema({
-  _id: { type: String },
-  turnOwner: { type: String, defaultValue: "corp", allowedValues: ["corp", "runner"] },
-  runnerId: { type: String },
-  corpId: { type: String }
-})
