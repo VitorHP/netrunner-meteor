@@ -20,6 +20,8 @@ Package.onUse(function(api) {
     'lib/methods.js',
     'lib/collections.js',
     'lib/collections/game.js',
+    'lib/collections/decks.js',
+    'lib/collections/cards.js',
   ], ["server", "client"]);
 
   api.addFiles([
