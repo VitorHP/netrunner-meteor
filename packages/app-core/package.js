@@ -18,7 +18,9 @@ Package.onUse(function(api) {
   api.addFiles([
     'app-core.js',
     'lib/methods.js',
-    'lib/collections.js',
+    'lib/collections/players.js',
+    'lib/collections/runners.js',
+    'lib/collections/corps.js',
     'lib/collections/game.js',
     'lib/collections/decks.js',
     'lib/collections/cards.js',
@@ -28,7 +30,7 @@ Package.onUse(function(api) {
     'server/publish.js'
   ], ["server"]);
 
-  api.export(["Runner", "Cards", "Decks", "Corp", "Game"], ["server", "client"]);
+  api.export(["Runner", "Cards", "Decks", "Corp", "Game", "Players"], ["server", "client"]);
 });
 
 Package.onTest(function(api) {
