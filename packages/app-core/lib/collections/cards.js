@@ -1,14 +1,32 @@
 Cards = new Mongo.Collection('cards');
 
 Cards.schema = new SimpleSchema({
-  title: { type: String },
-  imgSrc: { type: String },
+  last_modified: { type: String },
   code: { type: Number },
-  side: { type: String, allowedValues: ["Corp", "Runner"] },
-  side_code: { type: String, allowedValues: ["corp", "runner"] },
+  title: { type: String },
+  type: { type: String },
+  type_code: { type: String, allowedValues: ["hardware", "event", "agenda", "program", "identity", "ice"] },
+  subtype: { type: String },
+  subtype_code: { type: String },
+  text: { type: String },
+  baselink: { type: Number },
+  cost: { type: Number },
   faction: { type: String, allowedValues: ["Haas-Bioroid", "Criminal"] },
   faction_code: { type: String, allowedValues: ["haas-bioroid", "criminal"] },
-  type_code: { type: String, allowedValues: ["agenda", "program", "identity", "ice"] }
+  faction_letter: { type: String },
+  faction_cost: { type: Number },
+  flavor: { type: String },
+  number: { type: Number },
+  quantity: { type: Number },
+  set_name: { type: String },
+  set_code: { type: String },
+  side: { type: String, allowedValues: ["Corp", "Runner"] },
+  side_code: { type: String, allowedValues: ["corp", "runner"] },
+  uniqueness: { type: Boolean },
+  limited: { type: Number },
+  cycle_code: { type: String },
+  cycle_number: { type: Number },
+  img_src: { type: String },
 })
 
 Cards.helpers({

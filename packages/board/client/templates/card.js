@@ -5,6 +5,6 @@ Template.card.onRendered(function() {
 Template.card.helpers({
   cardImg(card, rezzed=true) {
     if (card)
-      return rezzed ? card.imgSrc : card.backImgSrc()
+      return rezzed ? card.img_src : card.backImgSrc()
   }
 })
