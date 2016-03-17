@@ -10,7 +10,6 @@ Actions.global = function(player) {
         Actions.common._updateGame(this.game)
       }
     },
-
     {
       label: "Draw card",
       requirement: function() {
@@ -34,19 +33,5 @@ Actions.global = function(player) {
         Actions.common._updatePlayer(this.player)
       }
     },
-
-    {
-      label: "Install a card",
-      perform() {
-
-      }
-    },
-
-    {
-      label: "Trigger ability",
-      perform() {
-
-      }
-    }
-  ] 
+  ]
 }
