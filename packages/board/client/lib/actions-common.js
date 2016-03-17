@@ -51,10 +51,12 @@ Actions.common = {
     return target.clicks = target.clicks - amount
   },
 
-  drawCard (target) {
+  drawCard (target, count=1) {
     if (target.deckCards.length === 0) return false
 
-    target.hand.push(target.deckCards.splice(0, 1)[0])
+    target.deckCards.splice(0, count).forEach(function(cardCode) {
+      target.hand.push(cardCode)
+    })
   },
 
   trashCard (target, targetCollection, cardCode) {

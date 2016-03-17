@@ -57,6 +57,12 @@ describe("Actions.common", function() {
     expect(runner.deckCards.length).to.equal(1)
   })
 
+  it ("Actions.common#drawCard removes [count] cards from the deck and places it on the runner's hand when [count is specified]", function() {
+    subject().drawCard(runner, 2)
+
+    expect(runner.deckCards.length).to.equal(0)
+  })
+
   it ("Actions.common#click reduces the target clicks by the amount specified", function() {
     subject().click(runner, 2)
 
