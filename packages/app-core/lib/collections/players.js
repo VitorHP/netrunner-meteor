@@ -1,7 +1,11 @@
 Players = {}
 
 function cardList(cardCodes) {
-  return Cards.find({ code: { "$in": cardCodes } }).fetch()
+  let cards = Cards.find({ code: { "$in": cardCodes } }).fetch()
+
+  return cardCodes.map(function(cardCode){
+    return cards.find(function(card){ return card.code === cardCode })
+  })
 }
 
 Players.commonHelpers = {

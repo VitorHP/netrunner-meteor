@@ -4,7 +4,6 @@
     <div class="col-md-12">
       <div class="corp-area {{active(game.turnOwner)}} row">
         <div class="remote-servers col-md-6">
-          {{ debug corp.remoteServersCards }}
           {{#each server in corp.remoteServersCards }}
             {{> remoteServer server=server }}
           {{/each }}

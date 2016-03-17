@@ -7,16 +7,16 @@ Corp.schema = new SimpleSchema({
   backgroundImgSrc: { type: String, defaultValue: "/images/cards/corp-background.png" },
   clicks: { type: Number, defaultValue: 0 },
   credits: { type: Number, defaultValue: 0 },
-  deckCards: { type: [Number], defaultValue: [] },
-  discard: { type: [Number], defaultValue: [] },
-  identityCardCode: { type: Number, defaultValue: 0 },
-  hand: { type: [Number] },
+  deckCards: { type: [String], defaultValue: [] },
+  discard: { type: [String], defaultValue: [] },
+  identityCardCode: { type: String, defaultValue: 0 },
+  hand: { type: [String] },
   "remoteServers.$.serverId": { type: Number },
   "remoteServers.$.cards": { type: [Object] },
-  "remoteServers.$.cards.$.cardCode": { type: Number },
+  "remoteServers.$.cards.$.cardCode": { type: String },
   "remoteServers.$.cards.$.rezzed": { type: Boolean },
   "remoteServers.$.ices": { type: [Object] },
-  "remoteServers.$.ices.$.cardCode": { type: Number },
+  "remoteServers.$.ices.$.cardCode": { type: String },
   "remoteServers.$.ices.$.rezzed": { type: Boolean }
 })
 
@@ -41,4 +41,3 @@ var _corpHelpers = {
 }
 
 Corp.helpers(_.extend(Players.commonHelpers, _corpHelpers))
-

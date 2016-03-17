@@ -85,6 +85,12 @@ Actions.common = {
     target.turnOwner = target.turnOwner == "corp" ? "runner" : "corp"
   },
 
+  // Deck
+
+  shuffleDeck (target) {
+    target.deckCards = _.shuffle(target.deckCards)
+  },
+
   // Cards
 
   isOfType(card, type_code) {

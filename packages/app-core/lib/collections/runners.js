@@ -7,16 +7,16 @@ Runner.schema = new SimpleSchema({
   backgroundImgSrc: { type: String, defaultValue: "images/cards/background.png" },
   clicks: { type: Number, defaultValue: 0 },
   credits: { type: Number, defaultValue: 0 },
-  deckCards: { type: [Number], defaultValue: [] },
-  discard: { type: [Number], defaultValue: [] },
-  hand: { type: [Number] },
-  identityCardCode: { type: Number, defaultValue: 0 },
+  deckCards: { type: [String], defaultValue: [] },
+  discard: { type: [String], defaultValue: [] },
+  hand: { type: [String] },
+  identityCardCode: { type: String, defaultValue: 0 },
   programs: { type: [Object], defaultValue: [] },
   hardware: { type: [Object], defaultValue: [] },
   resources: { type: [Object], defaultValue: [] },
-  "programs.$.cardCode": { type: Number },
-  "hardware.$.cardCode": { type: Number },
-  "resources.$.cardCode": { type: Number },
+  "programs.$.cardCode": { type: String },
+  "hardware.$.cardCode": { type: String },
+  "resources.$.cardCode": { type: String },
 })
 
 function rigCards(collection) {
