@@ -3,35 +3,50 @@ Actions.global = function(player) {
     {
       label: "Ready",
       requirement: function() {
-        return !Actions.common.hasClicks(this[player])
+        return !Actions.common.isReady(this[player])
       },
       perform() {
+        Actions.common.ready(this[player])
         Actions.common.shuffleDeck(this[player])
         Actions.common.drawCard(this[player], 5)
         Actions.common._updatePlayer(this[player])
       }
     },
+
     {
       label: "Mulligan",
       requirement: function() {
-        return !Actions.common.hasClicks(this[player])
+        return Actions.common.isReady(this[player]) &&
+               !Actions.common.didMulligan(this[player])
       },
       perform() {
         _.clone(this[player].hand).forEach((cardCode) => {
           Actions.common.trashCard(this[player], this[player].hand, cardCode)
         })
 
+        Actions.common.acceptMulligan(this[player], true)
         Actions.common.drawCard(this[player], 5)
-
-        console.log(this[player].hand)
-
         Actions.common._updatePlayer(this[player])
       }
     },
+
+    {
+      label: "Accept",
+      requirement: function() {
+        return Actions.common.isReady(this[player]) &&
+               !Actions.common.didMulligan(this[player])
+      },
+      perform() {
+        Actions.common.acceptMulligan(this[player], false)
+        Actions.common._updatePlayer(this[player])
+      }
+    },
+
     {
       label: "End Turn",
       requirement: function() {
-        return !Actions.common.hasClicks(this.player)
+        return !Actions.common.hasClicks(this[player]) &&
+               Actions.common.isTurnOwner(this[player])
       },
       perform() {
         Actions.common.shiftTurn(this.game)

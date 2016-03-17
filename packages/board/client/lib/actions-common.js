@@ -79,10 +79,30 @@ Actions.common = {
     return (target || {}).clicks > 0
   },
 
+  ready (player) {
+    return player.ready = true
+  },
+
+  isReady (player) {
+    return (player || {}).ready === true
+  },
+
+  acceptMulligan (player, accepted) {
+    player.mulligan = accepted
+  },
+
+  didMulligan (player) {
+    return (player || {}).mulligan !== undefined
+  },
+
   // Game
 
   shiftTurn (target) {
     target.turnOwner = target.turnOwner == "corp" ? "runner" : "corp"
+  },
+
+  isTurnOwner (game, player) {
+    (player || {}).side_code === (game || {}).turnOwner
   },
 
   // Deck
