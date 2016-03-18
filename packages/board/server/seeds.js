@@ -14,7 +14,7 @@ seedData(Game, [{
   "_id" : "7MGuiovynhY2TgsbJ",
   "runnerId" : "7MGuiovynhY2TgsbJ",
   "corpId" : "7MGuiovynhY2TgsbJ",
-  "turnOwner" : null
+  "turnOwner" : "corp"
 }])
 
 // Decks

@@ -10,6 +10,8 @@ Actions.global = function(player) {
         Actions.common.shuffleDeck(this[player])
         Actions.common.drawCard(this[player], 5)
         Actions.common._updatePlayer(this[player])
+        Actions.common.shiftTurn(this.game)
+        Actions.common._updateGame(this.game)
       }
     },
 
@@ -25,6 +27,8 @@ Actions.global = function(player) {
         Actions.common.shuffleDeck(this[player])
         Actions.common.drawCard(this[player], 5)
         Actions.common._updatePlayer(this[player])
+        Actions.common.shiftTurn(this.game)
+        Actions.common._updateGame(this.game)
       }
     },
 
@@ -37,6 +41,8 @@ Actions.global = function(player) {
       perform() {
         Actions.common.acceptMulligan(this[player], false)
         Actions.common._updatePlayer(this[player])
+        Actions.common.shiftTurn(this.game)
+        Actions.common._updateGame(this.game)
       }
     },
 
