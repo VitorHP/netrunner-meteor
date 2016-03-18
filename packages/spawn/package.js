@@ -13,18 +13,25 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.2.1');
   api.use(['ecmascript', 'underscore']);
-  api.addFiles('spawn.js');
+  api.addFiles([
+    'lib/underscore-extensions.js',
+    'spawn.js'
+  ]);
   api.export('Spawn');
 });
 
 Package.onTest(function(api) {
   api.use([
     'ecmascript',
+    'underscore',
     'mike:mocha-package@0.5.7', 
     'practicalmeteor:chai@2.1.0_1',
     'practicalmeteor:sinon@1.14.1_2',
     'netrunner:spawn'
   ]);
 
-  api.addFiles('spawn-tests.js');
+  api.addFiles([
+    'lib/underscore-extensions.js',
+    'spawn-tests.js'
+  ]);
 });

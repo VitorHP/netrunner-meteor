@@ -12,6 +12,6 @@ Spawn = {
     if (!this.templates)
       this.templates = {}
 
-    return _.extend(_.clone(this.templates[name]), modifiers)
+    return _.extend(_.deepClone(this.templates[name], 3), modifiers)
   }
 }
