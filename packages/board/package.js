@@ -54,16 +54,20 @@ Package.onUse(function(api) {
 
 Package.onTest(function(api) {
   api.use([
-    'mike:mocha-package@0.5.7', 
+    'mike:mocha-package@0.5.7',
     'practicalmeteor:chai@2.1.0_1',
     'practicalmeteor:sinon@1.14.1_2',
+    'netrunner:spawn',
     'netrunner:board',
   ]);
 
   api.addFiles([
     'client/lib/_actions.js',
     'client/lib/actions-common.js',
-    'tests/client/lib/actions-common-spec.js'
+    'client/lib/actions-global.js',
+    'tests/spawns.js',
+    'tests/client/lib/actions-common-spec.js',
+    'tests/client/lib/actions-global-spec.js'
   ], ["client"]);
 
 });

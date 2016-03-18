@@ -2,49 +2,10 @@ describe("Actions.common", function() {
   var runner, game, corp;
 
   beforeEach(function() {
-    runner = {
-      "_id" : "7MGuiovynhY2TgsbJ",
-      "deckId" : "sfHfp6WobMieubfYZ",
-      "backgroundImgSrc" : "images/cards/background.png",
-      "clicks" : 2,
-      "credits" : 1,
-      "deckCards" : [2, 3],
-      "discard" : [],
-      "hand" : [],
-      "identityCardCode" : 1,
-      "programs" : [],
-      "hardware" : [],
-      "resources" : []
-    }
-    corp = {
-      "_id" : "7MGuiovynhY2TgsbJ",
-      "deckId" : "sfHfp6WobMieubfYZ",
-      "backgroundImgSrc" : "images/cards/corp-background.png",
-      "clicks" : 2,
-      "credits" : 1,
-      "deckCards" : [],
-      "discard" : [],
-      "hand" : [2, 3],
-      "identityCardCode" : 1,
-      "remoteServers" : []
-    }
-    game = {
-      "_id" : "7MGuiovynhY2TgsbJ",
-      "runnerId" : "7MGuiovynhY2TgsbJ",
-      "corpId" : "7MGuiovynhY2TgsbJ",
-      "turnOwner" : "corp"
-    }
-    card = {
-      "_id" : "3gRNkaG99J5goYjKD",
-      "title" : "Noise - Hacker Extraordinaire",
-      "side" : "Runner",
-      "side_code" : "runner",
-      "faction" : "Criminal",
-      "faction_code" : "Criminal",
-      "imgSrc" : "images/cards/core/bc0f047c-01b1-427f-a439-d451eda01001.jpg",
-      "code" : 1,
-      "type_code" : "identity"
-    }
+    runner = Spawn.create("Runner")
+    corp = Spawn.create("Corp")
+    game = Spawn.create("Game")
+    card = Spawn.create("Card")
   })
 
   subject = function() {
@@ -96,9 +57,9 @@ describe("Actions.common", function() {
   })
 
   it ("Actions.common#trashCard discards a card from somewhere into the player's discard pile", function() {
-    subject().trashCard(corp, corp.hand, 2)
-    expect(corp.hand).to.not.include(2)
-    expect(corp.discard).to.include(2)
+    subject().trashCard(corp, corp.hand, "01003")
+    expect(corp.hand).to.not.include("01003")
+    expect(corp.discard).to.include("01003")
   })
 
   it ("Actions.common#_updateRunner calls an update for the runner", function() {
@@ -132,55 +93,55 @@ describe("Actions.common", function() {
 
   describe("Actions.common#installCard", function(){
     it ("installs a program in the runner's program area", function(){
-      let cardDouble = { code: 42, type_code: "program" }
+      let cardDouble = { code: "01042", type_code: "program" }
 
       subject().installCard(runner, cardDouble)
 
-      expect(runner.programs[0].cardCode).to.eq(42)
+      expect(runner.programs[0].cardCode).to.eq("01042")
     })
 
     it ("installs a hardware in the runner's hardware area", function(){
-      let cardDouble = { code: 42, type_code: "hardware" }
+      let cardDouble = { code: "01042", type_code: "hardware" }
 
       subject().installCard(runner, cardDouble)
 
-      expect(runner.hardware[0].cardCode).to.eq(42)
+      expect(runner.hardware[0].cardCode).to.eq("01042")
     })
 
     it ("installs a resource in the runner's resource area", function(){
-      let cardDouble = { code: 42, type_code: "resource" }
+      let cardDouble = { code: "01042", type_code: "resource" }
 
       subject().installCard(runner, cardDouble)
 
-      expect(runner.resources[0].cardCode).to.eq(42)
+      expect(runner.resources[0].cardCode).to.eq("01042")
     })
 
     it ("installs a rezzed agenda on a corp's new remote server", function(){
-      let cardDouble = { code: 42, type_code: "agenda" }
+      let cardDouble = { code: "01042", type_code: "agenda" }
 
       expect(corp.remoteServers.length).to.eq(0)
 
       subject().installCard(corp, cardDouble, { rezzed: true, serverId: "new-server" })
 
       expect(corp.remoteServers.length).to.eq(1)
-      expect(corp.remoteServers[0].cards[0].cardCode).to.eq(42)
+      expect(corp.remoteServers[0].cards[0].cardCode).to.eq("01042")
       expect(corp.remoteServers[0].cards[0].rezzed).to.eq(true)
     })
 
     it ("installs a unrezzed agenda on a corp's new remote server", function(){
-      let cardDouble = { code: 42, type_code: "agenda" }
+      let cardDouble = { code: "01042", type_code: "agenda" }
 
       expect(corp.remoteServers.length).to.eq(0)
 
       subject().installCard(corp, cardDouble, { rezzed: false, serverId: "new-server" })
 
       expect(corp.remoteServers.length).to.eq(1)
-      expect(corp.remoteServers[0].cards[0].cardCode).to.eq(42)
+      expect(corp.remoteServers[0].cards[0].cardCode).to.eq("01042")
       expect(corp.remoteServers[0].cards[0].rezzed).to.eq(false)
     })
 
     it ("installs a card on a corp's existing remote server", function(){
-      let cardDouble = { code: 42, type_code: "agenda" }
+      let cardDouble = { code: "01042", type_code: "agenda" }
 
       subject().installCard(corp, cardDouble, { rezzed: false, serverId: "new-server" })
 
@@ -193,23 +154,23 @@ describe("Actions.common", function() {
     })
 
     it ("installs a card on a corp's new remote server", function(){
-      let cardDouble = { code: 42, type_code: "ice" }
+      let cardDouble = { code: "01042", type_code: "ice" }
 
       subject().installCard(corp, cardDouble, { rezzed: false, serverId: "new-server" })
 
       expect(corp.remoteServers[0].ices.length).to.eq(1)
-      expect(corp.remoteServers[0].ices[0].cardCode).to.eq(42)
+      expect(corp.remoteServers[0].ices[0].cardCode).to.eq("01042")
     })
   })
 
   it ("Actions.common#removeFromHand removes a card from the player's hand", function(){
-    let cardDouble = { code: 2 }
+    let cardDouble = { code: "01002" }
 
-    expect(corp.hand).to.include(2)
+    expect(corp.hand).to.include("01002")
 
     subject().removeFromHand(corp, cardDouble)
 
-    expect(corp.hand).to.not.include(2)
+    expect(corp.hand).to.not.include("01002")
   })
 
   it ("Actions.common#isCorpCard returns true if it's a corp card", function(){
