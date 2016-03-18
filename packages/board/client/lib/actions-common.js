@@ -65,6 +65,10 @@ Actions.common = {
     target.discard.push(targetCollection.splice(targetIndex, 1)[0])
   },
 
+  returnToDeck (target, cards) {
+    target.deckCards.push.apply(target.deckCards, cards.splice(0, cards.length))
+  },
+
   receiveCredits (target, amount) {
     target.credits = target.credits + amount
   },

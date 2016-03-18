@@ -3608,3 +3608,4 @@ seedData(Cards, sanitizeCardValues([
   "imagesrc": "/bundles/netrunnerdbcards/images/cards/en/01113.png"
 }
 ]))
+

@@ -20,11 +20,9 @@ Actions.global = function(player) {
                !Actions.common.didMulligan(this[player])
       },
       perform() {
-        _.clone(this[player].hand).forEach((cardCode) => {
-          Actions.common.trashCard(this[player], this[player].hand, cardCode)
-        })
-
         Actions.common.acceptMulligan(this[player], true)
+        Actions.common.returnToDeck(this[player], this[player].hand)
+        Actions.common.shuffleDeck(this[player])
         Actions.common.drawCard(this[player], 5)
         Actions.common._updatePlayer(this[player])
       }

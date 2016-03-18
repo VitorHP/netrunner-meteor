@@ -29,3 +29,4 @@ Meteor.methods({
     Game.update(gameId, newGame);
   }
 });
+
