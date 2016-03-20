@@ -31,7 +31,8 @@ Package.onUse(function(api) {
     'kadira:flow-router',
     'reywood:publish-composite',
     'reactive-dict',
-    'reactive-var'
+    'reactive-var',
+    'ramda:ramda'
   ]
 
   api.use(packages);

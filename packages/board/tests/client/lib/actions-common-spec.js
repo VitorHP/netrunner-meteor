@@ -25,9 +25,9 @@ describe("Actions.common", function() {
   })
 
   it ("Actions.common#click reduces the target clicks by the amount specified", function() {
-    subject().click(runner, 2)
+    var click2 = subject().click(2)
 
-    expect(runner.clicks).to.equal(0)
+    expect(click2(runner).clicks).to.equal(0)
   })
 
   it ("Actions.common#receiveCredits increases the target credits by the amount specified", function() {

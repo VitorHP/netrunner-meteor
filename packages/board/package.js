@@ -57,6 +57,7 @@ Package.onTest(function(api) {
     'mike:mocha-package@0.5.7',
     'practicalmeteor:chai@2.1.0_1',
     'practicalmeteor:sinon@1.14.1_2',
+    'ramda:ramda',
     'netrunner:spawn',
     'netrunner:board',
   ]);

@@ -45,11 +45,9 @@ Actions.common = {
 
   //common
 
-  click (target, amount) {
-    if (amount > target.clicks) return false
-
-    return target.clicks = target.clicks - amount
-  },
+  click: R.curry((amount, target) => {
+    return R.assoc("clicks", amount - target.clicks, target)
+  }),
 
   drawCard (target, count=1) {
     if (target.deckCards.length === 0) return false
