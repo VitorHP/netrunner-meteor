@@ -49,12 +49,19 @@ Actions.common = {
     return R.assoc("clicks", amount - target.clicks, target)
   }),
 
-  drawCard (target, count=1) {
-    if (target.deckCards.length === 0) return false
+  drawCard (count=1, player) {
+    return [R.take(count, player.deckCards),
+            R.assoc('deckCards', R.drop(3, player.deckCards), player)]
+  },
 
-    target.deckCards.splice(0, count).forEach(function(cardCode) {
-      target.hand.push(cardCode)
-    })
+  addToHand (cards, player) {
+    return R.assoc('hand', R.concat(player.hand, cards), player)
+  },
+
+  drawIntoHand(amount, player) {
+    // debugger
+    //         R.compose(Actions.common.drawCard
+    // return R.apply(Actions.common.addToHand)((amount, player))
   },
 
   trashCard (target, targetCollection, cardCode) {

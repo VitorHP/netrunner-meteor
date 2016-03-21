@@ -13,15 +13,17 @@ describe("Actions.common", function() {
   }
 
   it ("Actions.common#drawCard removes a card from the deck and places it on the runner's hand", function() {
-    subject().drawCard(runner)
-
-    expect(runner.deckCards.length).to.equal(1)
+    expect(subject().drawCard(runner)).to.equal(1)
   })
 
   it ("Actions.common#drawCard removes [count] cards from the deck and places it on the runner's hand when [count is specified]", function() {
-    subject().drawCard(runner, 2)
+    let [cardsRemoved, player] = subject().drawCard(2, runner)
 
     expect(runner.deckCards.length).to.equal(0)
+  })
+
+  it ("Actions.common#drawIntoHand removes [count] cards from the deck and places it on the runner's hand when [count is specified]", function() {
+    expect(subject().drawIntoHand(2, runner)).to.equal(0)
   })
 
   it ("Actions.common#click reduces the target clicks by the amount specified", function() {

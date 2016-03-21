@@ -1,4 +1,6 @@
 Actions.global = function(player) {
+  let A = Actions.common
+
   return [
     {
       label: "Ready",

@@ -32,7 +32,7 @@ Package.onUse(function(api) {
     'reywood:publish-composite',
     'reactive-dict',
     'reactive-var',
-    'ramda:ramda'
+    'ramda:ramda@0.19.0'
   ]
 
   api.use(packages);
