@@ -1,3 +1,8 @@
+var deckCards = R.lensProp('deckCards')
+var hand      = R.lensProp('hand')
+var clicks    = R.lensProp('clicks')
+var credits   = R.lensProp('credits')
+
 Actions.common = {
   // DB
   _updateRunner (runner) {
@@ -45,23 +50,14 @@ Actions.common = {
 
   //common
 
-  click: R.curry((amount, target) => {
-    return R.assoc("clicks", amount - target.clicks, target)
-  }),
+  click (amount, player) {
+    return R.over(clicks, R.subtract(amount), player)
+  },
 
   drawCard (count=1, player) {
-    return [R.take(count, player.deckCards),
-            R.assoc('deckCards', R.drop(3, player.deckCards), player)]
-  },
+    let draw = R.view(deckCards, R.over(deckCards, R.take(count), player))
 
-  addToHand (cards, player) {
-    return R.assoc('hand', R.concat(player.hand, cards), player)
-  },
-
-  drawIntoHand(amount, player) {
-    // debugger
-    //         R.compose(Actions.common.drawCard
-    // return R.apply(Actions.common.addToHand)((amount, player))
+    return R.over(deckCards, R.drop(count), R.over(hand, R.concat(draw), player))
   },
 
   trashCard (target, targetCollection, cardCode) {
@@ -74,8 +70,8 @@ Actions.common = {
     target.deckCards.push.apply(target.deckCards, cards.splice(0, cards.length))
   },
 
-  receiveCredits (target, amount) {
-    target.credits = target.credits + amount
+  receiveCredits (amount, player) {
+    return R.over(credits, R.add(amount), player)
   },
 
   payCredits (target, amount) {

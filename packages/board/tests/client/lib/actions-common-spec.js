@@ -13,29 +13,23 @@ describe("Actions.common", function() {
   }
 
   it ("Actions.common#drawCard removes a card from the deck and places it on the runner's hand", function() {
-    expect(subject().drawCard(runner)).to.equal(1)
+    expect(subject().drawCard(2, runner).hand.length).to.equal(2)
   })
 
   it ("Actions.common#drawCard removes [count] cards from the deck and places it on the runner's hand when [count is specified]", function() {
-    let [cardsRemoved, player] = subject().drawCard(2, runner)
-
-    expect(runner.deckCards.length).to.equal(0)
-  })
-
-  it ("Actions.common#drawIntoHand removes [count] cards from the deck and places it on the runner's hand when [count is specified]", function() {
-    expect(subject().drawIntoHand(2, runner)).to.equal(0)
+    expect(subject().drawCard(2, runner).deckCards.length).to.equal(0)
   })
 
   it ("Actions.common#click reduces the target clicks by the amount specified", function() {
-    var click2 = subject().click(2)
+    expect(subject().click(2, runner).clicks).to.equal(0)
+  })
 
-    expect(click2(runner).clicks).to.equal(0)
+  it ("Actions.common#hasClicks returns true if the target clicks > 0", function() {
+    expect(subject().hasClicks(runner)).to.equal(true)
   })
 
   it ("Actions.common#receiveCredits increases the target credits by the amount specified", function() {
-    subject().receiveCredits(runner, 2)
-
-    expect(runner.credits).to.equal(3)
+    expect(subject().receiveCredits(2, runner).credits).to.equal(3)
   })
 
   describe("Actions.common#payCredits", function() {
