@@ -12,6 +12,16 @@ describe("Actions.common", function() {
     return Actions.common
   }
 
+  it ("Actions.common#click reduces the target clicks by the amount specified", function() {
+    expect(subject().click(2, runner).clicks).to.equal(0)
+  })
+
+  it ("Actions.common#hasClicks returns true if the target clicks > 0", function() {
+    runner = Spawn.create("Runner", { clicks: 1 })
+
+    expect(subject().hasClicks(runner)).to.equal(true)
+  })
+
   it ("Actions.common#drawCard removes a card from the deck and places it on the runner's hand", function() {
     expect(subject().drawCard(2, runner).hand.length).to.equal(2)
   })
@@ -20,12 +30,8 @@ describe("Actions.common", function() {
     expect(subject().drawCard(2, runner).deckCards.length).to.equal(0)
   })
 
-  it ("Actions.common#click reduces the target clicks by the amount specified", function() {
-    expect(subject().click(2, runner).clicks).to.equal(0)
-  })
-
-  it ("Actions.common#hasClicks returns true if the target clicks > 0", function() {
-    expect(subject().hasClicks(runner)).to.equal(true)
+  it ("Actions.common#trashFromHand discards a card from somewhere into the player's discard pile", function() {
+    subject().trashFromHand(corp, "01003")
   })
 
   it ("Actions.common#receiveCredits increases the target credits by the amount specified", function() {
@@ -34,14 +40,9 @@ describe("Actions.common", function() {
 
   describe("Actions.common#payCredits", function() {
     it ("decreases the target credits by the amount specified", function() {
-      subject().payCredits(runner, 1)
+      runner = Spawn.create("Runner", { credits: 2 })
 
-      expect(runner.credits).to.equal(0)
-    })
-
-    it ("returns false if the amount is higher than the targets credits", function() {
-
-      expect(subject().payCredits(runner, 2)).to.equal(false)
+      expect(subject().payCredits(2, runner).credits).to.equal(0)
     })
   })
 
@@ -50,12 +51,6 @@ describe("Actions.common", function() {
     expect(game.turnOwner).to.equal("runner")
     subject().shiftTurn(game)
     expect(game.turnOwner).to.equal("corp")
-  })
-
-  it ("Actions.common#trashCard discards a card from somewhere into the player's discard pile", function() {
-    subject().trashCard(corp, corp.hand, "01003")
-    expect(corp.hand).to.not.include("01003")
-    expect(corp.discard).to.include("01003")
   })
 
   it ("Actions.common#_updateRunner calls an update for the runner", function() {

@@ -2,6 +2,7 @@ var deckCards = R.lensProp('deckCards')
 var hand      = R.lensProp('hand')
 var clicks    = R.lensProp('clicks')
 var credits   = R.lensProp('credits')
+var discard   = R.lensProp('discard')
 
 Actions.common = {
   // DB
@@ -54,34 +55,35 @@ Actions.common = {
     return R.over(clicks, R.subtract(amount), player)
   },
 
+  hasClicks (player) {
+    return R.gt(R.view(clicks, player), 0)
+  },
+
   drawCard (count=1, player) {
     let draw = R.view(deckCards, R.over(deckCards, R.take(count), player))
 
     return R.over(deckCards, R.drop(count), R.over(hand, R.concat(draw), player))
   },
 
-  trashCard (target, targetCollection, cardCode) {
-    let targetIndex = targetCollection.indexOf(cardCode)
+  trashFromHand (player, cardCode) {
+    let targetIndex = R.indexOf(cardCode, R.view(hand, player))
+    let cardAtIndex = R.compose(hand, R.lensIndex(targetIndex))
 
-    target.discard.push(targetCollection.splice(targetIndex, 1)[0])
-  },
+    let discarded   = R.over(discard, R.append(R.view(cardAtIndex, player)), player)
 
-  returnToDeck (target, cards) {
-    target.deckCards.push.apply(target.deckCards, cards.splice(0, cards.length))
+    return R.over(hand, R.remove(targetIndex, 1), discarded)
   },
 
   receiveCredits (amount, player) {
     return R.over(credits, R.add(amount), player)
   },
 
-  payCredits (target, amount) {
-    if (amount > target.credits) return false
-
-    return target.credits = target.credits - amount
+  payCredits (amount, player) {
+    return R.over(credits, R.subtract(amount), player)
   },
 
-  hasClicks (target) {
-    return (target || {}).clicks > 0
+  returnToDeck (target, cards) {
+    target.deckCards.push.apply(target.deckCards, cards.splice(0, cards.length))
   },
 
   ready (player) {
