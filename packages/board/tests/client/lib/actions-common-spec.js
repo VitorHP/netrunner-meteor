@@ -83,10 +83,30 @@ describe("Actions.common", function() {
   })
 
   it ("Actions.common#shiftTurn changes the turn to the other player", function() {
-    subject().shiftTurn(game)
-    expect(game.turnOwner).to.equal("runner")
-    subject().shiftTurn(game)
-    expect(game.turnOwner).to.equal("corp")
+    game = Spawn.create("Game", { turnOwner: "corp" })
+    expect(subject().shiftTurn(game).turnOwner).to.equal("runner")
+
+    game = Spawn.create("Game", { turnOwner: "runner" })
+    expect(subject().shiftTurn(game).turnOwner).to.equal("corp")
+
+    game = Spawn.create("Game", { turnOwner: undefined })
+    expect(subject().shiftTurn(game).turnOwner).to.equal("corp")
+  })
+
+  it ("Actions.common#isTurnOwner returns true if is the turned owner", function() {
+    game = Spawn.create("Game", { turnOwner: "runner" })
+    expect(subject().isTurnOwner("runner", game)).to.equal(true)
+
+    game = Spawn.create("Game", { turnOwner: "corp" })
+    expect(subject().isTurnOwner("corp", game)).to.equal(true)
+  })
+
+  it ("Actions.common#shuffleDeck shuffles the player deck", function() {
+    spies.create('shuffle', _, 'shuffle')
+
+    subject().shuffleDeck(runner)
+
+    expect(spies.shuffle).to.have.been.calledWith()
   })
 
   it ("Actions.common#_updateRunner calls an update for the runner", function() {

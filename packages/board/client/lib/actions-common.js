@@ -5,6 +5,7 @@ var credits   = R.lensProp('credits')
 var discard   = R.lensProp('discard')
 var ready     = R.lensProp('ready')
 var mulligan  = R.lensProp('mulligan')
+var turnOwner = R.lensProp('turnOwner')
 
 Actions.common = {
   // DB
@@ -106,18 +107,22 @@ Actions.common = {
 
   // Game
 
-  shiftTurn (target) {
-    target.turnOwner = target.turnOwner == "corp" ? "runner" : "corp"
+  shiftTurn (game) {
+    let nextTurnOwner = R.view(turnOwner, (game || {})) == "corp" ? "runner" : "corp"
+
+    return R.set(turnOwner, nextTurnOwner, game)
   },
 
-  isTurnOwner (game, player) {
-    (player || {}).side_code === (game || {}).turnOwner
+  isTurnOwner (player, game) {
+    return R.view(turnOwner, (game || {})) === player
   },
 
   // Deck
 
-  shuffleDeck (target) {
-    target.deckCards = _.shuffle(target.deckCards)
+  shuffleDeck (player) {
+    let shuffle = _.shuffle
+
+    return R.over(deckCards, shuffle, player)
   },
 
   // Cards
