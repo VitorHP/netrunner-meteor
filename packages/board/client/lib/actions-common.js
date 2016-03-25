@@ -3,6 +3,8 @@ var hand      = R.lensProp('hand')
 var clicks    = R.lensProp('clicks')
 var credits   = R.lensProp('credits')
 var discard   = R.lensProp('discard')
+var ready     = R.lensProp('ready')
+var mulligan  = R.lensProp('mulligan')
 
 Actions.common = {
   // DB
@@ -82,24 +84,24 @@ Actions.common = {
     return R.over(credits, R.subtract(amount), player)
   },
 
-  returnToDeck (target, cards) {
-    target.deckCards.push.apply(target.deckCards, cards.splice(0, cards.length))
+  returnToDeck (cards, player) {
+    return R.over(deckCards, R.concat(cards), player)
   },
 
   ready (player) {
-    return player.ready = true
+    return R.set(ready, true, player)
   },
 
   isReady (player) {
-    return (player || {}).ready === true
+    return R.view(ready, (player || {})) === true
   },
 
-  acceptMulligan (player, accepted) {
-    player.mulligan = accepted
+  acceptMulligan (accepted, player) {
+    return R.set(mulligan, accepted, player)
   },
 
   didMulligan (player) {
-    return (player || {}).mulligan !== undefined
+    return R.view(mulligan, (player || {})) !== undefined
   },
 
   // Game

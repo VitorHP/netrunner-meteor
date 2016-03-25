@@ -31,7 +31,9 @@ describe("Actions.common", function() {
   })
 
   it ("Actions.common#trashFromHand discards a card from somewhere into the player's discard pile", function() {
-    subject().trashFromHand(corp, "01003")
+    corp = Spawn.create("Corp", { hand: ["01003"] })
+
+    expect(subject().trashFromHand(corp, "01003").hand).to.not.include("01003")
   })
 
   it ("Actions.common#receiveCredits increases the target credits by the amount specified", function() {
@@ -44,6 +46,40 @@ describe("Actions.common", function() {
 
       expect(subject().payCredits(2, runner).credits).to.equal(0)
     })
+  })
+
+  it ("Actions.common#returnToDeck returns the passed card to the player's deck", function() {
+    let cards = ["02001"]
+
+    expect(subject().returnToDeck(cards, runner).deckCards).to.include("02001")
+  })
+
+  it ("Actions.common#ready sets the player as ready", function() {
+    corp = Spawn.create("Corp", { ready: false })
+
+    expect(subject().ready(corp).ready).to.eq(true)
+  })
+
+  it ("Actions.common#isReady returns true if the player is ready", function() {
+    corp = Spawn.create("Corp", { ready: true })
+    expect(subject().isReady(corp)).to.eq(true)
+
+    corp = undefined
+    expect(subject().isReady(corp)).to.eq(false)
+  })
+
+  it ("Actions.common#acceptMulligan sets the player mulligan", function() {
+    corp = Spawn.create("Corp", { mulligan: false })
+
+    expect(subject().acceptMulligan(true, corp).mulligan).to.eq(true)
+  })
+
+  it ("Actions.common#didMulligan returns true if the player accepted a mulligan", function() {
+    corp = Spawn.create("Corp", { mulligan: false })
+    expect(subject().didMulligan(corp)).to.eq(true)
+
+    corp = undefined
+    expect(subject().didMulligan(corp)).to.eq(false)
   })
 
   it ("Actions.common#shiftTurn changes the turn to the other player", function() {
