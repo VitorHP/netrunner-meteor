@@ -66,14 +66,14 @@ Actions.common = {
   },
 
   hasClicks (player) {
-    return R.gt(R.view(clicks, player), 0)
+    return R.gt(R.view(clicks, (player || {})), 0)
   },
 
-  drawCard (count=1, player) {
+  drawCard: R.curry((count=1, player) => {
     let draw = R.view(deckCards, R.over(deckCards, R.take(count), player))
 
     return R.over(deckCards, R.drop(count), R.over(hand, R.concat(draw), player))
-  },
+  }),
 
   trashFromHand (player, cardCode) {
     let targetIndex = R.indexOf(cardCode, R.view(hand, player))
