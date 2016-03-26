@@ -3,23 +3,23 @@ Corp = new Mongo.Collection('corp');
 
 Corp.schema = new SimpleSchema({
   _id: { type: String },
-  deckId: { type: String },
-  backgroundImgSrc: { type: String, defaultValue: "/images/cards/corp-background.png" },
+  deck_id: { type: String },
+  background_img_src: { type: String, defaultValue: "/images/cards/corp-background.png" },
   clicks: { type: Number, defaultValue: 0 },
   credits: { type: Number, defaultValue: 0 },
-  deckCards: { type: [String], defaultValue: [] },
+  deck_cards: { type: [String], defaultValue: [] },
   discard: { type: [String], defaultValue: [] },
-  identityCardCode: { type: String, defaultValue: 0 },
+  identity_card_code: { type: String, defaultValue: 0 },
   hand: { type: [String] },
   side_code: { type: String },
   mulligan: { type: Boolean, optional: true },
   ready: { type: Boolean, defaultValue: null },
-  "remoteServers.$.serverId": { type: Number },
+  "remoteServers.$.server_id": { type: Number },
   "remoteServers.$.cards": { type: [Object] },
-  "remoteServers.$.cards.$.cardCode": { type: String },
+  "remoteServers.$.cards.$.card_code": { type: String },
   "remoteServers.$.cards.$.rezzed": { type: Boolean },
   "remoteServers.$.ices": { type: [Object] },
-  "remoteServers.$.ices.$.cardCode": { type: String },
+  "remoteServers.$.ices.$.card_code": { type: String },
   "remoteServers.$.ices.$.rezzed": { type: Boolean }
 })
 
@@ -27,7 +27,7 @@ var _corpHelpers = {
   remoteServersCards() {
     let serverCard = function(serverCard){ 
       return {
-        card: Cards.findOne({ 'code': serverCard.cardCode }),
+        card: Cards.findOne({ 'code': serverCard.card_code }),
         rezzed: serverCard.rezzed
       }
     }

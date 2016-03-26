@@ -4,8 +4,8 @@ Template.corpArea.helpers({
     return ActionFactory.corpActions(Template.instance().data)
   },
 
-  active (turnOwner) {
-    return turnOwner == "corp" ? "corp-area--active" : ""
+  active (turn_owner) {
+    return turn_owner == "corp" ? "corp-area--active" : ""
   }
 
 })

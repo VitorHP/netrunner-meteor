@@ -27,7 +27,7 @@ Actions.hand = function() {
 
             Actions.common.removeFromHand(_this.player, _this.card)
             //TODO: comparison with == can maybe lead to problems later?
-            Actions.common.installCard(_this.player, _this.card, { rezzed: Boolean(rezzed) == true, serverId: server })
+            Actions.common.installCard(_this.player, _this.card, { rezzed: Boolean(rezzed) == true, server_id: server })
             Actions.common._updatePlayer(_this.player)
           })
       }

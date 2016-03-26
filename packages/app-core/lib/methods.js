@@ -1,22 +1,22 @@
 Meteor.methods({
-  'Runner.methods.update'({ runnerId, newRunner }) {
+  'Runner.methods.update'({ runner_id, newRunner }) {
 
-    new SimpleSchema({ runnerId: { type: String } }).validate({runnerId});
+    new SimpleSchema({ runner_id: { type: String } }).validate({runner_id});
     Runner.schema.validate(newRunner)
 
-    const runner = Runner.findOne(runnerId);
+    const runner = Runner.findOne(runner_id);
 
-    Runner.update(runnerId, newRunner);
+    Runner.update(runner_id, newRunner);
   },
 
-  'Corp.methods.update'({ corpId, newCorp }) {
+  'Corp.methods.update'({ corp_id, newCorp }) {
 
-    new SimpleSchema({ corpId: { type: String } }).validate({corpId});
+    new SimpleSchema({ corp_id: { type: String } }).validate({corp_id});
     Corp.schema.validate(newCorp)
 
-    const corp = Corp.findOne(corpId);
+    const corp = Corp.findOne(corp_id);
 
-    Corp.update(corpId, newCorp);
+    Corp.update(corp_id, newCorp);
   },
 
   'Game.methods.update'({ gameId, newGame }) {

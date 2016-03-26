@@ -3,8 +3,8 @@ Template.runnerArea.helpers({
     return ActionFactory.runnerActions(Template.instance().data)
   },
 
-  active (turnOwner) {
-    return turnOwner == "runner" ? "runner-area--active" : ""
+  active (turn_owner) {
+    return turn_owner == "runner" ? "runner-area--active" : ""
   }
 })
 

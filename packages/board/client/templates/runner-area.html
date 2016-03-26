@@ -1,13 +1,13 @@
 <template name="runnerArea">
   <div class="row">
     <div class="col-md-12">
-      <div class="runner-area {{active(game.turnOwner)}} row">
+      <div class="runner-area {{active(game.turn_owner)}} row">
         <div class="col-md-6">
           <div class="row">
             <div class="heap col-md-4">
             </div>
             <div class="stack col-md-4">
-              {{> deck size=runner.deckSize background=runner.backgroundImgSrc }}
+              {{> deck size=runner.deckSize background=runner.background_img_src }}
             </div>
             <div class="identity col-md-4">
               {{> card card=runner.identity}}

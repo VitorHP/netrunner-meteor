@@ -2,7 +2,7 @@
 <template name="corpArea">
   <div class="row">
     <div class="col-md-12">
-      <div class="corp-area {{active(game.turnOwner)}} row">
+      <div class="corp-area {{active(game.turn_owner)}} row">
         <div class="remote-servers col-md-6">
           {{#each server in corp.remoteServersCards }}
             {{> remoteServer server=server }}
@@ -21,7 +21,7 @@
             </div>
             <div class="col-md-4">
               <div class="rnd">
-                {{> deck size=corp.deckSize background=corp.backgroundImgSrc }}
+                {{> deck size=corp.deckSize background=corp.background_img_src }}
               </div>
               <div class="root">
               </div>

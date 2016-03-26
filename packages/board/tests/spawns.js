@@ -1,15 +1,15 @@
 Spawn.register("Runner", {
   "_id" : "7MGuiovynhY2TgsbJ",
-  "deckId" : "sfHfp6WobMieubfYZ",
-  "backgroundImgSrc" : "images/cards/background.png",
+  "deck_id" : "sfHfp6WobMieubfYZ",
+  "background_img_src" : "images/cards/background.png",
   "clicks" : 2,
   "credits" : 1,
-  "deckCards" : ["01002", "01003"],
+  "deck_cards" : ["01002", "01003"],
   "discard" : [],
   "hand" : [],
   "side_code" : "runner",
   "ready" : false,
-  "identityCardCode" : "01001",
+  "identity_card_code" : "01001",
   "programs" : [],
   "hardware" : [],
   "resources" : []
@@ -17,24 +17,24 @@ Spawn.register("Runner", {
 
 Spawn.register("Corp", {
   "_id" : "7MGuiovynhY2TgsbJ",
-  "deckId" : "sfHfp6WobMieubfYZ",
-  "backgroundImgSrc" : "images/cards/corp-background.png",
+  "deck_id" : "sfHfp6WobMieubfYZ",
+  "background_img_src" : "images/cards/corp-background.png",
   "clicks" : 2,
   "credits" : 1,
-  "deckCards" : [],
+  "deck_cards" : [],
   "discard" : [],
   "hand" : ["01002", "01003"],
   "side_code" : "corp",
   "ready" : false,
-  "identityCardCode" : "01001",
+  "identity_card_code" : "01001",
   "remoteServers" : []
 })
 
 Spawn.register("Game", {
   "_id" : "7MGuiovynhY2TgsbJ",
-  "runnerId" : "7MGuiovynhY2TgsbJ",
-  "corpId" : "7MGuiovynhY2TgsbJ",
-  "turnOwner" : "corp"
+  "runner_id" : "7MGuiovynhY2TgsbJ",
+  "corp_id" : "7MGuiovynhY2TgsbJ",
+  "turn_owner" : "corp"
 })
 
 Spawn.register("Card", {

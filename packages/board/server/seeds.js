@@ -12,9 +12,9 @@ function seedData(collection, data) {
 
 seedData(Game, [{
   "_id" : "7MGuiovynhY2TgsbJ",
-  "runnerId" : "7MGuiovynhY2TgsbJ",
-  "corpId" : "7MGuiovynhY2TgsbJ",
-  "turnOwner" : "corp"
+  "runner_id" : "7MGuiovynhY2TgsbJ",
+  "corp_id" : "7MGuiovynhY2TgsbJ",
+  "turn_owner" : "corp"
 }])
 
 // Decks
@@ -22,7 +22,7 @@ seedData(Game, [{
 seedData(Decks, [{
     "_id" : "sfHfp6WobMieubfYZ",
     "name" : "Haas Bioroid",
-    "identityCardCode" : "01054",
+    "identity_card_code" : "01054",
     "cards" : {
       "01054": 1,
       "01055": 3,
@@ -50,7 +50,7 @@ seedData(Decks, [{
   }, {
     "_id" : "56d1aef3d330b6eba537beaa",
     "name" : "Noise",
-    "identityCardCode" : "01001",
+    "identity_card_code" : "01001",
     "cards" : {
       "01001": 1,
       "01002": 2,
@@ -81,17 +81,17 @@ seedData(Decks, [{
 // Runner
 
 seedData(Runner, [{
-  "_id" : "7MGuiovynhY2TgsbJ",
-  "deckId" : "56d1aef3d330b6eba537beaa",
-  "backgroundImgSrc" : "images/cards/runner-background.png",
+    "_id" : "7MGuiovynhY2TgsbJ",
+    "deck_id" : "56d1aef3d330b6eba537beaa",
+  "background_img_src" : "images/cards/runner-background.png",
   "clicks" : 0,
   "credits" : 0,
-  "deckCards" : ["01002", "01002", "01003", "01003", "01003", "01005", "01005", "01005", "01006", "01007", "01007", "01008", "01008", "01010", "01010", "01011", "01011", "01012", "01012", "01012", "01013", "01013", "01014", "01014", "01015", "01016", "01019", "01019", "01019", "01022", "01022", "01036", "01036", "01040", "01040", "01049", "01049", "01049", "01050", "01050", "01050", "01051", "01051", "01051", "01053", "01053", "01053"],
+  "deck_cards" : ["01002", "01002", "01003", "01003", "01003", "01005", "01005", "01005", "01006", "01007", "01007", "01008", "01008", "01010", "01010", "01011", "01011", "01012", "01012", "01012", "01013", "01013", "01014", "01014", "01015", "01016", "01019", "01019", "01019", "01022", "01022", "01036", "01036", "01040", "01040", "01049", "01049", "01049", "01050", "01050", "01050", "01051", "01051", "01051", "01053", "01053", "01053"],
   "discard" : [],
   "hand" : [],
   "side_code" : "runner",
   "ready" : false,
-  "identityCardCode" : '01001',
+  "identity_card_code" : '01001',
   "programs" : [],
   "hardware" : [],
   "resources" : []
@@ -101,16 +101,16 @@ seedData(Runner, [{
 
 seedData(Corp, [{
   "_id" : "7MGuiovynhY2TgsbJ",
-  "deckId" : "sfHfp6WobMieubfYZ",
-  "backgroundImgSrc" : "images/cards/corp-background.png",
+  "deck_id" : "sfHfp6WobMieubfYZ",
+  "background_img_src" : "images/cards/corp-background.png",
   "clicks" : 0,
   "credits" : 0,
-  "deckCards" : ["01054", "01055", "01055", "01055", "01056", "01056", "01056", "01057", "01057", "01058", "01058", "01059", "01059", "01059", "01060", "01060", "01061", "01061", "01062", "01062", "01062", "01063", "01063", "01064", "01064", "01065", "01066", "01066", "01106", "01106", "01106", "01107", "01107", "01107", "01108", "01108", "01109", "01109", "01109", "01110", "01110", "01110", "01111", "01111", "01111", "01112", "01112", "01113", "01113", "01113"],
+  "deck_cards" : ["01054", "01055", "01055", "01055", "01056", "01056", "01056", "01057", "01057", "01058", "01058", "01059", "01059", "01059", "01060", "01060", "01061", "01061", "01062", "01062", "01062", "01063", "01063", "01064", "01064", "01065", "01066", "01066", "01106", "01106", "01106", "01107", "01107", "01107", "01108", "01108", "01109", "01109", "01109", "01110", "01110", "01110", "01111", "01111", "01111", "01112", "01112", "01113", "01113", "01113"],
   "discard" : [],
   "hand" : [],
   "side_code" : "corp",
   "ready" : false,
-  "identityCardCode" : "01054",
+  "identity_card_code" : "01054",
   "remoteServers" : []
 }])
 
@@ -118,10 +118,10 @@ seedData(Corp, [{
 
 function sanitizeCardValues(cards) {
   let standardizedProperties = {
-    "influencelimit" : "influence_limit",
+    "influencelimit"  : "influence_limit",
     "minimumdecksize" : "minimum_deck_size",
-    "setname" : "set_name",
-    "cyclenumber" : "cycle_number",
+    "setname"         : "set_name",
+    "cyclenumber"     : "cycle_number",
   }
 
   let unusedProperties = [

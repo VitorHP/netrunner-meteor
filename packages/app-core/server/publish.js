@@ -1,9 +1,9 @@
 
-function deckCardCodesList (deckCards) {
-  return Object.keys(deckCards).reduce(function(cardCodes, cardCode){
-    cardCodes = cardCodes.concat(new Array(deckCards[cardCode]).fill(cardCode))
+function deckCardCodesList (deck_cards) {
+  return Object.keys(deck_cards).reduce(function(card_codes, card_code){
+    card_codes = card_codes.concat(new Array(deck_cards[card_code]).fill(card_code))
 
-    return cardCodes
+    return card_codes
   }, [])
 }
 
@@ -15,24 +15,24 @@ Meteor.publishComposite('Game.game', function(deckName){
     },
     children: [{
       find (game) {
-        return Corp.find({ _id: game.corpId })
+        return Corp.find({ _id: game.corp_id })
       },
       children: [{
         find(corp) {
-          let cardCodes = Object.keys(Decks.findOne(corp.deckId).cards)
+          let card_codes = Object.keys(Decks.findOne(corp.deck_id).cards)
 
-          return Cards.find({ code: { "$in": cardCodes } })
+          return Cards.find({ code: { "$in": card_codes } })
         }
       }]
     },{
       find (game) {
-        return Runner.find({ _id: game.runnerId })
+        return Runner.find({ _id: game.runner_id })
       },
       children: [{
         find(runner) {
-          let cardCodes = Object.keys(Decks.findOne(runner.deckId).cards)
+          let card_codes = Object.keys(Decks.findOne(runner.deck_id).cards)
 
-          return Cards.find({ code: { "$in": cardCodes } })
+          return Cards.find({ code: { "$in": card_codes } })
         }
       }]
     }]

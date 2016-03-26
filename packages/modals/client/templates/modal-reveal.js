@@ -1,7 +1,7 @@
 function wrapCards(cards, cardsToReveal) {
   return cards.map(function(c){
     return {
-      cardCode: c.code,
+      card_code: c.code,
       revealed: cards.length <= cardsToReveal
     }
   })
@@ -10,7 +10,7 @@ function wrapCards(cards, cardsToReveal) {
 function unwrapCards(wrappedCards, cards) {
   return wrappedCards.map(function(wc){
     return {
-      card: cards.find(function(c){ return c.code == wc.cardCode }),
+      card: cards.find(function(c){ return c.code == wc.card_code }),
       revealed: wc.revealed
     }
   })

@@ -1,16 +1,16 @@
-var deckCards     = R.lensProp('deckCards')
+var deckCards     = R.lensProp('deck_cards')
 var hand          = R.lensProp('hand')
 var clicks        = R.lensProp('clicks')
 var credits       = R.lensProp('credits')
 var discard       = R.lensProp('discard')
 var ready         = R.lensProp('ready')
 var mulligan      = R.lensProp('mulligan')
-var turnOwner     = R.lensProp('turnOwner')
+var turnOwner     = R.lensProp('turn_owner')
 var programs      = R.lensProp('programs')
 var hardware      = R.lensProp('hardware')
 var resources     = R.lensProp('resources')
 var remoteServers = R.lensProp('remoteServers')
-var cardCode      = R.lensProp('cardCode')
+var cardCode      = R.lensProp('card_code')
 var cards         = R.lensProp('cards')
 var ices          = R.lensProp('ices')
 
@@ -18,7 +18,7 @@ Actions.common = {
   // DB
   _updateRunner (runner) {
     return Meteor.call('Runner.methods.update', {
-      runnerId: runner._id,
+      runner_id: runner._id,
       newRunner: runner
     }, (err, res) => {
       if (err) {
@@ -31,7 +31,7 @@ Actions.common = {
 
   _updateCorp (corp) {
     return Meteor.call('Corp.methods.update', {
-      corpId: corp._id,
+      corp_id: corp._id,
       newCorp: corp
     }, (err, res) => {
       if (err) {
@@ -156,28 +156,28 @@ Actions.common = {
 
   _findOrInitializeServer(player, options) {
     let server = R.compose(remoteServers, 
-                           R.lensIndex(options.serverId))
+                           R.lensIndex(options.server_id))
 
     return R.view(server, player) !== undefined ?
       player :
-      R.over(remoteServers, R.append({ serverId: options.serverId,
+      R.over(remoteServers, R.append({ server_id: options.server_id,
                                        cards:    [],
                                        ices:     [] }), player)
   },
 
   _installCorpCard: R.curry((lens, card, player, options) => {
     let target = R.compose(remoteServers,
-                           R.lensIndex(options.serverId),
+                           R.lensIndex(options.server_id),
                            lens)
 
     return R.over(target, R.append({
-             cardCode: card.code,
+             card_code: card.code,
              rezzed: options.rezzed
            }), Actions.common._findOrInitializeServer(player, options))
   }),
 
   _installRunnerCard: R.curry((lens, card, player) => {
-    return R.over(lens, R.append({ cardCode: card.code }), player)
+    return R.over(lens, R.append({ card_code: card.code }), player)
   }),
 
   installCard(player, card, options) {
