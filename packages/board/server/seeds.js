@@ -111,7 +111,7 @@ seedData(Corp, [{
   "side_code" : "corp",
   "ready" : false,
   "identity_card_code" : "01054",
-  "remoteServers" : []
+  "remote_servers" : []
 }])
 
 // Cards

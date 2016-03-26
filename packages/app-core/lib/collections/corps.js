@@ -14,13 +14,13 @@ Corp.schema = new SimpleSchema({
   side_code: { type: String },
   mulligan: { type: Boolean, optional: true },
   ready: { type: Boolean, defaultValue: null },
-  "remoteServers.$.server_id": { type: Number },
-  "remoteServers.$.cards": { type: [Object] },
-  "remoteServers.$.cards.$.card_code": { type: String },
-  "remoteServers.$.cards.$.rezzed": { type: Boolean },
-  "remoteServers.$.ices": { type: [Object] },
-  "remoteServers.$.ices.$.card_code": { type: String },
-  "remoteServers.$.ices.$.rezzed": { type: Boolean }
+  "remote_servers.$.server_id": { type: Number },
+  "remote_servers.$.cards": { type: [Object] },
+  "remote_servers.$.cards.$.card_code": { type: String },
+  "remote_servers.$.cards.$.rezzed": { type: Boolean },
+  "remote_servers.$.ices": { type: [Object] },
+  "remote_servers.$.ices.$.card_code": { type: String },
+  "remote_servers.$.ices.$.rezzed": { type: Boolean }
 })
 
 var _corpHelpers = {
@@ -32,7 +32,7 @@ var _corpHelpers = {
       }
     }
 
-    return this.remoteServers.reduce((memo, server) => {
+    return this.remote_servers.reduce((memo, server) => {
       memo.push({
         ices: server.ices.map(serverCard),
         cards: server.cards.map(serverCard)

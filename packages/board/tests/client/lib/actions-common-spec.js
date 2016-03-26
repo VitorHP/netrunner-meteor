@@ -188,37 +188,37 @@ describe("Actions.common", function() {
     it ("installs a rezzed agenda on a corp's new remote server", function(){
       let cardDouble = { code: "01042", type_code: "agenda" }
 
-      expect(corp.remoteServers.length).to.eq(0)
+      expect(corp.remote_servers.length).to.eq(0)
 
       let res = subject().installCard(corp, cardDouble, { rezzed: true, server_id: 0 })
 
-      expect(res.remoteServers.length).to.eq(1)
-      expect(res.remoteServers[0].cards[0].card_code).to.eq("01042")
-      expect(res.remoteServers[0].cards[0].rezzed).to.eq(true)
+      expect(res.remote_servers.length).to.eq(1)
+      expect(res.remote_servers[0].cards[0].card_code).to.eq("01042")
+      expect(res.remote_servers[0].cards[0].rezzed).to.eq(true)
     })
 
     it ("installs a unrezzed agenda on a corp's new remote server", function(){
       let cardDouble = { code: "01042", type_code: "agenda" }
 
-      expect(corp.remoteServers.length).to.eq(0)
+      expect(corp.remote_servers.length).to.eq(0)
 
       let res = subject().installCard(corp, cardDouble, { rezzed: false, server_id: 0 })
 
-      expect(res.remoteServers.length).to.eq(1)
-      expect(res.remoteServers[0].cards[0].card_code).to.eq("01042")
-      expect(res.remoteServers[0].cards[0].rezzed).to.eq(false)
+      expect(res.remote_servers.length).to.eq(1)
+      expect(res.remote_servers[0].cards[0].card_code).to.eq("01042")
+      expect(res.remote_servers[0].cards[0].rezzed).to.eq(false)
     })
 
     it ("installs an ice on a corp's existing remote server", function(){
-      let corp = Spawn.create("Corp", { remoteServers: [{ server_id: 0, cards: [], ices: [] }] })
+      let corp = Spawn.create("Corp", { remote_servers: [{ server_id: 0, cards: [], ices: [] }] })
       let cardDouble = { code: "01042", type_code: "agenda" }
 
-      expect(corp.remoteServers.length).to.eq(1)
+      expect(corp.remote_servers.length).to.eq(1)
 
       let res = subject().installCard(corp, cardDouble, { rezzed: true, server_id: 0 })
 
-      expect(res.remoteServers.length).to.eq(1)
-      expect(res.remoteServers[0].cards.length).to.eq(1)
+      expect(res.remote_servers.length).to.eq(1)
+      expect(res.remote_servers[0].cards.length).to.eq(1)
     })
 
     it ("installs an ice on a corp's new remote server", function(){
@@ -226,8 +226,8 @@ describe("Actions.common", function() {
 
       let res = subject().installCard(corp, cardDouble, { rezzed: true, server_id: 0 })
 
-      expect(res.remoteServers[0].ices.length).to.eq(1)
-      expect(res.remoteServers[0].ices[0].card_code).to.eq("01042")
+      expect(res.remote_servers[0].ices.length).to.eq(1)
+      expect(res.remote_servers[0].ices[0].card_code).to.eq("01042")
     })
   })
 

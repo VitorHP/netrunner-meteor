@@ -15,6 +15,7 @@ Package.onUse(function(api) {
   api.use([
     'netrunner:app-lib'
   ]);
+
   api.addFiles([
     'app-core.js',
     'lib/methods.js',

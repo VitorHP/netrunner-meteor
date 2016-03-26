@@ -14,7 +14,7 @@ Actions.hand = function() {
           .then( function(data) {
             rezzed = data
 
-            serverChoices = _this.player.remoteServers.reduce(function(memo, server, index) {
+            serverChoices = _this.player.remote_servers.reduce(function(memo, server, index) {
               memo.push({ label: "Server #" + index, value: index })
 
               return memo

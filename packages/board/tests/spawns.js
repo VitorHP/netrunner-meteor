@@ -27,7 +27,7 @@ Spawn.register("Corp", {
   "side_code" : "corp",
   "ready" : false,
   "identity_card_code" : "01001",
-  "remoteServers" : []
+  "remote_servers" : []
 })
 
 Spawn.register("Game", {
