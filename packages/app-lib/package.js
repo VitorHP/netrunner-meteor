@@ -38,7 +38,14 @@ Package.onUse(function(api) {
   api.use(packages);
   api.imply(packages);
 
-  api.addFiles('app-lib.js');
+  api.addFiles([
+    'lib/assoc.js',
+    'lib/lens-prop.js',
+    'app-lib.js'
+  ]);
+
+  api.export(['lensProp', 'assoc'])
+
 });
 
 Package.onTest(function(api) {
