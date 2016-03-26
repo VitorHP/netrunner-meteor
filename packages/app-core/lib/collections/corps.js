@@ -43,4 +43,4 @@ var _corpHelpers = {
   }
 }
 
-Corp.helpers(_.extend(Players.commonHelpers, _corpHelpers))
+Corp.helpers(R.merge(Players.commonHelpers, _corpHelpers))

@@ -40,4 +40,4 @@ var _runnerHelpers = {
   }
 }
 
-Runner.helpers(_.extend(Players.commonHelpers, _runnerHelpers))
+Runner.helpers(R.merge(Players.commonHelpers, _runnerHelpers))
