@@ -1,11 +1,18 @@
-var deckCards = R.lensProp('deckCards')
-var hand      = R.lensProp('hand')
-var clicks    = R.lensProp('clicks')
-var credits   = R.lensProp('credits')
-var discard   = R.lensProp('discard')
-var ready     = R.lensProp('ready')
-var mulligan  = R.lensProp('mulligan')
-var turnOwner = R.lensProp('turnOwner')
+var deckCards     = R.lensProp('deckCards')
+var hand          = R.lensProp('hand')
+var clicks        = R.lensProp('clicks')
+var credits       = R.lensProp('credits')
+var discard       = R.lensProp('discard')
+var ready         = R.lensProp('ready')
+var mulligan      = R.lensProp('mulligan')
+var turnOwner     = R.lensProp('turnOwner')
+var programs      = R.lensProp('programs')
+var hardware      = R.lensProp('hardware')
+var resources     = R.lensProp('resources')
+var remoteServers = R.lensProp('remoteServers')
+var cardCode      = R.lensProp('cardCode')
+var cards         = R.lensProp('cards')
+var ices          = R.lensProp('ices')
 
 Actions.common = {
   // DB
@@ -105,6 +112,12 @@ Actions.common = {
     return R.view(mulligan, (player || {})) !== undefined
   },
 
+  removeFromHand(player, card) {
+    let cardIndex = player.hand.indexOf(card.code)
+
+    return player.hand.splice(cardIndex, 1)
+  },
+
   // Game
 
   shiftTurn (game) {
@@ -141,67 +154,44 @@ Actions.common = {
     return !Actions.common.isCorpCard(card)
   },
 
-  _installProgram(player, card) {
-    player.programs.push({
-      cardCode: card.code
-    })
-  },
-
-  _installHardware(player, card) {
-    player.hardware.push({
-      cardCode: card.code
-    })
-  },
-
-  _installResource(player, card) {
-    player.resources.push({
-      cardCode: card.code
-    })
-  },
-
   _findOrInitializeServer(player, options) {
-    //TODO: Comparison with == can maybe lead to problems later?
-    let server = player.remoteServers.find(function(s) { return s.serverId == options.serverId })
+    let server = R.compose(remoteServers, 
+                           R.lensIndex(options.serverId))
 
-    if (server)
-      return server
-
-    player.remoteServers.push({ serverId: player.remoteServers.length, cards: [], ices: [] })
-
-    return player.remoteServers[player.remoteServers.length - 1]
+    return R.view(server, player) !== undefined ?
+      player :
+      R.over(remoteServers, R.append({ serverId: options.serverId,
+                                       cards:    [],
+                                       ices:     [] }), player)
   },
 
-  _installAgenda(player, card, options) {
-    Actions.common._findOrInitializeServer(player, options).cards.push({
-      cardCode: card.code,
-      rezzed: options.rezzed
-    })
-  },
+  _installCorpCard: R.curry((lens, card, player, options) => {
+    let target = R.compose(remoteServers,
+                           R.lensIndex(options.serverId),
+                           lens)
 
-  _installIce(player, card, options) {
-    Actions.common._findOrInitializeServer(player, options).ices.push({
-      cardCode: card.code,
-      rezzed: options.rezzed
-    })
-  },
+    return R.over(target, R.append({
+             cardCode: card.code,
+             rezzed: options.rezzed
+           }), Actions.common._findOrInitializeServer(player, options))
+  }),
+
+  _installRunnerCard: R.curry((lens, card, player) => {
+    return R.over(lens, R.append({ cardCode: card.code }), player)
+  }),
 
   installCard(player, card, options) {
     let fns = {
-      program: Actions.common._installProgram,
-      hardware: Actions.common._installHardware,
-      resource: Actions.common._installResource,
+      program:  Actions.common._installRunnerCard(programs),
+      hardware: Actions.common._installRunnerCard(hardware),
+      resource: Actions.common._installRunnerCard(resources),
 
-      agenda: Actions.common._installAgenda,
-      ice: Actions.common._installIce
+      agenda:   Actions.common._installCorpCard(cards),
+      ice:      Actions.common._installCorpCard(ices)
     }
 
-    fns[card.type_code](player, card, options)
+    return fns[card.type_code](card, player, options)
   },
 
-  removeFromHand(player, card) {
-    let cardIndex = player.hand.indexOf(card.code)
-
-    return player.hand.splice(cardIndex, 1)
-  }
 }
 
