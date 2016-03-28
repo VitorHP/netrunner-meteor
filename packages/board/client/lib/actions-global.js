@@ -29,13 +29,19 @@ Actions.global = function(player) {
                !A.didMulligan(this[player])
       },
       perform() {
-        A.acceptMulligan(this[player], true)
-        A.returnToDeck(this[player], this[player].hand)
-        A.shuffleDeck(this[player])
-        A.drawCard(this[player], 5)
-        A._updatePlayer(this[player])
-        A.shiftTurn(this.game)
-        A._updateGame(this.game)
+        R.pipe(
+          A.acceptMulligan(true),
+          A.returnToDeck(this[player].hand, 'hand'),
+          A.shuffleDeck,
+          A.drawCard(5),
+          // A._updatePlayer,
+        )(this[player])
+          debugger
+
+        R.pipe(
+          A.shiftTurn,
+          A._updateGame
+        )(this.game)
       }
     },
 
@@ -46,10 +52,15 @@ Actions.global = function(player) {
                !A.didMulligan(this[player])
       },
       perform() {
-        A.acceptMulligan(this[player], false)
-        A._updatePlayer(this[player])
-        A.shiftTurn(this.game)
-        A._updateGame(this.game)
+        R.pipe(
+          A.acceptMulligan(false),
+          A._updatePlayer
+        )(this[player])
+
+        R.pipe(
+          A.shiftTurn,
+          A._updateGame,
+        )(this.game)
       }
     },
 
@@ -60,8 +71,10 @@ Actions.global = function(player) {
                A.isTurnOwner(this[player])
       },
       perform() {
-        A.shiftTurn(this.game)
-        A._updateGame(this.game)
+        R.pipe(
+          A.shiftTurn,
+          A._updateGame
+        )(this.game)
       }
     },
     {

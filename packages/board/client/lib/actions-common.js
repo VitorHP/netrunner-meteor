@@ -92,9 +92,25 @@ Actions.common = {
     return R.over(credits, R.subtract(amount), player)
   },
 
-  returnToDeck (cards, player) {
-    return R.over(deckCards, R.concat(cards), player)
-  },
+  returnToDeck: R.curry((cards, collection, player) => {
+    var props = {
+      'hand': hand
+    }
+
+    var removeFromCollection = R.curry(function (collection, cards){
+      return R.map(
+        R.pipe(
+          R.indexOf(R.__, collection),
+          R.remove(R.__, 1, collection)
+        )
+      , cards)
+    })
+
+    var handWithoutCards =
+      R.over(hand, removeFromCollection(props[collection]), player)
+
+    return R.over(deckCards, R.concat(cards), handWithoutCards)
+  }),
 
   ready (player) {
     return R.set(ready, true, player)
@@ -104,9 +120,10 @@ Actions.common = {
     return R.view(ready, (player || {})) === true
   },
 
-  acceptMulligan (accepted, player) {
+  acceptMulligan: R.curry((accepted, player) => {
+    debugger
     return R.set(mulligan, accepted, player)
-  },
+  }),
 
   didMulligan (player) {
     return R.view(mulligan, (player || {})) !== undefined

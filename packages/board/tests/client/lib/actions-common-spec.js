@@ -49,9 +49,9 @@ describe("Actions.common", function() {
   })
 
   it ("Actions.common#returnToDeck returns the passed card to the player's deck", function() {
-    let cards = ["02001"]
+    let runner = Spawn.create("Runner", { hand: [1, 2], deck_cards: [3] })
 
-    expect(subject().returnToDeck(cards, runner).deck_cards).to.include("02001")
+    expect(subject().returnToDeck(runner.hand, 'hand', runner).deck_cards).to.deep.equal([1, 2, 3])
   })
 
   it ("Actions.common#ready sets the player as ready", function() {
