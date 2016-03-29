@@ -72,6 +72,7 @@ Actions.common = {
   drawCard: R.curry((count=1, player) => {
     let draw = R.view(deckCards, R.over(deckCards, R.take(count), player))
 
+    debugger
     return R.over(deckCards, R.drop(count), R.over(hand, R.concat(draw), player))
   }),
 
@@ -97,17 +98,16 @@ Actions.common = {
       'hand': hand
     }
 
-    var removeFromCollection = R.curry(function (collection, cards){
-      return R.map(
-        R.pipe(
-          R.indexOf(R.__, collection),
-          R.remove(R.__, 1, collection)
-        )
-      , cards)
+    var removeFromCollection = R.curry(function(cards, hand){
+      return cards.reduce(function(memo, card){
+        debugger
+        var index = memo.indexOf(card)
+        return R.remove(index, 1, memo)
+      }, hand)
     })
 
     var handWithoutCards =
-      R.over(hand, removeFromCollection(props[collection]), player)
+      R.over(hand, removeFromCollection(cards), player)
 
     return R.over(deckCards, R.concat(cards), handWithoutCards)
   }),

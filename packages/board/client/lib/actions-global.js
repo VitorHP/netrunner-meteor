@@ -34,7 +34,7 @@ Actions.global = function(player) {
           A.returnToDeck(this[player].hand, 'hand'),
           A.shuffleDeck,
           A.drawCard(5),
-          // A._updatePlayer,
+          A._updatePlayer,
         )(this[player])
           debugger
 
