@@ -1,3 +1,5 @@
+import './runner-area.html'
+
 Template.runnerArea.helpers({
   actions() {
     return ActionFactory.runnerActions(Template.instance().data)

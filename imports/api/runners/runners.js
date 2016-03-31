@@ -1,3 +1,4 @@
+import { SimpleSchema } from 'meteor/aldeed:simple-schema'
 
 Runner = new Mongo.Collection('runner');
 
@@ -41,3 +42,5 @@ var _runnerHelpers = {
 }
 
 Runner.helpers(R.merge(Players.commonHelpers, _runnerHelpers))
+
+export { Runner };

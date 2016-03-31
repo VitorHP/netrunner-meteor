@@ -1,3 +1,4 @@
+import './corp-area.html'
 
 Template.corpArea.helpers({
   actions() {

@@ -72,7 +72,6 @@ Actions.common = {
   drawCard: R.curry((count=1, player) => {
     let draw = R.view(deckCards, R.over(deckCards, R.take(count), player))
 
-    debugger
     return R.over(deckCards, R.drop(count), R.over(hand, R.concat(draw), player))
   }),
 
@@ -100,7 +99,6 @@ Actions.common = {
 
     var removeFromCollection = R.curry(function(cards, hand){
       return cards.reduce(function(memo, card){
-        debugger
         var index = memo.indexOf(card)
         return R.remove(index, 1, memo)
       }, hand)
@@ -121,7 +119,6 @@ Actions.common = {
   },
 
   acceptMulligan: R.curry((accepted, player) => {
-    debugger
     return R.set(mulligan, accepted, player)
   }),
 

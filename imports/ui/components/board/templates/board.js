@@ -1,3 +1,12 @@
+import './board.html'
+
+import './corp-area.js'
+import './runner-area.js';
+
+import { Runner } from '../../../../api/runners/runners.js';
+import { Corp } from '../../../../api/corps/corps.js';
+import { Game } from '../../../../api/games/games.js';
+
 Template.board.onCreated(function() {
   this.autorun(() => {
     Meteor.subscribe('Game.game');
