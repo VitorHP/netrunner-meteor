@@ -1,5 +1,10 @@
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import 'meteor/dburles:collection-helpers';
+import R from 'ramda';
 
-Corp = new Mongo.Collection('corp');
+import { Players } from '../players/players.js'
+
+export const Corp = new Mongo.Collection('corp');
 
 Corp.schema = new SimpleSchema({
   _id: { type: String },

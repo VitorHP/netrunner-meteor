@@ -1,2 +1,3 @@
-Template.hand.helpers({
-})
+import './hand.html'
+
+import './hand-item.js'

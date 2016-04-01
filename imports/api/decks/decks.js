@@ -1,4 +1,4 @@
-Decks = new Mongo.Collection('decks')
+export const Decks = new Mongo.Collection('decks')
 
 Decks.schema = new SimpleSchema({
   name: { type: String },

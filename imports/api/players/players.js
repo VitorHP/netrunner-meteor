@@ -1,4 +1,6 @@
-Players = {}
+import { Cards } from '../cards/cards.js'
+
+export const Players = {}
 
 function cardList(card_codes) {
   let cards = Cards.find({ code: { "$in": card_codes } }).fetch()
@@ -26,4 +28,3 @@ Players.commonHelpers = {
   },
 
 }
-

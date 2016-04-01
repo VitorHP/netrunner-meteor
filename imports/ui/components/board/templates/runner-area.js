@@ -2,7 +2,8 @@ import './runner-area.html'
 
 Template.runnerArea.helpers({
   actions() {
-    return ActionFactory.runnerActions(Template.instance().data)
+    return []
+    // return ActionFactory.runnerActions(Template.instance().data)
   },
 
   active (turn_owner) {

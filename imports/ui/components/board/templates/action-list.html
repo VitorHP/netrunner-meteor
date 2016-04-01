@@ -1,0 +1,8 @@
+<template name="actionList">
+  <ul class="list-unstyled actionList">
+    {{#each item in actions }}
+      <li>{{> action action=item }}</li>
+    {{/each }}
+  </ul>
+</template>
+

@@ -20,3 +20,5 @@ standard-minifier-js
 kadira:flow-router
 kadira:blaze-layout
 aldeed:simple-schema
+dburles:collection-helpers
+reywood:publish-composite

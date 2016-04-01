@@ -1,3 +1,10 @@
+import 'meteor/reywood:publish-composite';
+
+import { Runner } from './runners/runners.js';
+import { Corp } from './corps/corps.js';
+import { Game } from './games/games.js';
+import { Decks } from './decks/decks.js';
+import { Cards } from './cards/cards.js';
 
 function deckCardCodesList (deck_cards) {
   return Object.keys(deck_cards).reduce(function(card_codes, card_code){

@@ -1,6 +1,10 @@
-import { SimpleSchema } from 'meteor/aldeed:simple-schema'
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+import 'meteor/dburles:collection-helpers';
+import R from 'ramda';
 
-Runner = new Mongo.Collection('runner');
+import { Players } from '../players/players.js'
+
+export const Runner = new Mongo.Collection('runner');
 
 Runner.schema = new SimpleSchema({
   _id: { type: String },
@@ -42,5 +46,3 @@ var _runnerHelpers = {
 }
 
 Runner.helpers(R.merge(Players.commonHelpers, _runnerHelpers))
-
-export { Runner };

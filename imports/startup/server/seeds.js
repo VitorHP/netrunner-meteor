@@ -1,3 +1,9 @@
+import { Runner } from '../../api/runners/runners.js';
+import { Corp } from   '../../api/corps/corps.js';
+import { Game } from   '../../api/games/games.js';
+import { Decks } from   '../../api/decks/decks.js';
+import { Cards } from   '../../api/cards/cards.js';
+
 function seedData(collection, data) {
   let ids = collection.find().fetch().map(function(d){ return d["_id"] })
 

@@ -1,3 +1,7 @@
+import { Zoom } from '../../zoom/templates/zoom.js'
+
+import './card.html'
+
 Template.card.onRendered(function() {
   Zoom.on(Template.instance().view._domrange.$('img'))
 });

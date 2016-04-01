@@ -1,11 +1,14 @@
 import './board.html'
 
 import './corp-area.js'
-import './runner-area.js';
+import './runner-area.js'
 
 import { Runner } from '../../../../api/runners/runners.js';
 import { Corp } from '../../../../api/corps/corps.js';
 import { Game } from '../../../../api/games/games.js';
+
+// debug helpers
+import '../lib/helper.js'
 
 Template.board.onCreated(function() {
   this.autorun(() => {

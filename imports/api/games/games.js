@@ -1,4 +1,6 @@
-Game = new Mongo.Collection('game')
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+export const Game = new Mongo.Collection('game')
 
 Game.schema = new SimpleSchema({
   _id: { type: String },

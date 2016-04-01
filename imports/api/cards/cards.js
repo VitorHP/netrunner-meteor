@@ -1,4 +1,4 @@
-Cards = new Mongo.Collection('cards');
+export const Cards = new Mongo.Collection('cards');
 
 Cards.schema = new SimpleSchema({
   last_modified: { type: String },
