@@ -1,6 +1,6 @@
 import { Runner } from '../../api/runners/runners.js';
-import { Corp } from   '../../api/corps/corps.js';
-import { Game } from   '../../api/games/games.js';
+import { Corp }   from '../../api/corps/corps.js';
+import { Game }   from '../../api/games/games.js';
 
 import './board-container.html'
 import '../components/board/templates/board.js'

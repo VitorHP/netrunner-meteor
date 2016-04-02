@@ -1,6 +1,6 @@
 import './runner-area.html'
 
-import "../lib/action-factory.js"
+import "../../../../api/lib/action-factory.js"
 
 Template.runnerArea.helpers({
   actions() {

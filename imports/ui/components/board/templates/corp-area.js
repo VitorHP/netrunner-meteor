@@ -5,7 +5,7 @@ import './deck.js'
 import './action-list.js'
 import './hand.js'
 
-import "../lib/action-factory.js"
+import "../../../../api/lib/action-factory.js"
 
 Template.corpArea.helpers({
   actions() {
