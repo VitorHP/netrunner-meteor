@@ -5,10 +5,11 @@ import './deck.js'
 import './action-list.js'
 import './hand.js'
 
+import "../lib/action-factory.js"
+
 Template.corpArea.helpers({
   actions() {
-    return []
-    // return ActionFactory.corpActions(Template.instance().data)
+    return ActionFactory.corpActions(Template.instance().data)
   },
 
   active (turn_owner) {

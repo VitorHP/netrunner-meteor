@@ -1,3 +1,8 @@
+import "./actions-common.js"
+import "./actions-global.js"
+import "./actions-corp.js"
+import "./actions-runner.js"
+import "./actions-hand.js"
 
 function wrapPerform (fn, data) {
   return function() {

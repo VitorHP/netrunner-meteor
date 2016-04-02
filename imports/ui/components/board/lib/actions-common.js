@@ -1,3 +1,5 @@
+import "./lens-prop.js"
+
 var deckCards     = lensProp('deck_cards')
 var hand          = lensProp('hand')
 var clicks        = lensProp('clicks')
