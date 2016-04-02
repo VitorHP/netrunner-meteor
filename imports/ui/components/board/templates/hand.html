@@ -1,0 +1,7 @@
+<template name="hand">
+  <div class="hand">
+    {{#each card in player.handCards }}
+      {{> handItem card=card player=player }}
+    {{/each }}
+  </div>
+</template>
