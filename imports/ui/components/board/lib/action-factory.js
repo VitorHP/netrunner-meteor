@@ -1,8 +1,7 @@
-import "./actions-common.js"
-import "./actions-global.js"
-import "./actions-corp.js"
-import "./actions-runner.js"
-import "./actions-hand.js"
+import { PlayerContext } from "./contexts/player-context.js"
+import { CorpContext }   from "./contexts/corp-context.js"
+import { RunnerContext } from "./contexts/runner-context.js"
+import { HandContext }   from "./contexts/hand-context.js"
 
 function wrapPerform (fn, data) {
   return function() {
@@ -31,17 +30,17 @@ ActionFactory = {
   corpActions(data) {
     let player = "corp"
 
-    return this.allowedActions(Actions.global(player).concat(Actions.corp(player)), data)
+    return this.allowedActions(PlayerContext(player).concat(CorpContext(player)), data)
   },
 
   runnerActions(data) {
     let player = "runner"
 
-    return this.allowedActions(Actions.global(player).concat(Actions.runner(player)), data)
+    return this.allowedActions(PlayerContext(player).concat(RunnerContext(player)), data)
   },
 
   handActions(data) {
-    return this.allowedActions(Actions.hand(), data)
+    return this.allowedActions(HandContext(), data)
   }
 
 }

@@ -1,9 +1,11 @@
-Actions.hand = function() {
+import { Mutations } from '../mutations.js'
+
+export const HandContext = function() {
   return [
     {
       label: "Install",
       requirement() {
-        return Actions.common.isOfType(this.card, ["agenda", "ice"])
+        return Mutations.isOfType(this.card, ["agenda", "ice"])
       },
       perform() {
         let rezzed
@@ -25,22 +27,22 @@ Actions.hand = function() {
           .then(function(data){
             server = data
 
-            Actions.common.removeFromHand(_this.player, _this.card)
+            Mutations.removeFromHand(_this.player, _this.card)
             //TODO: comparison with == can maybe lead to problems later?
-            Actions.common.installCard(_this.player, _this.card, { rezzed: Boolean(rezzed) == true, server_id: server })
-            Actions.common._updatePlayer(_this.player)
+            Mutations.installCard(_this.player, _this.card, { rezzed: Boolean(rezzed) == true, server_id: server })
+            Mutations._updatePlayer(_this.player)
           })
       }
     },
     {
       label: "Install",
       requirement() {
-        return Actions.common.isOfType(this.card, ["program", "hardware", "resource"])
+        return Mutations.isOfType(this.card, ["program", "hardware", "resource"])
       },
       perform() {
-        Actions.common.removeFromHand(this.player, this.card)
-        Actions.common.installCard(this.player, this.card)
-        Actions.common._updatePlayer(this.player)
+        Mutations.removeFromHand(this.player, this.card)
+        Mutations.installCard(this.player, this.card)
+        Mutations._updatePlayer(this.player)
       }
     }
   ]

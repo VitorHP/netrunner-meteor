@@ -1,9 +1,10 @@
 import './runner-area.html'
 
+import "../lib/action-factory.js"
+
 Template.runnerArea.helpers({
   actions() {
-    return []
-    // return ActionFactory.runnerActions(Template.instance().data)
+    return ActionFactory.runnerActions(Template.instance().data)
   },
 
   active (turn_owner) {

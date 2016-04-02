@@ -1,3 +1,7 @@
+import { Game } from "./games/games.js";
+import { Runner } from "./runners/runners.js";
+import { Corp } from "./corps/corps.js";
+
 Meteor.methods({
   'Runner.methods.update'({ runner_id, newRunner }) {
 

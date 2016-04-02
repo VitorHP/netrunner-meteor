@@ -1,9 +1,11 @@
-Actions.runner = function (player) {
+import { Mutations } from '../mutations.js'
+
+export const RunnerContext = function (player) {
   return [
     {
       label: "Remove one tag",
       requirement: function() {
-        return Actions.common.hasClicks(this.player)
+        return Mutations.hasClicks(this.player)
       },
       perform() {
 
@@ -12,7 +14,7 @@ Actions.runner = function (player) {
     {
       label: "Make a Run",
       requirement: function() {
-        return Actions.common.hasClicks(this.player)
+        return Mutations.hasClicks(this.player)
       },
       perform() {
 

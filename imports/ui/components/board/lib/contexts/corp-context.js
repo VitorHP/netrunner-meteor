@@ -1,9 +1,11 @@
-Actions.corp = function (player) {
+import { Mutations } from '../mutations.js'
+
+export const CorpContext = function (player) {
   return [
     {
       label: "Trash Runner's Resource",
       requirement: function() {
-        return Actions.common.hasClicks(this.player)
+        return Mutations.hasClicks(this.player)
       },
       perform() {
 
@@ -12,7 +14,7 @@ Actions.corp = function (player) {
     {
       label: "Purge Virus",
       requirement: function() {
-        return Actions.common.hasClicks(this.player)
+        return Mutations.hasClicks(this.player)
       },
       perform() {
 

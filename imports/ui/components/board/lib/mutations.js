@@ -1,3 +1,5 @@
+import R from 'ramda'
+
 import "./lens-prop.js"
 
 var deckCards     = lensProp('deck_cards')
@@ -16,7 +18,7 @@ var cardCode      = lensProp('card_code')
 var cards         = lensProp('cards')
 var ices          = lensProp('ices')
 
-Actions.common = {
+export const Mutations = {
   // DB
   _updateRunner (runner) {
     return Meteor.call('Runner.methods.update', {
@@ -45,7 +47,7 @@ Actions.common = {
   },
 
   _updatePlayer(player) {
-    player.identity().side_code == "corp" ? Actions.common._updateCorp(player) : Actions.common._updateRunner(player)
+    player.identity().side_code == "corp" ? Mutations._updateCorp(player) : Mutations._updateRunner(player)
   },
 
   _updateGame (game) {
@@ -71,7 +73,7 @@ Actions.common = {
     return R.gt(R.view(clicks, (player || {})), 0)
   },
 
-  drawCard: R.curry((count=1, player) => {
+  drawCard: R.curry((count, player) => {
     let draw = R.view(deckCards, R.over(deckCards, R.take(count), player))
 
     return R.over(deckCards, R.drop(count), R.over(hand, R.concat(draw), player))
@@ -149,9 +151,8 @@ Actions.common = {
   // Deck
 
   shuffleDeck (player) {
-    let shuffle = _.shuffle
-
-    return R.over(deckCards, shuffle, player)
+    // TODO: get shuffle from somewhere
+    return R.over(deckCards, R.identity, player)
   },
 
   // Cards
@@ -167,7 +168,7 @@ Actions.common = {
   },
 
   isRunnerCard(card) {
-    return !Actions.common.isCorpCard(card)
+    return !Mutations.isCorpCard(card)
   },
 
   _findOrInitializeServer(player, options) {
@@ -189,7 +190,7 @@ Actions.common = {
     return R.over(target, R.append({
              card_code: card.code,
              rezzed: options.rezzed
-           }), Actions.common._findOrInitializeServer(player, options))
+           }), Mutations._findOrInitializeServer(player, options))
   }),
 
   _installRunnerCard: R.curry((lens, card, player) => {
@@ -198,12 +199,12 @@ Actions.common = {
 
   installCard(player, card, options) {
     let fns = {
-      program:  Actions.common._installRunnerCard(programs),
-      hardware: Actions.common._installRunnerCard(hardware),
-      resource: Actions.common._installRunnerCard(resources),
+      program:  Mutations._installRunnerCard(programs),
+      hardware: Mutations._installRunnerCard(hardware),
+      resource: Mutations._installRunnerCard(resources),
 
-      agenda:   Actions.common._installCorpCard(cards),
-      ice:      Actions.common._installCorpCard(ices)
+      agenda:   Mutations._installCorpCard(cards),
+      ice:      Mutations._installCorpCard(ices)
     }
 
     return fns[card.type_code](card, player, options)
