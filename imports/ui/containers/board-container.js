@@ -3,7 +3,7 @@ import { Corp }   from '../../api/corps/corps.js';
 import { Game }   from '../../api/games/games.js';
 
 import './board-container.html'
-import '../components/board/templates/board.js'
+import '../components/board/board.js'
 
 Template.boardContainer.onCreated(function(){
   this.autorun(() => {

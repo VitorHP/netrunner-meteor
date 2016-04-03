@@ -1,5 +1,6 @@
+import { Spawn } from "netrunner:spawn"
 
-describe("Actions.global", function() {
+describe("PlayerContext", function() {
   var runner;
 
   beforeEach(function() {

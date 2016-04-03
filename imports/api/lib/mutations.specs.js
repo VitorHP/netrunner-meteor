@@ -1,4 +1,11 @@
-describe("Actions.common", function() {
+import { Spawn }  from "meteor/netrunner:spawn"
+import { expect } from 'meteor/practicalmeteor:chai'
+import { spies }  from 'meteor/practicalmeteor:sinon'
+import '/imports/tests/support/spawns.js'
+
+import { Mutations } from "./mutations.js"
+
+describe("Mutations", function() {
   var runner, game, corp;
 
   beforeEach(function() {
@@ -9,38 +16,38 @@ describe("Actions.common", function() {
   })
 
   subject = function() {
-    return Actions.common
+    return Mutations
   }
 
-  it ("Actions.common#click reduces the target clicks by the amount specified", function() {
+  it ("Mutations#click reduces the target clicks by the amount specified", function() {
     expect(subject().click(2, runner).clicks).to.equal(0)
   })
 
-  it ("Actions.common#hasClicks returns true if the target clicks > 0", function() {
+  it ("Mutations#hasClicks returns true if the target clicks > 0", function() {
     runner = Spawn.create("Runner", { clicks: 1 })
 
     expect(subject().hasClicks(runner)).to.equal(true)
   })
 
-  it ("Actions.common#drawCard removes a card from the deck and places it on the runner's hand", function() {
+  it ("Mutations#drawCard removes a card from the deck and places it on the runner's hand", function() {
     expect(subject().drawCard(2, runner).hand.length).to.equal(2)
   })
 
-  it ("Actions.common#drawCard removes [count] cards from the deck and places it on the runner's hand when [count is specified]", function() {
+  it ("Mutations#drawCard removes [count] cards from the deck and places it on the runner's hand when [count is specified]", function() {
     expect(subject().drawCard(2, runner).deck_cards.length).to.equal(0)
   })
 
-  it ("Actions.common#trashFromHand discards a card from somewhere into the player's discard pile", function() {
+  it ("Mutations#trashFromHand discards a card from somewhere into the player's discard pile", function() {
     corp = Spawn.create("Corp", { hand: ["01003"] })
 
     expect(subject().trashFromHand(corp, "01003").hand).to.not.include("01003")
   })
 
-  it ("Actions.common#receiveCredits increases the target credits by the amount specified", function() {
+  it ("Mutations#receiveCredits increases the target credits by the amount specified", function() {
     expect(subject().receiveCredits(2, runner).credits).to.equal(3)
   })
 
-  describe("Actions.common#payCredits", function() {
+  describe("Mutations#payCredits", function() {
     it ("decreases the target credits by the amount specified", function() {
       runner = Spawn.create("Runner", { credits: 2 })
 
@@ -48,20 +55,20 @@ describe("Actions.common", function() {
     })
   })
 
-  it.only ("Actions.common#returnToDeck returns the passed card to the player's deck", function() {
+  it ("Mutations#returnToDeck returns the passed card to the player's deck", function() {
     let runner = Spawn.create("Runner", { hand: [1, 2], deck_cards: [3] })
 
     expect(subject().returnToDeck(runner.hand, 'hand', runner).deck_cards).to.deep.equal([1, 2, 3])
     expect(subject().returnToDeck(runner.hand, 'hand', runner).hand).to.deep.equal([])
   })
 
-  it ("Actions.common#ready sets the player as ready", function() {
+  it ("Mutations#ready sets the player as ready", function() {
     corp = Spawn.create("Corp", { ready: false })
 
     expect(subject().ready(corp).ready).to.eq(true)
   })
 
-  it ("Actions.common#isReady returns true if the player is ready", function() {
+  it ("Mutations#isReady returns true if the player is ready", function() {
     corp = Spawn.create("Corp", { ready: true })
     expect(subject().isReady(corp)).to.eq(true)
 
@@ -69,13 +76,13 @@ describe("Actions.common", function() {
     expect(subject().isReady(corp)).to.eq(false)
   })
 
-  it ("Actions.common#acceptMulligan sets the player mulligan", function() {
+  it ("Mutations#acceptMulligan sets the player mulligan", function() {
     corp = Spawn.create("Corp", { mulligan: false })
 
     expect(subject().acceptMulligan(true, corp).mulligan).to.eq(true)
   })
 
-  it ("Actions.common#didMulligan returns true if the player accepted a mulligan", function() {
+  it ("Mutations#didMulligan returns true if the player accepted a mulligan", function() {
     corp = Spawn.create("Corp", { mulligan: false })
     expect(subject().didMulligan(corp)).to.eq(true)
 
@@ -83,7 +90,7 @@ describe("Actions.common", function() {
     expect(subject().didMulligan(corp)).to.eq(false)
   })
 
-  it ("Actions.common#removeFromHand removes a card from the player's hand", function(){
+  it ("Mutations#removeFromHand removes a card from the player's hand", function(){
     let cardDouble = { code: "01002" }
 
     expect(corp.hand).to.include("01002")
@@ -95,7 +102,7 @@ describe("Actions.common", function() {
 
   // Game
 
-  it ("Actions.common#shiftTurn changes the turn to the other player", function() {
+  it ("Mutations#shiftTurn changes the turn to the other player", function() {
     game = Spawn.create("Game", { turn_owner: "corp" })
     expect(subject().shiftTurn(game).turn_owner).to.equal("runner")
 
@@ -106,7 +113,7 @@ describe("Actions.common", function() {
     expect(subject().shiftTurn(game).turn_owner).to.equal("corp")
   })
 
-  it ("Actions.common#isTurnOwner returns true if is the turned owner", function() {
+  it ("Mutations#isTurnOwner returns true if is the turned owner", function() {
     game = Spawn.create("Game", { turn_owner: "runner" })
     expect(subject().isTurnOwner("runner", game)).to.equal(true)
 
@@ -116,7 +123,7 @@ describe("Actions.common", function() {
 
   // Deck
 
-  it ("Actions.common#shuffleDeck shuffles the player deck", function() {
+  it ("Mutations#shuffleDeck shuffles the player deck", function() {
     spies.create('shuffle', _, 'shuffle')
 
     subject().shuffleDeck(runner)
@@ -126,48 +133,54 @@ describe("Actions.common", function() {
 
   // Cards
 
-  it ("Actions.common#isOfType returns true if card.type_code is of one of the types specified", function() {
+  it ("Mutations#isOfType returns true if card.type_code is of one of the types specified", function() {
     expect(subject().isOfType(card, "identity")).to.equal(true)
     expect(subject().isOfType(card, ["identity", "program"])).to.equal(true)
   })
 
-  it ("Actions.common#isCorpCard returns true if it's a corp card", function(){
+  it ("Mutations#isCorpCard returns true if it's a corp card", function(){
     let cardDouble = { code: 2, side_code: "corp" }
 
     expect(subject().isCorpCard(cardDouble)).to.eql(true)
   })
 
-  it ("Actions.common#isRunnerCard returns true if it's a runner card", function(){
+  it ("Mutations#isRunnerCard returns true if it's a runner card", function(){
     let cardDouble = { code: 2, side_code: "runner" }
 
     expect(subject().isRunnerCard(cardDouble)).to.eql(true)
   })
 
-  it ("Actions.common#_updateRunner calls an update for the runner", function() {
-    spies.create('call', Meteor, 'call')
+  describe ("methods which call meteor Methods", function(){
 
-    subject()._updateRunner(runner)
+    beforeEach(function(){
+      stubs.create('call', Meteor, 'call')
+    })
 
-    expect(spies.call).to.have.been.calledWith('Runner.methods.update', { runner_id: runner._id, newRunner: runner })
+    afterEach(function(){
+      stubs.restoreAll()
+    })
+
+    it ("Mutations#_updateRunner calls an update for the runner", function() {
+      subject()._updateRunner(runner)
+
+      expect(stubs.call).to.have.been.calledWith('Runner.methods.update', { runner_id: runner._id, newRunner: runner })
+    })
+
+    it ("Mutations#_updateCorp calls an update for the runner", function() {
+      subject()._updateCorp(corp)
+
+      expect(stubs.call).to.have.been.calledWith('Corp.methods.update', { corp_id: corp._id, newCorp: corp })
+    })
+
+    it ("Mutations#_updateGame calls an update for the game", function() {
+      subject()._updateGame(game)
+
+      expect(stubs.call).to.have.been.calledWith('Game.methods.update', { gameId: game._id, newGame: game })
+    })
+
   })
 
-  it ("Actions.common#_updateCorp calls an update for the runner", function() {
-    spies.create('call', Meteor, 'call')
-
-    subject()._updateCorp(corp)
-
-    expect(spies.call).to.have.been.calledWith('Corp.methods.update', { corp_id: corp._id, newCorp: corp })
-  })
-
-  it ("Actions.common#_updateGame calls an update for the game", function() {
-    spies.create('call', Meteor, 'call')
-
-    subject()._updateGame(game)
-
-    expect(spies.call).to.have.been.calledWith('Game.methods.update', { gameId: game._id, newGame: game })
-  })
-
-  describe("Actions.common#installCard", function(){
+  describe("Mutations#installCard", function(){
     it ("installs a program in the runner's program area", function(){
       let cardDouble = { code: "01042", type_code: "program" }
 

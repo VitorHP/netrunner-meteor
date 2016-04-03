@@ -1,4 +1,5 @@
 import R from 'ramda'
+import { _ } from 'meteor/underscore'
 
 import "./lens-prop.js"
 
@@ -151,8 +152,10 @@ export const Mutations = {
   // Deck
 
   shuffleDeck (player) {
-    // TODO: get shuffle from somewhere
-    return R.over(deckCards, R.identity, player)
+    //TODO: Remove underscore
+    var shuffle = _.shuffle
+
+    return R.over(deckCards, shuffle, player)
   },
 
   // Cards
