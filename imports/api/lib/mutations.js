@@ -1,212 +1,210 @@
-import R from 'ramda'
-import { N } from './n.js'
+import { Meteor } from 'meteor/meteor';
+import R from 'ramda';
+import { N } from './n.js';
 
-var deckCards     = N.lensProp('deck_cards')
-var hand          = N.lensProp('hand')
-var clicks        = N.lensProp('clicks')
-var credits       = N.lensProp('credits')
-var discard       = N.lensProp('discard')
-var ready         = N.lensProp('ready')
-var mulligan      = N.lensProp('mulligan')
-var turnOwner     = N.lensProp('turn_owner')
-var programs      = N.lensProp('programs')
-var hardware      = N.lensProp('hardware')
-var resources     = N.lensProp('resources')
-var remoteServers = N.lensProp('remote_servers')
-var cardCode      = N.lensProp('card_code')
-var cards         = N.lensProp('cards')
-var ices          = N.lensProp('ices')
+const deckCards = N.lensProp('deck_cards');
+const hand = N.lensProp('hand');
+const clicks = N.lensProp('clicks');
+const credits = N.lensProp('credits');
+const discard = N.lensProp('discard');
+const ready = N.lensProp('ready');
+const mulligan = N.lensProp('mulligan');
+const turnOwner = N.lensProp('turn_owner');
+const programs = N.lensProp('programs');
+const hardware = N.lensProp('hardware');
+const resources = N.lensProp('resources');
+const remoteServers = N.lensProp('remote_servers');
+const cards = N.lensProp('cards');
+const ices = N.lensProp('ices');
 
 export const Mutations = {
   // DB
-  _updateRunner (runner) {
+  _updateRunner(runner) {
     return Meteor.call('Runner.methods.update', {
       runner_id: runner._id,
-      newRunner: runner
-    }, (err, res) => {
+      newRunner: runner,
+    }, (err) => {
       if (err) {
-        alert(err);
+        // error
       } else {
-        console.log("Mama mia!")
+        // success
       }
     });
   },
 
-  _updateCorp (corp) {
+  _updateCorp(corp) {
     return Meteor.call('Corp.methods.update', {
       corp_id: corp._id,
-      newCorp: corp
-    }, (err, res) => {
+      newCorp: corp,
+    }, (err) => {
       if (err) {
-        alert(err);
+        // error
       } else {
-        console.log("Mama mia!")
+        // success
       }
     });
   },
 
   _updatePlayer(player) {
-    player.identity().side_code == "corp" ? Mutations._updateCorp(player) : Mutations._updateRunner(player)
+    return player.identity().side_code === 'corp' ?
+      Mutations._updateCorp(player) :
+      Mutations._updateRunner(player);
   },
 
-  _updateGame (game) {
+  _updateGame(game) {
     return Meteor.call('Game.methods.update', {
       gameId: game._id,
-      newGame: game
-    }, (err, res) => {
+      newGame: game,
+    }, (err) => {
       if (err) {
-        alert(err);
+        // error
       } else {
-        console.log("Mama mia!")
+        // success
       }
     });
   },
 
-  //common
+  // common
 
-  click (amount, player) {
-    return R.over(clicks, R.subtract(amount), player)
+  click(amount, player) {
+    return R.over(clicks, R.subtract(amount), player);
   },
 
-  hasClicks (player) {
-    return R.gt(R.view(clicks, (player || {})), 0)
+  hasClicks(player) {
+    return R.gt(R.view(clicks, (player || {})), 0);
   },
 
   drawCard: R.curry((count, player) => {
-    let draw = R.view(deckCards, R.over(deckCards, R.take(count), player))
+    const draw = R.view(deckCards, R.over(deckCards, R.take(count), player));
 
-    return R.over(deckCards, R.drop(count), R.over(hand, R.concat(draw), player))
+    return R.over(deckCards, R.drop(count), R.over(hand, R.concat(draw), player));
   }),
 
-  trashFromHand (player, cardCode) {
-    let targetIndex = R.indexOf(cardCode, R.view(hand, player))
-    let cardAtIndex = R.compose(hand, R.lensIndex(targetIndex))
+  trashFromHand(player, cardCode) {
+    const targetIndex = R.indexOf(cardCode, R.view(hand, player));
+    const cardAtIndex = R.compose(hand, R.lensIndex(targetIndex));
 
-    let discarded   = R.over(discard, R.append(R.view(cardAtIndex, player)), player)
+    const discarded = R.over(discard, R.append(R.view(cardAtIndex, player)), player);
 
-    return R.over(hand, R.remove(targetIndex, 1), discarded)
+    return R.over(hand, R.remove(targetIndex, 1), discarded);
   },
 
-  receiveCredits (amount, player) {
-    return R.over(credits, R.add(amount), player)
+  receiveCredits(amount, player) {
+    return R.over(credits, R.add(amount), player);
   },
 
-  payCredits (amount, player) {
-    return R.over(credits, R.subtract(amount), player)
+  payCredits(amount, player) {
+    return R.over(credits, R.subtract(amount), player);
   },
 
-  returnToDeck: R.curry((cards, collection, player) => {
-    var props = {
-      'hand': hand
-    }
+  returnToDeck: R.curry((cardsReturned, collection, player) => {
+    const removeFromCollection = R.curry((cardsToRemove, playerHand) =>
+      cardsToRemove.reduce((memo, card) => {
+        const index = memo.indexOf(card);
+        return R.remove(index, 1, memo);
+      }, playerHand)
+    );
 
-    var removeFromCollection = R.curry(function(cards, hand){
-      return cards.reduce(function(memo, card){
-        var index = memo.indexOf(card)
-        return R.remove(index, 1, memo)
-      }, hand)
-    })
+    const handWithoutCards =
+      R.over(hand, removeFromCollection(cardsReturned), player);
 
-    var handWithoutCards =
-      R.over(hand, removeFromCollection(cards), player)
-
-    return R.over(deckCards, R.concat(cards), handWithoutCards)
+    return R.over(deckCards, R.concat(cardsReturned), handWithoutCards);
   }),
 
-  ready (player) {
-    return R.set(ready, true, player)
+  ready(player) {
+    return R.set(ready, true, player);
   },
 
-  isReady (player) {
-    return R.view(ready, (player || {})) === true
+  isReady(player) {
+    return R.view(ready, (player || {})) === true;
   },
 
-  acceptMulligan: R.curry((accepted, player) => {
-    return R.set(mulligan, accepted, player)
-  }),
+  acceptMulligan: R.curry((accepted, player) =>
+    R.set(mulligan, accepted, player)
+  ),
 
-  didMulligan (player) {
-    return R.view(mulligan, (player || {})) !== undefined
+  didMulligan(player) {
+    return R.view(mulligan, (player || {})) !== undefined;
   },
 
   removeFromHand(player, card) {
-    let cardIndex = player.hand.indexOf(card.code)
+    const cardIndex = player.hand.indexOf(card.code);
 
-    return player.hand.splice(cardIndex, 1)
+    return player.hand.splice(cardIndex, 1);
   },
 
   // Game
 
-  shiftTurn (game) {
-    let nextTurnOwner = R.view(turnOwner, (game || {})) == "corp" ? "runner" : "corp"
+  shiftTurn(game) {
+    const nextTurnOwner = R.view(turnOwner, (game || {})) === 'corp' ? 'runner' : 'corp';
 
-    return R.set(turnOwner, nextTurnOwner, game)
+    return R.set(turnOwner, nextTurnOwner, game);
   },
 
-  isTurnOwner (player, game) {
-    return R.view(turnOwner, (game || {})) === player
+  isTurnOwner(player, game) {
+    return R.view(turnOwner, (game || {})) === player;
   },
 
   // Deck
 
-  shuffleDeck (player) {
-    return R.over(deckCards, N.shuffle, player)
+  shuffleDeck(player) {
+    return R.over(deckCards, N.shuffle, player);
   },
 
   // Cards
 
-  isOfType(card, type_code) {
-    let type_codes = type_code instanceof Array ? type_code : [type_code]
+  isOfType(card, typeCode) {
+    const typeCodes = typeCode instanceof Array ? typeCode : [typeCode];
 
-    return type_codes.some(function(t) { return t == card.type_code })
+    return typeCodes.some((t) => t === card.typeCode);
   },
 
   isCorpCard(card) {
-    return card.side_code === "corp"
+    return card.side_code === 'corp';
   },
 
   isRunnerCard(card) {
-    return !Mutations.isCorpCard(card)
+    return !Mutations.isCorpCard(card);
   },
 
   _findOrInitializeServer(player, options) {
-    let server = R.compose(remoteServers, 
-                           R.lensIndex(options.server_id))
+    const server = R.compose(remoteServers,
+                           R.lensIndex(options.server_id));
 
     return R.view(server, player) !== undefined ?
       player :
       R.over(remoteServers, R.append({ server_id: options.server_id,
-                                       cards:    [],
-                                       ices:     [] }), player)
+                                       cards: [],
+                                       ices: [] }), player);
   },
 
   _installCorpCard: R.curry((lens, card, player, options) => {
-    let target = R.compose(remoteServers,
+    const target = R.compose(remoteServers,
                            R.lensIndex(options.server_id),
-                           lens)
+                           lens);
 
     return R.over(target, R.append({
-             card_code: card.code,
-             rezzed: options.rezzed
-           }), Mutations._findOrInitializeServer(player, options))
+      card_code: card.code,
+      rezzed: options.rezzed,
+    }), Mutations._findOrInitializeServer(player, options));
   }),
 
-  _installRunnerCard: R.curry((lens, card, player) => {
-    return R.over(lens, R.append({ card_code: card.code }), player)
-  }),
+  _installRunnerCard: R.curry((lens, card, player) =>
+    R.over(lens, R.append({ card_code: card.code }), player)
+  ),
 
   installCard(player, card, options) {
-    let fns = {
-      program:  Mutations._installRunnerCard(programs),
+    const fns = {
+      program: Mutations._installRunnerCard(programs),
       hardware: Mutations._installRunnerCard(hardware),
       resource: Mutations._installRunnerCard(resources),
 
-      agenda:   Mutations._installCorpCard(cards),
-      ice:      Mutations._installCorpCard(ices)
-    }
+      agenda: Mutations._installCorpCard(cards),
+      ice: Mutations._installCorpCard(ices),
+    };
 
-    return fns[card.type_code](card, player, options)
+    return fns[card.type_code](card, player, options);
   },
 
-}
+};
 
