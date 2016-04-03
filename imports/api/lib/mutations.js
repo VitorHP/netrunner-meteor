@@ -156,7 +156,7 @@ export const Mutations = {
   isOfType(card, typeCode) {
     const typeCodes = typeCode instanceof Array ? typeCode : [typeCode];
 
-    return typeCodes.some((t) => t === card.typeCode);
+    return typeCodes.some((t) => t === card.type_code);
   },
 
   isCorpCard(card) {
