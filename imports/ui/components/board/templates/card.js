@@ -1,4 +1,4 @@
-import { Zoom } from '../../zoom/templates/zoom.js'
+import { Zoom } from '../../zoom/zoom.js'
 
 import './card.html'
 
