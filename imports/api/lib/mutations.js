@@ -1,23 +1,21 @@
 import R from 'ramda'
-import { _ } from 'meteor/underscore'
+import { N } from './n.js'
 
-import "./lens-prop.js"
-
-var deckCards     = lensProp('deck_cards')
-var hand          = lensProp('hand')
-var clicks        = lensProp('clicks')
-var credits       = lensProp('credits')
-var discard       = lensProp('discard')
-var ready         = lensProp('ready')
-var mulligan      = lensProp('mulligan')
-var turnOwner     = lensProp('turn_owner')
-var programs      = lensProp('programs')
-var hardware      = lensProp('hardware')
-var resources     = lensProp('resources')
-var remoteServers = lensProp('remote_servers')
-var cardCode      = lensProp('card_code')
-var cards         = lensProp('cards')
-var ices          = lensProp('ices')
+var deckCards     = N.lensProp('deck_cards')
+var hand          = N.lensProp('hand')
+var clicks        = N.lensProp('clicks')
+var credits       = N.lensProp('credits')
+var discard       = N.lensProp('discard')
+var ready         = N.lensProp('ready')
+var mulligan      = N.lensProp('mulligan')
+var turnOwner     = N.lensProp('turn_owner')
+var programs      = N.lensProp('programs')
+var hardware      = N.lensProp('hardware')
+var resources     = N.lensProp('resources')
+var remoteServers = N.lensProp('remote_servers')
+var cardCode      = N.lensProp('card_code')
+var cards         = N.lensProp('cards')
+var ices          = N.lensProp('ices')
 
 export const Mutations = {
   // DB
@@ -152,10 +150,7 @@ export const Mutations = {
   // Deck
 
   shuffleDeck (player) {
-    //TODO: Remove underscore
-    var shuffle = _.shuffle
-
-    return R.over(deckCards, shuffle, player)
+    return R.over(deckCards, N.shuffle, player)
   },
 
   // Cards

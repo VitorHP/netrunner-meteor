@@ -1,6 +1,7 @@
 import { Spawn }  from "meteor/netrunner:spawn"
 import { expect } from 'meteor/practicalmeteor:chai'
 import { spies }  from 'meteor/practicalmeteor:sinon'
+import { N } from './n.js'
 import '/imports/tests/support/spawns.js'
 
 import { Mutations } from "./mutations.js"
@@ -124,11 +125,11 @@ describe("Mutations", function() {
   // Deck
 
   it ("Mutations#shuffleDeck shuffles the player deck", function() {
-    spies.create('shuffle', _, 'shuffle')
+    stubs.create('shuffle', N, 'shuffle')
 
     subject().shuffleDeck(runner)
 
-    expect(spies.shuffle).to.have.been.calledWith()
+    expect(stubs.shuffle).to.have.been.calledWith(runner.deck_cards)
   })
 
   // Cards

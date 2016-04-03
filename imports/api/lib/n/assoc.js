@@ -1,6 +1,6 @@
 import R from 'ramda'
 
-assoc = R.curry(function assoc(prop, val, obj) {
+export const assoc = R.curry(function assoc(prop, val, obj) {
   var result = Object.create(Object.getPrototypeOf(obj))
   var properties = Object.getOwnPropertyNames(obj)
 
