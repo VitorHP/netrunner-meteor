@@ -33,11 +33,5 @@
     "meteor-node-stubs": "^0.2.1",
     "mocha": "^2.4.5",
     "ramda": "^0.20.1"
-  },
-  "devDependencies": {
-    "eslint": "^2.6.0",
-    "eslint-config-airbnb": "^6.2.0",
-    "eslint-plugin-meteor": "^3.4.0",
-    "eslint-plugin-react": "^4.2.3"
   }
 }
