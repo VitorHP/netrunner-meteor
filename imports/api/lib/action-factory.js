@@ -3,9 +3,28 @@ import { corpContext } from './contexts/corp-context.js';
 import { runnerContext } from './contexts/runner-context.js';
 import { handContext } from './contexts/hand-context.js';
 
+import R from 'ramda';
+
+import { Mutations } from './mutations.js';
+
+function updateContext(context) {
+  switch (context.side_code) {
+    case 'corp':
+      Mutations._updateCorp(context);
+      break;
+    case 'runner':
+      Mutations._updateRunner(context);
+      break;
+    default:
+      Mutations._updateGame(context);
+  }
+}
+
 function wrapPerform(fn, data) {
   return function applyData() {
-    return fn.apply(data);
+    const context = fn.apply(data);
+
+    R.map(updateContext, context);
   };
 }
 

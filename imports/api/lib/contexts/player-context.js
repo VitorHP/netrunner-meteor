@@ -10,17 +10,17 @@ export function playerContext() {
         return !Mutations.isReady(this.player);
       },
       perform() {
-        R.pipe(
-          Mutations.ready,
-          Mutations.shuffleDeck,
-          Mutations.drawCard(5),
-          Mutations._updatePlayer
-        )(this.player);
+        return {
+          player: R.pipe(
+            Mutations.ready,
+            Mutations.shuffleDeck,
+            Mutations.drawCard(5)
+          )(this.player),
 
-        R.pipe(
-          Mutations.shiftTurn,
-          Mutations._updateGame
-        )(this.game);
+          game: R.pipe(
+            Mutations.shiftTurn
+          )(this.game),
+        };
       },
     },
 
@@ -31,18 +31,18 @@ export function playerContext() {
                !Mutations.didMulligan(this.player);
       },
       perform() {
-        R.pipe(
-          Mutations.acceptMulligan(true),
-          Mutations.returnToDeck(this.player.hand, 'hand'),
-          Mutations.shuffleDeck,
-          Mutations.drawCard(5),
-          Mutations._updatePlayer
-        )(this.player);
+        return {
+          player: R.pipe(
+            Mutations.acceptMulligan(true),
+            Mutations.returnToDeck(this.player.hand, 'hand'),
+            Mutations.shuffleDeck,
+            Mutations.drawCard(5)
+          )(this.player),
 
-        R.pipe(
-          Mutations.shiftTurn,
-          Mutations._updateGame
-        )(this.game);
+          game: R.pipe(
+            Mutations.shiftTurn
+          )(this.game),
+        };
       },
     },
 
@@ -53,15 +53,15 @@ export function playerContext() {
                !Mutations.didMulligan(this.player);
       },
       perform() {
-        R.pipe(
-          Mutations.acceptMulligan(false),
-          Mutations._updatePlayer
-        )(this.player);
+        return {
+          player: R.pipe(
+            Mutations.acceptMulligan(false)
+          )(this.player),
 
-        R.pipe(
-          Mutations.shiftTurn,
-          Mutations._updateGame
-        )(this.game);
+          game: R.pipe(
+            Mutations.shiftTurn
+          )(this.game),
+        };
       },
     },
 
@@ -72,10 +72,11 @@ export function playerContext() {
                Mutations.isTurnOwner(this.player);
       },
       perform() {
-        R.pipe(
-          Mutations.shiftTurn,
-          Mutations._updateGame
-        )(this.game);
+        return {
+          game: R.pipe(
+            Mutations.shiftTurn
+          )(this.game),
+        };
       },
     },
     {
@@ -84,9 +85,12 @@ export function playerContext() {
         return Mutations.hasClicks(this.player);
       },
       perform() {
-        Mutations.drawCard(this.player);
-        Mutations.click(this.player, 1);
-        Mutations._updatePlayer(this.player);
+        return {
+          player: R.pipe(
+            Mutations.drawCard(5),
+            Mutations.click(1)
+          )(this.player),
+        };
       },
     },
 
@@ -96,9 +100,12 @@ export function playerContext() {
         return Mutations.hasClicks(this.player);
       },
       perform() {
-        Mutations.receiveCredits(1);
-        Mutations.click(this.player, 1);
-        Mutations._updatePlayer(this.player);
+        return {
+          player: R.pipe(
+            Mutations.receiveCredits(1),
+            Mutations.click(1)
+          )(this.player),
+        };
       },
     },
   ];
