@@ -2,7 +2,7 @@ import R from 'ramda'
 
 import { Mutations } from '../mutations.js'
 
-export const PlayerContext = function(player) {
+export function playerContext(player) {
 
   return [
     {
@@ -38,12 +38,12 @@ export const PlayerContext = function(player) {
           Mutations.shuffleDeck,
           Mutations.drawCard(5),
           Mutations._updatePlayer,
-        )(this[player])
+        )(this[player]);
 
         R.pipe(
           Mutations.shiftTurn,
           Mutations._updateGame
-        )(this.game)
+        )(this.game);
       }
     },
 

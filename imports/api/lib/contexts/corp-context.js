@@ -1,24 +1,24 @@
-import { Mutations } from '../mutations.js'
+import { Mutations } from '../mutations.js';
 
-export const CorpContext = function (player) {
+export function corpContext() {
   return [
     {
       label: "Trash Runner's Resource",
-      requirement: function() {
-        return Mutations.hasClicks(this.player)
+      requirement: function requirement() {
+        return Mutations.hasClicks(this.player);
       },
       perform() {
 
-      }
+      },
     },
     {
-      label: "Purge Virus",
-      requirement: function() {
-        return Mutations.hasClicks(this.player)
+      label: 'Purge Virus',
+      requirement() {
+        return Mutations.hasClicks(this.player);
       },
       perform() {
 
-      }
+      },
     },
-  ]
+  ];
 }

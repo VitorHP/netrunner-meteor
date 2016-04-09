@@ -1,46 +1,46 @@
-import { PlayerContext } from "./contexts/player-context.js"
-import { CorpContext }   from "./contexts/corp-context.js"
-import { RunnerContext } from "./contexts/runner-context.js"
-import { HandContext }   from "./contexts/hand-context.js"
+import { playerContext } from './contexts/player-context.js';
+import { corpContext } from './contexts/corp-context.js';
+import { runnerContext } from './contexts/runner-context.js';
+import { handContext } from './contexts/hand-context.js';
 
-function wrapPerform (fn, data) {
-  return function() {
-    return fn.apply(data)
-  }
+function wrapPerform(fn, data) {
+  return function applyData() {
+    return fn.apply(data);
+  };
 }
 
-ActionFactory = {
+export const ActionFactory = {
 
   // wraps the perform function with 'this' being the data context of the Template
-  allowedActions (actionList, data) {
-    return actionList.reduce(function(memo, action){
-      rFn = action.requirement || function() { return true }
+  allowedActions(actionList, data) {
+    return actionList.reduce((memo, action) => {
+      const rFn = action.requirement || function returnTrue() { return true; };
 
-      if (rFn.apply(data))
+      if (rFn.apply(data)) {
         memo.push({
           label: action.label,
-          perform: wrapPerform(action.perform, data)
-        })
+          perform: wrapPerform(action.perform, data),
+        });
+      }
 
-      return memo
-    }, [])
-
+      return memo;
+    }, []);
   },
 
   corpActions(data) {
-    let player = "corp"
+    const player = 'corp';
 
-    return this.allowedActions(PlayerContext(player).concat(CorpContext(player)), data)
+    return this.allowedActions(playerContext(player).concat(corpContext(player)), data);
   },
 
   runnerActions(data) {
-    let player = "runner"
+    const player = 'runner';
 
-    return this.allowedActions(PlayerContext(player).concat(RunnerContext(player)), data)
+    return this.allowedActions(playerContext(player).concat(runnerContext(player)), data);
   },
 
   handActions(data) {
-    return this.allowedActions(HandContext(), data)
-  }
+    return this.allowedActions(handContext(), data);
+  },
 
-}
+};
