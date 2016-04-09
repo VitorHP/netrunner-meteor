@@ -6,3 +6,5 @@ languages:
 exclude_paths:
 - "imports/startup/server/seeds.js"
 - "**.specs.js"
+- "/**/spawns.js"
+- "/**/*.spawns.js"
