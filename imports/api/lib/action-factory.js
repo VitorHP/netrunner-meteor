@@ -22,9 +22,7 @@ function updateContext(context) {
 
 function wrapPerform(fn, data) {
   return function applyData() {
-    const context = fn.apply(data);
-
-    R.map(updateContext, context);
+    R.map(updateContext, fn(data));
   };
 }
 
@@ -35,7 +33,7 @@ export const ActionFactory = {
     return actionList.reduce((memo, action) => {
       const rFn = action.requirement || function returnTrue() { return true; };
 
-      if (rFn.apply(data)) {
+      if (rFn(data)) {
         memo.push({
           label: action.label,
           perform: wrapPerform(action.perform, data),

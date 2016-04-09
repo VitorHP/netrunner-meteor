@@ -6,105 +6,105 @@ export function playerContext() {
   return [
     {
       label: 'Ready',
-      requirement() {
-        return !Mutations.isReady(this.player);
+      requirement(data) {
+        return !Mutations.isReady(data.player);
       },
-      perform() {
+      perform(data) {
         return {
           player: R.pipe(
             Mutations.ready,
             Mutations.shuffleDeck,
             Mutations.drawCard(5)
-          )(this.player),
+          )(data.player),
 
           game: R.pipe(
             Mutations.shiftTurn
-          )(this.game),
+          )(data.game),
         };
       },
     },
 
     {
       label: 'Mulligan',
-      requirement() {
-        return Mutations.isReady(this.player) &&
-               !Mutations.didMulligan(this.player);
+      requirement(data) {
+        return Mutations.isReady(data.player) &&
+               !Mutations.didMulligan(data.player);
       },
-      perform() {
+      perform(data) {
         return {
           player: R.pipe(
             Mutations.acceptMulligan(true),
-            Mutations.returnToDeck(this.player.hand, 'hand'),
+            Mutations.returnToDeck(data.player.hand, 'hand'),
             Mutations.shuffleDeck,
             Mutations.drawCard(5)
-          )(this.player),
+          )(data.player),
 
           game: R.pipe(
             Mutations.shiftTurn
-          )(this.game),
+          )(data.game),
         };
       },
     },
 
     {
       label: 'Accept',
-      requirement() {
-        return Mutations.isReady(this.player) &&
-               !Mutations.didMulligan(this.player);
+      requirement(data) {
+        return Mutations.isReady(data.player) &&
+               !Mutations.didMulligan(data.player);
       },
-      perform() {
+      perform(data) {
         return {
           player: R.pipe(
             Mutations.acceptMulligan(false)
-          )(this.player),
+          )(data.player),
 
           game: R.pipe(
             Mutations.shiftTurn
-          )(this.game),
+          )(data.game),
         };
       },
     },
 
     {
       label: 'End Turn',
-      requirement() {
-        return !Mutations.hasClicks(this.player) &&
-               Mutations.isTurnOwner(this.player);
+      requirement(data) {
+        return !Mutations.hasClicks(data.player) &&
+               Mutations.isTurnOwner(data.player);
       },
-      perform() {
+      perform(data) {
         return {
           game: R.pipe(
             Mutations.shiftTurn
-          )(this.game),
+          )(data.game),
         };
       },
     },
     {
       label: 'Draw card',
-      requirement() {
-        return Mutations.hasClicks(this.player);
+      requirement(data) {
+        return Mutations.hasClicks(data.player);
       },
-      perform() {
+      perform(data) {
         return {
           player: R.pipe(
             Mutations.drawCard(5),
             Mutations.click(1)
-          )(this.player),
+          )(data.player),
         };
       },
     },
 
     {
       label: 'Receive 1 Credit',
-      requirement() {
-        return Mutations.hasClicks(this.player);
+      requirement(data) {
+        return Mutations.hasClicks(data.player);
       },
-      perform() {
+      perform(data) {
         return {
           player: R.pipe(
             Mutations.receiveCredits(1),
             Mutations.click(1)
-          )(this.player),
+          )(data.player),
         };
       },
     },

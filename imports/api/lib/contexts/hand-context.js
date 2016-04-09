@@ -5,19 +5,18 @@ export function handContext() {
   return [
     {
       label: 'Install',
-      requirement() {
-        return Mutations.isOfType(this.card, ['agenda', 'ice']);
+      requirement(data) {
+        return Mutations.isOfType(data.card, ['agenda', 'ice']);
       },
-      perform() {
+      perform(data) {
         let rezzed;
         let server;
-        const _this = this;
 
         Modals.choiceModal([{ label: 'Rezzed', value: true }, { label: 'Unrezzed', value: false }])
-          .then((data) => {
-            rezzed = data;
+          .then((d) => {
+            rezzed = d;
 
-            const serverChoices = _this.player.remote_servers.reduce((memo, s, index) => {
+            const serverChoices = data.player.remote_servers.reduce((memo, s, index) => {
               memo.push({ label: `Server #${index}`, value: index });
 
               return memo;
@@ -25,29 +24,29 @@ export function handContext() {
 
             return Modals.choiceModal(serverChoices);
           })
-          .then((data) => {
-            server = data;
+          .then((d) => {
+            server = d;
 
-            Mutations.removeFromHand(_this.player, _this.card);
+            Mutations.removeFromHand(data.player, data.card);
             // TODO: comparison with == can maybe lead to problems later?
             Mutations.installCard(
-              _this.player,
-              _this.card,
+              data.player,
+              data.card,
               { rezzed: Boolean(rezzed) === true, server_id: server });
 
-            Mutations._updatePlayer(_this.player);
+            Mutations._updatePlayer(data.player);
           });
       },
     },
     {
       label: 'Install',
-      requirement() {
-        return Mutations.isOfType(this.card, ['program', 'hardware', 'resource']);
+      requirement(data) {
+        return Mutations.isOfType(data.card, ['program', 'hardware', 'resource']);
       },
-      perform() {
-        Mutations.removeFromHand(this.player, this.card);
-        Mutations.installCard(this.player, this.card);
-        Mutations._updatePlayer(this.player);
+      perform(data) {
+        Mutations.removeFromHand(data.player, data.card);
+        Mutations.installCard(data.player, data.card);
+        Mutations._updatePlayer(data.player);
       },
     },
   ];
