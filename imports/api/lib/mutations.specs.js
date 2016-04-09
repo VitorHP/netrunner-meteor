@@ -30,6 +30,12 @@ describe("Mutations", function() {
     expect(subject().hasClicks(runner)).to.equal(true)
   })
 
+  it ("Mutations#fillClicks fills the player clicks to its maximum", function() {
+    runner = Spawn.create("Runner", { clicks: 0 })
+
+    expect(subject().fillClicks(runner).clicks).to.equal(4)
+  })
+
   it ("Mutations#drawCard removes a card from the deck and places it on the runner's hand", function() {
     expect(subject().drawCard(2, runner).hand.length).to.equal(2)
   })

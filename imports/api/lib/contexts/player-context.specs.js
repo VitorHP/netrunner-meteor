@@ -49,6 +49,7 @@ describe('playerContext', function() {
     beforeEach(function() {
       game = Spawn.create('Game', { turn_owner: 'runner' })
       player = Spawn.create('Runner', { ready: true, mulligan: undefined, deck_cards: [6, 7, 8, 9, 10], hand: [1, 2, 3, 4, 5] })
+      opponent = Spawn.create('Corp', { clicks: 0 })
     });
 
     describe('requirements', function(){
@@ -59,7 +60,7 @@ describe('playerContext', function() {
 
     describe('perform', function(){
       beforeEach(function(){
-        ({ player, game } = p('Mulligan', subject, { player: player, game: game }))
+        ({ player, game, opponent } = p('Mulligan', subject, { player, game, opponent }))
       })
 
       it('draws another 5 cards', function(){
@@ -73,6 +74,10 @@ describe('playerContext', function() {
       it('shifts turn', function(){
         expect(game.turn_owner).to.eq('corp')
       })
+
+      it('fills the opponents clicks if player is a runner', function(){
+        expect(opponent.clicks).to.eq(3)
+      })
     })
   })
 
@@ -80,6 +85,7 @@ describe('playerContext', function() {
     beforeEach(function() {
       game = Spawn.create('Game', { turn_owner: 'runner' })
       player = Spawn.create('Runner', { ready: true, mulligan: undefined, deck_cards: [6, 7, 8, 9, 10], hand: [1, 2, 3, 4, 5] })
+      opponent = Spawn.create('Corp', { clicks: 0 })
     });
 
     describe('requirements', function(){
@@ -90,7 +96,7 @@ describe('playerContext', function() {
 
     describe('perform', function(){
       beforeEach(function(){
-        ({ player, game } = p('Accept', subject, { player: player, game: game }))
+        ({ player, game, opponent } = p('Accept', subject, { player, game, opponent }))
       })
 
       it('accepts the current cards', function(){
@@ -103,6 +109,10 @@ describe('playerContext', function() {
 
       it('shifts turn', function(){
         expect(game.turn_owner).to.eq('corp')
+      })
+
+      it('fills the opponents clicks if player is a runner', function(){
+        expect(opponent.clicks).to.eq(3)
       })
     })
   })

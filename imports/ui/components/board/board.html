@@ -1,7 +1,7 @@
 <template name="board">
-  {{> corpArea player=corp game=game }}
+  {{> corpArea player=corp game=game opponent=runner }}
   <div class="row board__spacer">
     &nbsp;
   </div>
-  {{> runnerArea player=runner game=game }}
+  {{> runnerArea player=runner game=game opponent=corp }}
 </template>

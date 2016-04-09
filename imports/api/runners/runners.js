@@ -1,16 +1,37 @@
+import { Mongo } from 'meteor/mongo';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import 'meteor/dburles:collection-helpers';
 import R from 'ramda';
 
-import { Players } from '../players/players.js'
+import { Players } from '../players/players.js';
+import { Cards } from '../cards/cards.js';
 
 export const Runner = new Mongo.Collection('runner');
+
+function rigCards(collection) {
+  return collection.map((c) => (
+    { card: Cards.findOne({ code: c.card_code }) }
+  ));
+}
+
+const _runnerHelpers = {
+  programCards() {
+    return rigCards(this.programs);
+  },
+  hardwareCards() {
+    return rigCards(this.hardware);
+  },
+  resourceCards() {
+    return rigCards(this.resources);
+  },
+};
 
 Runner.schema = new SimpleSchema({
   _id: { type: String },
   deck_id: { type: String },
-  background_img_src: { type: String, defaultValue: "images/cards/background.png" },
+  background_img_src: { type: String, defaultValue: 'images/cards/background.png' },
   clicks: { type: Number, defaultValue: 0 },
+  max_clicks: { type: Number, defaultValue: 4 },
   credits: { type: Number, defaultValue: 0 },
   deck_cards: { type: [String], defaultValue: [] },
   discard: { type: [String], defaultValue: [] },
@@ -22,27 +43,9 @@ Runner.schema = new SimpleSchema({
   side_code: { type: String },
   mulligan: { type: Boolean, optional: true },
   ready: { type: Boolean, defaultValue: null },
-  "programs.$.card_code": { type: String },
-  "hardware.$.card_code": { type: String },
-  "resources.$.card_code": { type: String },
-})
+  'programs.$.card_code': { type: String },
+  'hardware.$.card_code': { type: String },
+  'resources.$.card_code': { type: String },
+});
 
-function rigCards(collection) {
-  return collection.map(function(c) {
-    return { card: Cards.findOne({ 'code': c.card_code }) }
-  })
-}
-
-var _runnerHelpers = {
-  programCards() {
-    return rigCards(this.programs)
-  },
-  hardwareCards() {
-    return rigCards(this.hardware)
-  },
-  resourceCards() {
-    return rigCards(this.resources)
-  }
-}
-
-Runner.helpers(R.merge(Players.commonHelpers, _runnerHelpers))
+Runner.helpers(R.merge(Players.commonHelpers, _runnerHelpers));

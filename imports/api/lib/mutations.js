@@ -16,6 +16,7 @@ const resources = N.lensProp('resources');
 const remoteServers = N.lensProp('remote_servers');
 const cards = N.lensProp('cards');
 const ices = N.lensProp('ices');
+const maxClicks = N.lensProp('max_clicks');
 
 export const Mutations = {
   // DB
@@ -66,12 +67,18 @@ export const Mutations = {
 
   // common
 
-  click(amount, player) {
-    return R.over(clicks, R.subtract(amount), player);
+  isRunner(player) {
+    return player.side_code === 'runner';
   },
+
+  click: R.curry((amount, player) => R.over(clicks, R.flip(R.subtract)(amount), player)),
 
   hasClicks(player) {
     return R.gt(R.view(clicks, (player || {})), 0);
+  },
+
+  fillClicks(player) {
+    return R.over(clicks, R.add(R.view(maxClicks, (player || {}))), player);
   },
 
   drawCard: R.curry((count, player) => {
@@ -89,9 +96,7 @@ export const Mutations = {
     return R.over(hand, R.remove(targetIndex, 1), discarded);
   },
 
-  receiveCredits(amount, player) {
-    return R.over(credits, R.add(amount), player);
-  },
+  receiveCredits: R.curry((amount, player) => R.over(credits, R.add(amount), player)),
 
   payCredits(amount, player) {
     return R.over(credits, R.subtract(amount), player);
@@ -142,7 +147,7 @@ export const Mutations = {
   },
 
   isTurnOwner(player, game) {
-    return R.view(turnOwner, (game || {})) === player;
+    return R.view(turnOwner, (game || {})) === player.side_code;
   },
 
   // Deck
