@@ -1,14 +1,13 @@
-import R from 'ramda'
+import R from 'ramda';
 
-import { Mutations } from '../mutations.js'
+import { Mutations } from '../mutations.js';
 
 export function playerContext(player) {
-
   return [
     {
-      label: "Ready",
-      requirement: function() {
-        return !Mutations.isReady(this[player])
+      label: 'Ready',
+      requirement() {
+        return !Mutations.isReady(this[player]);
       },
       perform() {
         R.pipe(
@@ -16,20 +15,20 @@ export function playerContext(player) {
           Mutations.shuffleDeck,
           Mutations.drawCard(5),
           Mutations._updatePlayer
-        )(this[player])
+        )(this[player]);
 
         R.pipe(
           Mutations.shiftTurn,
           Mutations._updateGame
-        )(this.game)
-      }
+        )(this.game);
+      },
     },
 
     {
-      label: "Mulligan",
-      requirement: function() {
+      label: 'Mulligan',
+      requirement() {
         return Mutations.isReady(this[player]) &&
-               !Mutations.didMulligan(this[player])
+               !Mutations.didMulligan(this[player]);
       },
       perform() {
         R.pipe(
@@ -37,70 +36,70 @@ export function playerContext(player) {
           Mutations.returnToDeck(this[player].hand, 'hand'),
           Mutations.shuffleDeck,
           Mutations.drawCard(5),
-          Mutations._updatePlayer,
+          Mutations._updatePlayer
         )(this[player]);
 
         R.pipe(
           Mutations.shiftTurn,
           Mutations._updateGame
         )(this.game);
-      }
+      },
     },
 
     {
-      label: "Accept",
-      requirement: function() {
+      label: 'Accept',
+      requirement() {
         return Mutations.isReady(this[player]) &&
-               !Mutations.didMulligan(this[player])
+               !Mutations.didMulligan(this[player]);
       },
       perform() {
         R.pipe(
           Mutations.acceptMulligan(false),
           Mutations._updatePlayer
-        )(this[player])
+        )(this[player]);
 
         R.pipe(
           Mutations.shiftTurn,
-          Mutations._updateGame,
-        )(this.game)
-      }
+          Mutations._updateGame
+        )(this.game);
+      },
     },
 
     {
-      label: "End Turn",
-      requirement: function() {
+      label: 'End Turn',
+      requirement() {
         return !Mutations.hasClicks(this[player]) &&
-               Mutations.isTurnOwner(this[player])
+               Mutations.isTurnOwner(this[player]);
       },
       perform() {
         R.pipe(
           Mutations.shiftTurn,
           Mutations._updateGame
-        )(this.game)
-      }
+        )(this.game);
+      },
     },
     {
-      label: "Draw card",
-      requirement: function() {
-        return Mutations.hasClicks(this.player)
+      label: 'Draw card',
+      requirement() {
+        return Mutations.hasClicks(this.player);
       },
       perform() {
-        Mutations.drawCard(this.player)
-        Mutations.click(this.player, 1)
-        Mutations._updatePlayer(this.player)
-      }
+        Mutations.drawCard(this.player);
+        Mutations.click(this.player, 1);
+        Mutations._updatePlayer(this.player);
+      },
     },
 
     {
-      label: "Receive 1 Credit",
-      requirement: function() {
-        return Mutations.hasClicks(this.player)
+      label: 'Receive 1 Credit',
+      requirement() {
+        return Mutations.hasClicks(this.player);
       },
       perform() {
-        Mutations.receiveCredits(1)
-        Mutations.click(this.player, 1)
-        Mutations._updatePlayer(this.player)
-      }
+        Mutations.receiveCredits(1);
+        Mutations.click(this.player, 1);
+        Mutations._updatePlayer(this.player);
+      },
     },
-  ]
+  ];
 }

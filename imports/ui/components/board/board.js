@@ -1,4 +1,4 @@
-import './board.html'
+import './board.html';
 
-import './templates/corp-area.js'
-import './templates/runner-area.js'
+import './templates/corp-area.js';
+import './templates/runner-area.js';
