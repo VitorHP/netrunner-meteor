@@ -2,12 +2,12 @@ import R from 'ramda';
 
 import { Mutations } from '../mutations.js';
 
-export function playerContext(player) {
+export function playerContext() {
   return [
     {
       label: 'Ready',
       requirement() {
-        return !Mutations.isReady(this[player]);
+        return !Mutations.isReady(this.player);
       },
       perform() {
         R.pipe(
@@ -15,7 +15,7 @@ export function playerContext(player) {
           Mutations.shuffleDeck,
           Mutations.drawCard(5),
           Mutations._updatePlayer
-        )(this[player]);
+        )(this.player);
 
         R.pipe(
           Mutations.shiftTurn,
@@ -27,17 +27,17 @@ export function playerContext(player) {
     {
       label: 'Mulligan',
       requirement() {
-        return Mutations.isReady(this[player]) &&
-               !Mutations.didMulligan(this[player]);
+        return Mutations.isReady(this.player) &&
+               !Mutations.didMulligan(this.player);
       },
       perform() {
         R.pipe(
           Mutations.acceptMulligan(true),
-          Mutations.returnToDeck(this[player].hand, 'hand'),
+          Mutations.returnToDeck(this.player.hand, 'hand'),
           Mutations.shuffleDeck,
           Mutations.drawCard(5),
           Mutations._updatePlayer
-        )(this[player]);
+        )(this.player);
 
         R.pipe(
           Mutations.shiftTurn,
@@ -49,14 +49,14 @@ export function playerContext(player) {
     {
       label: 'Accept',
       requirement() {
-        return Mutations.isReady(this[player]) &&
-               !Mutations.didMulligan(this[player]);
+        return Mutations.isReady(this.player) &&
+               !Mutations.didMulligan(this.player);
       },
       perform() {
         R.pipe(
           Mutations.acceptMulligan(false),
           Mutations._updatePlayer
-        )(this[player]);
+        )(this.player);
 
         R.pipe(
           Mutations.shiftTurn,
@@ -68,8 +68,8 @@ export function playerContext(player) {
     {
       label: 'End Turn',
       requirement() {
-        return !Mutations.hasClicks(this[player]) &&
-               Mutations.isTurnOwner(this[player]);
+        return !Mutations.hasClicks(this.player) &&
+               Mutations.isTurnOwner(this.player);
       },
       perform() {
         R.pipe(

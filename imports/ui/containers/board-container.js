@@ -8,7 +8,7 @@ import { Game } from '../../api/games/games.js';
 import './board-container.html';
 import '../components/board/board.js';
 
-Template.boardContainer.onCreated(() => {
+Template.boardContainer.onCreated(function subscribeToGame() {
   this.autorun(() => {
     Meteor.subscribe('Game.game');
   });

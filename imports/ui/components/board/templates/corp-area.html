@@ -4,7 +4,7 @@
     <div class="col-md-12">
       <div class="corp-area {{active(game.turn_owner)}} row">
         <div class="remote-servers col-md-6">
-          {{#each server in corp.remoteServersCards }}
+          {{#each server in player.remoteServersCards }}
             {{> remoteServer server=server }}
           {{/each }}
         </div>
@@ -14,14 +14,14 @@
           <div class="row">
             <div class="col-md-4">
               <div class="identity">
-                {{> card card=(corp.identity) }}
+                {{> card card=(player.identity) }}
               </div>
               <div class="root">
               </div>
             </div>
             <div class="col-md-4">
               <div class="rnd">
-                {{> deck size=corp.deckSize background=corp.background_img_src }}
+                {{> deck size=player.deckSize background=player.background_img_src }}
               </div>
               <div class="root">
               </div>
@@ -47,7 +47,7 @@
     </div>
   </div>
   <div class="row">
-    {{> hand player=corp }}
+    {{> hand player=player }}
   </div>
 </template>
 

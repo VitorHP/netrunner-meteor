@@ -7,10 +7,10 @@
             <div class="heap col-md-4">
             </div>
             <div class="stack col-md-4">
-              {{> deck size=runner.deckSize background=runner.background_img_src }}
+              {{> deck size=player.deckSize background=player.background_img_src }}
             </div>
             <div class="identity col-md-4">
-              {{> card card=runner.identity}}
+              {{> card card=player.identity}}
             </div>
           </div>
           <div class="row">
@@ -28,17 +28,17 @@
         </div>
         <div class="rig col-md-6">
           <div class="rig__program-row">
-            {{#each program in runner.programCards }}
+            {{#each program in player.programCards }}
               {{> card card=program.card }}
             {{/each}}
           </div>
           <div class="rig__hardware-row">
-            {{#each hardware in runner.hardwareCards }}
+            {{#each hardware in player.hardwareCards }}
               {{> card card=hardware.card }}
             {{/each}}
           </div>
           <div class="rig__resource-row">
-            {{#each resource in runner.resourceCards }}
+            {{#each resource in player.resourceCards }}
               {{> card card=resource.card }}
             {{/each}}
           </div>
@@ -47,6 +47,6 @@
     </div>
   </div>
   <div class="row">
-    {{> hand player=runner }}
+    {{> hand player=player }}
   </div>
 </template>
