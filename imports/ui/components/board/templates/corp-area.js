@@ -1,19 +1,22 @@
-import './corp-area.html'
+import { ActionFactory } from '../../../../api/lib/action-factory.js';
+import { Template } from 'meteor/templating';
 
-import './card.js'
-import './deck.js'
-import './action-list.js'
-import './hand.js'
+import './corp-area.html';
 
-import "../../../../api/lib/action-factory.js"
+import './card.js';
+import './deck.js';
+import './action-list.js';
+import './hand.js';
+
+import '../../../../api/lib/action-factory.js';
 
 Template.corpArea.helpers({
   actions() {
-    return ActionFactory.corpActions(Template.instance().data)
+    return ActionFactory.corpActions(Template.instance().data);
   },
 
-  active (turn_owner) {
-    return turn_owner == "corp" ? "corp-area--active" : ""
-  }
+  active(turnOwner) {
+    return turnOwner === 'corp' ? 'corp-area--active' : '';
+  },
 
-})
+});

@@ -1,4 +1,4 @@
-import { Modals } from 'meteor/netrunner:modals';
+import { Modals } from '../../../ui/components/modals/modals.js';
 import { Mutations } from '../mutations.js';
 
 export function handContext() {
