@@ -7,6 +7,7 @@ import './card.js';
 import './deck.js';
 import './action-list.js';
 import './hand.js';
+import './score.js';
 
 import '../../../../api/lib/action-factory.js';
 

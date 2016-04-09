@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { Modals } from '../../modals/modals.js';
 
 import './runner-area.html';
+import './score.js';
 
 Template.runnerArea.helpers({
   actions() {
