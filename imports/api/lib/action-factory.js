@@ -1,4 +1,4 @@
-import { playerContext } from './contexts/player-context.js';
+import { PlayerContext } from './contexts/player-context.js';
 import { corpContext } from './contexts/corp-context.js';
 import { runnerContext } from './contexts/runner-context.js';
 import { handContext } from './contexts/hand-context.js';
@@ -47,13 +47,13 @@ export const ActionFactory = {
   corpActions(data) {
     const player = 'corp';
 
-    return this.allowedActions(playerContext(player).concat(corpContext(player)), data);
+    return this.allowedActions(PlayerContext.concat(corpContext(player)), data);
   },
 
   runnerActions(data) {
     const player = 'runner';
 
-    return this.allowedActions(playerContext(player).concat(runnerContext(player)), data);
+    return this.allowedActions(PlayerContext.concat(runnerContext(player)), data);
   },
 
   handActions(data) {

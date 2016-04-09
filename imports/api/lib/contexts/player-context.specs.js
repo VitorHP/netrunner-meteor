@@ -1,28 +1,54 @@
-import { Spawn } from "meteor/netrunner:spawn"
+import { Spawn } from 'meteor/netrunner:spawn';
+import { expect } from 'meteor/practicalmeteor:chai';
+import { spies }  from 'meteor/practicalmeteor:sinon';
+import R from 'ramda';
 
+import { Mutations } from '../mutations.js';
 import { PlayerContext } from './player-context.js';
 
-describe("PlayerContext", function() {
-  var runner;
+function method(label, subject){
+  return R.find(R.propEq('label', label), subject);
+}
+
+function requirement(label, subject) {
+  return method(label, subject).requirement;
+}
+
+function perform(label, subject) {
+  return method(label, subject).perform;
+}
+
+describe('playerContext', function() {
+  let player, game;
 
   beforeEach(function() {
-    runner = Spawn.create("Runner", { ready: false })
-    pc = PlayerContext('runner')
-  })
+    subject = PlayerContext;
+  });
 
-  describe ("Actions.global#ready", function() {
-    let r;
+  describe('Actions.global#ready', function() {
+    beforeEach(function() {
+      game = Spawn.create('Game')
+      player = Spawn.create('Runner', { ready: false, deck_cards: [1, 2, 3, 4, 5], hand: [] })
+    });
 
-    beforeEach(function(){
-
+    describe('requirements', function(){
+      it('player is not ready', function(){
+        expect(requirement('Ready', subject)({ player: player })).to.eq(true)
+      })
     })
 
-    it.skip ("happens when the player is not ready", function(){
+    describe('perform', function(){
+      beforeEach(function(){
+        ({ player, game } = perform('Ready', subject)({ player: player, game: game }))
+      })
 
-    })
+      it('draws 5 cards', function(){
+        expect(player.hand.length).to.eq(5)
+      })
 
-    it.skip ("draws cards for the player then shifts turn", function(){
-
+      it('readies player', function(){
+        expect(player.ready).to.eq(true)
+      })
     })
   })
 })

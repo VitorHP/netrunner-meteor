@@ -16,7 +16,7 @@ describe("Mutations", function() {
     card = Spawn.create("Card")
   })
 
-  subject = function() {
+  function subject() {
     return Mutations
   }
 
