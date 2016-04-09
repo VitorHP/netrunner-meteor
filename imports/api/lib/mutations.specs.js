@@ -122,10 +122,12 @@ describe("Mutations", function() {
 
   it ("Mutations#isTurnOwner returns true if is the turned owner", function() {
     game = Spawn.create("Game", { turn_owner: "runner" })
-    expect(subject().isTurnOwner("runner", game)).to.equal(true)
+    corp = Spawn.create("Corp")
+    expect(subject().isTurnOwner(corp, game)).to.equal(false)
 
     game = Spawn.create("Game", { turn_owner: "corp" })
-    expect(subject().isTurnOwner("corp", game)).to.equal(true)
+    corp = Spawn.create("Corp")
+    expect(subject().isTurnOwner(corp, game)).to.equal(true)
   })
 
   // Deck
