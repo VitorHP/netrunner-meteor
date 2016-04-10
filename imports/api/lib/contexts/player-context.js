@@ -93,6 +93,10 @@ export const PlayerContext = [
         game: R.pipe(
           Mutations.shiftTurn
         )(data.game),
+
+        opponent: R.pipe(
+          Mutations.fillClicks
+        )(data.opponent),
       };
     },
   },
