@@ -36,6 +36,7 @@ export const ActionFactory = {
       if (rFn(data)) {
         memo.push({
           label: action.label,
+          alias: action.alias,
           perform: wrapPerform(action.perform, data),
         });
       }
