@@ -20,6 +20,10 @@ describe("Mutations", function() {
     return Mutations
   }
 
+  it ("Mutations#isRunner reduces the target clicks by the amount specified", function() {
+    expect(subject().isRunner(runner)).to.equal(true)
+  })
+
   it ("Mutations#click reduces the target clicks by the amount specified", function() {
     expect(subject().click(2, runner).clicks).to.equal(0)
   })
