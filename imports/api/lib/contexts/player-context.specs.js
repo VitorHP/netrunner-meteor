@@ -22,13 +22,13 @@ describe('playerContext', function() {
 
     describe('requirements', function(){
       it('player is not ready', function(){
-        expect(r('Ready', subject, { player: player })).to.eq(true)
+        expect(r('ready', subject, { player: player })).to.eq(true)
       })
     })
 
     describe('perform', function(){
       beforeEach(function(){
-        ({ player, game } = p('Ready', subject, { player: player, game: game }))
+        ({ player, game } = p('ready', subject, { player: player, game: game }))
       })
 
       it('draws 5 cards', function(){
@@ -54,13 +54,13 @@ describe('playerContext', function() {
 
     describe('requirements', function(){
       it('player is ready and did not mulligan', function(){
-        expect(r('Mulligan', subject, { player: player })).to.eq(true)
+        expect(r('mulligan', subject, { player: player })).to.eq(true)
       })
     })
 
     describe('perform', function(){
       beforeEach(function(){
-        ({ player, game, opponent } = p('Mulligan', subject, { player, game, opponent }))
+        ({ player, game, opponent } = p('mulligan', subject, { player, game, opponent }))
       })
 
       it('draws another 5 cards', function(){
@@ -90,13 +90,13 @@ describe('playerContext', function() {
 
     describe('requirements', function(){
       it('player is ready and did not mulligan', function(){
-        expect(r('Accept', subject, { player: player })).to.eq(true)
+        expect(r('accept', subject, { player: player })).to.eq(true)
       })
     })
 
     describe('perform', function(){
       beforeEach(function(){
-        ({ player, game, opponent } = p('Accept', subject, { player, game, opponent }))
+        ({ player, game, opponent } = p('accept', subject, { player, game, opponent }))
       })
 
       it('accepts the current cards', function(){
@@ -117,4 +117,57 @@ describe('playerContext', function() {
     })
   })
 
+  describe('Actions.global#drawCard', function() {
+    beforeEach(function() {
+      player = Spawn.create('Runner', { clicks: 1, hand: [] })
+    });
+
+    describe('requirements', function(){
+      it('player has clicks', function(){
+        expect(r('draw-card', subject, { player: player })).to.eq(true)
+      })
+    })
+
+    describe('perform', function(){
+      beforeEach(function(){
+        ({ player } = p('draw-card', subject, { player }))
+      })
+
+      it('adds a card to the player\'s hand', function(){
+        expect(player.hand.length).to.eq(1)
+      })
+
+      it('removes a click', function(){
+        expect(player.clicks).to.eq(0)
+      })
+
+    })
+  })
+
+  describe('Actions.global#drawCard', function() {
+    beforeEach(function() {
+      player = Spawn.create('Runner', { clicks: 1, credits: 0 })
+    });
+
+    describe('requirements', function(){
+      it('player has clicks', function(){
+        expect(r('receive-credit', subject, { player: player })).to.eq(true)
+      })
+    })
+
+    describe('perform', function(){
+      beforeEach(function(){
+        ({ player } = p('receive-credit', subject, { player }))
+      })
+
+      it('adds a credit to the player\'s account', function(){
+        expect(player.credits).to.eq(1)
+      })
+
+      it('removes a click', function(){
+        expect(player.clicks).to.eq(0)
+      })
+
+    })
+  })
 })

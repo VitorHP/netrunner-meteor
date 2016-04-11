@@ -11,6 +11,7 @@ function startOpponentIfRunner(player) {
 export const PlayerContext = [
   {
     label: 'Ready',
+    alias: 'ready',
     requirement(data) {
       return !Mutations.isReady(data.player);
     },
@@ -31,6 +32,7 @@ export const PlayerContext = [
 
   {
     label: 'Mulligan',
+    alias: 'mulligan',
     requirement(data) {
       return Mutations.isReady(data.player) &&
               !Mutations.didMulligan(data.player);
@@ -59,6 +61,7 @@ export const PlayerContext = [
 
   {
     label: 'Accept',
+    alias: 'accept',
     requirement(data) {
       return Mutations.isReady(data.player) &&
               !Mutations.didMulligan(data.player);
@@ -84,6 +87,7 @@ export const PlayerContext = [
 
   {
     label: 'End Turn',
+    alias: 'end-turn',
     requirement(data) {
       return !Mutations.hasClicks(data.player) &&
               Mutations.isTurnOwner(data.player, data.game);
@@ -102,6 +106,7 @@ export const PlayerContext = [
   },
   {
     label: 'Draw card',
+    alias: 'draw-card',
     requirement(data) {
       return Mutations.hasClicks(data.player);
     },
@@ -117,6 +122,7 @@ export const PlayerContext = [
 
   {
     label: 'Receive 1 Credit',
+    alias: 'receive-credit',
     requirement(data) {
       return Mutations.hasClicks(data.player);
     },
