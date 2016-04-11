@@ -57,6 +57,7 @@ export const PlayerContext = [
         )(data.opponent),
       };
     },
+    afterPerform: ['start-game']
   },
 
   {
@@ -83,6 +84,7 @@ export const PlayerContext = [
         )(data.opponent),
       };
     },
+    afterPerform: ['start-game'],
   },
 
   {
