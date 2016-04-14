@@ -147,7 +147,7 @@ export const Mutations = {
   },
 
   isTurnOwner(player, game) {
-    return R.view(turnOwner, (game || {})) === player.side_code;
+    return player && game && game.turn_owner === player.side_code;
   },
 
   // Deck
