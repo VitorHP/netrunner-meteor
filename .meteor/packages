@@ -25,3 +25,4 @@ reywood:publish-composite
 netrunner:spawn
 practicalmeteor:mocha@2.1.1-rc.2
 dispatch:mocha-phantomjs
+twbs:bootstrap
