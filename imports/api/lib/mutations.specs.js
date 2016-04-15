@@ -7,7 +7,7 @@ import '/imports/tests/support/spawns.js'
 import { Mutations } from "./mutations.js"
 
 describe("Mutations", function() {
-  var runner, game, corp;
+  var runner, game, corp, card;
 
   beforeEach(function() {
     runner = Spawn.create("Runner")

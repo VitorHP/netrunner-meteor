@@ -22,13 +22,15 @@ function updateContext(context) {
 
 function wrapPerform(fn, data) {
   return function applyData() {
-    R.map(updateContext, fn(data));
+    R.ifElse(R.is(Object),
+      R.map(updateContext),
+      () => { throw new Error('Return of action must be an object'); }
+    )(fn(data));
   };
 }
 
 export const ActionFactory = {
 
-  // wraps the perform function with 'this' being the data context of the Template
   allowedActions(actionList, data) {
     return actionList.reduce((memo, action) => {
       const rFn = action.requirement || function returnTrue() { return true; };
