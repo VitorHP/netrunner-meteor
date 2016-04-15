@@ -74,10 +74,6 @@ describe('playerContext', function() {
       it('shifts turn', function(){
         expect(game.turn_owner).to.eq('corp')
       })
-
-      it('fills the opponents clicks if player is a runner', function(){
-        expect(opponent.clicks).to.eq(3)
-      })
     })
   })
 
@@ -110,9 +106,28 @@ describe('playerContext', function() {
       it('shifts turn', function(){
         expect(game.turn_owner).to.eq('corp')
       })
+    })
+  })
 
-      it('fills the opponents clicks if player is a runner', function(){
+  describe('Actions.global#startGame', function() {
+    beforeEach(function(){
+      player = Spawn.create("Runner", { mulligan: true }),
+      opponent = Spawn.create("Corp", { mulligan: false, clicks: 0 }),
+      game = Spawn.create("Game", { turn: 0 })
+    })
+
+    describe('requirements', function(){
+      it('both players did mulligan', function() {
+        expect(r('start-game', subject, { player, opponent, game })).to.eq(true)
+      })
+    })
+
+    describe('perform', function(){
+      it('fills the corp\'s clicks and starts the first turn', function(){
+        ({ player, opponent, game } = p('start-game', subject, { player, opponent, game }))
+
         expect(opponent.clicks).to.eq(3)
+        expect(game.turn).to.eq(1)
       })
     })
   })

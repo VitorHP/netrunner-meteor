@@ -17,6 +17,7 @@ const remoteServers = N.lensProp('remote_servers');
 const cards = N.lensProp('cards');
 const ices = N.lensProp('ices');
 const maxClicks = N.lensProp('max_clicks');
+const turn = N.lensProp('turn');
 
 export const Mutations = {
   // DB
@@ -146,8 +147,14 @@ export const Mutations = {
     return R.set(turnOwner, nextTurnOwner, game);
   },
 
+  newTurn: R.over(turn, R.inc),
+
   isTurnOwner(player, game) {
     return player && game && game.turn_owner === player.side_code;
+  },
+
+  gameStarted(game) {
+    return game.turn > 0;
   },
 
   // Deck

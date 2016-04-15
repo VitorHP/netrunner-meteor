@@ -2,12 +2,6 @@ import R from 'ramda';
 
 import { Mutations } from '../mutations.js';
 
-function startOpponentIfRunner(player) {
-  return Mutations.isRunner(player) ?
-    Mutations.fillClicks :
-    R.identity;
-}
-
 export const PlayerContext = [
   {
     label: 'Ready',
@@ -38,8 +32,6 @@ export const PlayerContext = [
               !Mutations.didMulligan(data.player);
     },
     perform(data) {
-      const fn = startOpponentIfRunner(data.player);
-
       return {
         player: R.pipe(
           Mutations.acceptMulligan(true),
@@ -51,13 +43,9 @@ export const PlayerContext = [
         game: R.pipe(
           Mutations.shiftTurn
         )(data.game),
-
-        opponent: R.pipe(
-          fn
-        )(data.opponent),
       };
     },
-    afterPerform: ['start-game']
+    afterPerform: ['start-game'],
   },
 
   {
@@ -68,8 +56,6 @@ export const PlayerContext = [
               !Mutations.didMulligan(data.player);
     },
     perform(data) {
-      const fn = startOpponentIfRunner(data.player);
-
       return {
         player: R.pipe(
           Mutations.acceptMulligan(false)
@@ -78,13 +64,31 @@ export const PlayerContext = [
         game: R.pipe(
           Mutations.shiftTurn
         )(data.game),
-
-        opponent: R.pipe(
-          fn
-        )(data.opponent),
       };
     },
     afterPerform: ['start-game'],
+  },
+
+  {
+    label: 'Start Game',
+    alias: 'start-game',
+    requirement(data) {
+      return Mutations.didMulligan(data.player) &&
+        Mutations.didMulligan(data.opponent) &&
+        !Mutations.gameStarted(data.game);
+    },
+    perform(data) {
+      const corp = data.player.side_code === 'corp' ? 'player' : 'opponent';
+
+      return {
+        [corp]: R.pipe(
+          Mutations.fillClicks
+        )(data[corp]),
+        game: R.pipe(
+          Mutations.newTurn
+        )(data.game),
+      };
+    },
   },
 
   {

@@ -124,6 +124,11 @@ describe("Mutations", function() {
     expect(subject().shiftTurn(game).turn_owner).to.equal("corp")
   })
 
+  it ("Mutations#newTurn increases turn counter", function(){
+    game = Spawn.create("Game", { turn: 2 })
+    expect(subject().newTurn(game).turn).to.equal(3)
+  })
+
   it ("Mutations#isTurnOwner returns true if is the turned owner", function() {
     game = Spawn.create("Game", { turn_owner: "runner" })
     corp = Spawn.create("Corp")
@@ -132,6 +137,11 @@ describe("Mutations", function() {
     game = Spawn.create("Game", { turn_owner: "corp" })
     corp = Spawn.create("Corp")
     expect(subject().isTurnOwner(corp, game)).to.equal(true)
+  })
+
+  it ("Mutations#gameStarted returns true if turn is bigger than zero", function() {
+    game = Spawn.create("Game", { turn: 0 })
+    expect(subject().gameStarted(game)).to.equal(false)
   })
 
   // Deck
