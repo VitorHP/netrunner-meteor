@@ -74,8 +74,8 @@ export const PlayerContext = [
     alias: 'start-game',
     requirement(data) {
       return Mutations.didMulligan(data.player) &&
-        Mutations.didMulligan(data.opponent) &&
-        !Mutations.gameStarted(data.game);
+             Mutations.didMulligan(data.opponent) &&
+             !Mutations.gameStarted(data.game);
     },
     perform(data) {
       const corp = data.player.side_code === 'corp' ? 'player' : 'opponent';
@@ -95,7 +95,8 @@ export const PlayerContext = [
     label: 'End Turn',
     alias: 'end-turn',
     requirement(data) {
-      return !Mutations.hasClicks(data.player) &&
+      return !Mutations.isReady(data.player) &&
+              Mutations.hasClicks(data.player) &&
               Mutations.isTurnOwner(data.player, data.game);
     },
     perform(data) {

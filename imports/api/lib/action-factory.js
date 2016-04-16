@@ -7,45 +7,82 @@ import R from 'ramda';
 
 import { Mutations } from './mutations.js';
 
-function updateContext(context) {
-  switch (context.side_code) {
-    case 'corp':
-      Mutations._updateCorp(context);
-      break;
-    case 'runner':
-      Mutations._updateRunner(context);
-      break;
-    default:
-      Mutations._updateGame(context);
-  }
-}
-
-function wrapPerform(fn, data) {
-  return function applyData() {
-    R.ifElse(R.is(Object),
-      R.map(updateContext),
-      () => { throw new Error('Return of action must be an object'); }
-    )(fn(data));
-  };
-}
-
 export const ActionFactory = {
 
   allowedActions(actionList, data) {
-    return actionList.reduce((memo, action) => {
-      const rFn = action.requirement || function returnTrue() { return true; };
+    return actionList.reduce((acc, action) => {
+      const checkedAction =
+        this._wrapAction(action, data, this._fetchHooks(action, actionList));
 
-      if (rFn(data)) {
-        memo.push({
-          label: action.label,
-          alias: action.alias,
-          perform: wrapPerform(action.perform, data),
-        });
-      }
-
-      return memo;
+      return checkedAction ?
+        R.concat(acc, [checkedAction]) :
+        acc;
     }, []);
   },
+
+  _wrapAction(action, data, hooks) {
+    return action.requirement(data) ?
+      this._wrapPerform(action, data, hooks) :
+      false;
+  },
+
+  _fetchHooks(action, actionList) {
+    function findHookAction(hookAlias) {
+      const hookAction = R.find(R.propEq('alias', hookAlias), actionList);
+
+      if (hookAction === undefined) {
+        throw new Error(`Action \'${hookAlias}'\ not found in actionList`);
+      }
+
+      return hookAction;
+    }
+
+    return {
+      before: R.map(findHookAction, (action.beforePerform || [])),
+      after: R.map(findHookAction, (action.afterPerform || [])),
+    };
+  },
+
+  _wrapPerform(action, data, hooks) {
+    const trigger = R.curry(function (triggerAction, triggerData) {
+      return triggerAction.requirement(triggerData) ?
+        R.merge(triggerData, triggerAction.perform(triggerData)) :
+        triggerData;
+    });
+
+    const performs = R.flatten([
+      R.map(trigger, hooks.before),
+      trigger(action),
+      R.map(trigger, hooks.after),
+      this._updateContext,
+    ]);
+
+    return {
+      label: action.label,
+      alias: action.alias,
+      perform() {
+        return R.pipe(
+          ...performs
+        )(data);
+      },
+    };
+  },
+
+  _updateContext: R.map((context) => {
+    switch (context.side_code) {
+      case 'corp':
+        Mutations._updateCorp(context);
+        break;
+      case 'runner':
+        Mutations._updateRunner(context);
+        break;
+      default:
+        Mutations._updateGame(context);
+    }
+
+    return true;
+  }),
+
 
   corpActions(data) {
     const player = 'corp';

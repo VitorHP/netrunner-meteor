@@ -29,14 +29,15 @@ Spawn.register("Corp", {
   "side_code" : "corp",
   "ready" : false,
   "identity_card_code" : "01001",
-  "remote_servers" : []
+  "remote_servers" : [],
 })
 
 Spawn.register("Game", {
   "_id" : "7MGuiovynhY2TgsbJ",
   "runner_id" : "7MGuiovynhY2TgsbJ",
   "corp_id" : "7MGuiovynhY2TgsbJ",
-  "turn_owner" : "corp"
+  "turn_owner" : "corp",
+  "turn" : 0,
 })
 
 Spawn.register("Card", {

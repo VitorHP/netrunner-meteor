@@ -8,4 +8,5 @@ Game.schema = new SimpleSchema({
   turn_owner: { type: String, defaultValue: 'corp', allowedValues: ['corp', 'runner'] },
   runner_id: { type: String },
   corp_id: { type: String },
+  turn: { type: Number, defaultValue: 0 }
 });

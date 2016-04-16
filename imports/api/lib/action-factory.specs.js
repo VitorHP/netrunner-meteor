@@ -12,8 +12,8 @@ describe('ActionFactory', function() {
     let action,
         runner = Spawn.create("Runner"),
         standardAction = {
-          label: 'Test',
-          alias: 'test',
+          label: 'Standard',
+          alias: 'standard',
           requirement(context){ return true; },
           perform(context){ return context; },
         },
@@ -28,17 +28,10 @@ describe('ActionFactory', function() {
       stubs.requirement.returns(true)
 
       expect(ActionFactory.allowedActions([standardAction])[0].alias)
-        .to.equal('test')
+        .to.equal('standard')
       expect(stubs.requirement).to.have.been.calledWith()
 
       stubs.restoreAll()
-    })
-
-    describe('when there\'s no requirement function', function(){
-      it('returns the action as if passing the requirements', function(){
-        expect(ActionFactory.allowedActions([noRequirement])[0].alias)
-          .to.equal('no-requirement')
-      })
     })
 
     describe('when requirements pass', function(){
@@ -57,15 +50,6 @@ describe('ActionFactory', function() {
         expect(stubs.perform).to.have.been.calledWith()
       })
 
-      it('throws an error if the wrapped function does not return an object', function(){
-        stubs.create('perform', standardAction, 'perform')
-        stubs.perform.returns(undefined)
-
-        action = ActionFactory.allowedActions([standardAction])[0]
-
-        expect(action.perform).to.throw(Error)
-      })
-
       it('updates the context after executed', function(){
         stubs.create('_updateRunner', Mutations, '_updateRunner')
 
@@ -75,6 +59,49 @@ describe('ActionFactory', function() {
 
         expect(stubs._updateRunner).to.have.been.calledWith(runner)
       })
+    })
+
+    describe('Hooks', function(){
+      afterEach(function(){
+        stubs.restoreAll()
+      })
+
+      it('afterPerform executes other actions after the current', function(){
+        const actionWithHook = {
+          label: 'After',
+          requirement(){ return true; },
+          perform(context){ return context; },
+          afterPerform: ['standard'],
+        }
+
+        stubs.create('hookPerform', standardAction, 'perform')
+        stubs.hookPerform.returns({ a: 1 })
+
+        action = ActionFactory.allowedActions([actionWithHook, standardAction], {})[0]
+
+        action.perform()
+
+        expect(stubs.hookPerform).to.have.been.calledWith({})
+      })
+
+      it('beforePerform executes other actions before the current', function(){
+        const actionWithHook = {
+          label: 'Before',
+          requirement(){ return true; },
+          perform(context){ return context; },
+          beforePerform: ['standard']
+        }
+
+        stubs.create('hookPerform', standardAction, 'perform')
+        stubs.hookPerform.returns({ a: 1 })
+
+        action = ActionFactory.allowedActions([actionWithHook, standardAction], {})[0]
+
+        action.perform()
+
+        expect(stubs.hookPerform).to.have.been.calledWith({})
+      })
+
     })
   })
 })

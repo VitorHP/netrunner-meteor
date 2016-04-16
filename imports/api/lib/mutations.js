@@ -130,7 +130,7 @@ export const Mutations = {
   ),
 
   didMulligan(player) {
-    return R.view(mulligan, (player || {})) !== undefined;
+    return !R.isNil(R.view(mulligan, (player || {})));
   },
 
   removeFromHand(player, card) {
