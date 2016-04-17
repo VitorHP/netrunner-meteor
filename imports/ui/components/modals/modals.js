@@ -1,54 +1,75 @@
-// Write your package code here!
+import { Blaze } from 'meteor/kadira:blaze-layout';
+import { Template } from 'meteor/templating';
 
-function loadModal(data, callbacks = []){
-  return new Promise(function(resolve, reject){
-    let parentNode = document.body
+function loadModal(data, callbacks = []) {
+  return new Promise((resolve, reject) => {
+    const parentNode = document.body;
 
-    let view = Blaze.renderWithData(Template["modal"], data, parentNode)
+    const view = Blaze.renderWithData(Template.modal, data, parentNode);
 
-    let domRange = view._domrange // TODO: Don't violate against the public API.
+    const domRange = view._domrange; // TODO: Don't violate against the public API.
 
-    let $modal = domRange.$('.modal')
+    const $modal = domRange.$('.modal');
 
-    $modal.on('shown.bs.modal', function(event){
-      $modal.find('[autofocus]').focus()
-    })
+    $modal.on('shown.bs.modal', () => {
+      $modal.find('[autofocus]').focus();
+    });
 
-    $modal.on('hidden.bs.modal', function(event){
-      Blaze.remove(view)
-    })
+    $modal.on('hidden.bs.modal', () => {
+      Blaze.remove(view);
+    });
 
-    callbacks.forEach(function(c){
-      $modal.on(c.event, function(){
-        c.fn($modal, resolve, reject)
-      })
-    })
+    callbacks.forEach((c) => {
+      $modal.on(c.event, () => {
+        c.fn($modal, resolve, reject);
+      });
+    });
 
-    $modal.modal()
-  })
+    $modal.modal();
+  });
 }
 
-Modals = {
-  choiceModal(choices) {
-    let dataContext = { templateName: "modalChoice", choices: choices }
-    let callbacks   = [
-      {
-        event: "hidden.bs.modal",
-        fn: function($modal, resolve, reject){
-          //TODO: Why do I have to access value as an attribute?
-          resolve($modal.find('.modal-choice__option:checked').attr("value"))
-        }
-      }
-    ]
+export const Modals = {
+  serverChoiceModal(servers) {
+    const choices = servers.reduce((memo, s, index) => {
+      memo.unshift({ label: `Server #${index + 1}`, value: index });
+      return memo;
+    }, [{ label: 'New Server', value: 'new-server' }]);
 
-    return loadModal(dataContext, callbacks)
+    return this.choiceModal(choices);
   },
 
-  revealModal(cards, cardsToReveal=0) {
-    let dataContext = { templateName: "modalReveal",
-                        cards: cards,
-                        cardsToReveal: cardsToReveal }
+  cardSideModal() {
+    const choices = [
+      { label: 'Rezzed', value: true },
+      { label: 'Unrezzed', value: false },
+    ];
 
-    return loadModal(dataContext)
-  }
-}
+    return this.choiceModal(choices);
+  },
+
+  choiceModal(choices) {
+    const dataContext = { templateName: 'modalChoice', choices };
+    const callbacks = [
+      {
+        event: 'hidden.bs.modal',
+        fn($modal, resolve) {
+          // TODO: Why do I have to access value as an attribute?
+          resolve($modal.find('.modal-choice__option:checked').attr('value'));
+        },
+      },
+    ];
+
+    return loadModal(dataContext, callbacks);
+  },
+
+  revealModal(cards, cardsToReveal = 0) {
+    const dataContext = {
+      templateName: 'modalReveal',
+      cards,
+      cardsToReveal,
+    };
+
+    return loadModal(dataContext);
+  },
+};

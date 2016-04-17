@@ -204,22 +204,22 @@ describe("Mutations", function() {
   })
 
   describe("Mutations#installCard", function(){
-    it ("installs a program in the runner's program area", function(){
+    it("installs a program in the runner's program area", function(){
       let cardDouble = { code: "01042", type_code: "program" }
 
-      expect(subject().installCard(runner, cardDouble).programs[0].card_code).to.eq("01042")
+      expect(subject().installCard(cardDouble, {}, runner).programs[0].card_code).to.eq("01042")
     })
 
     it ("installs a hardware in the runner's hardware area", function(){
       let cardDouble = { code: "01042", type_code: "hardware" }
 
-      expect(subject().installCard(runner, cardDouble).hardware[0].card_code).to.eq("01042")
+      expect(subject().installCard(cardDouble, {}, runner).hardware[0].card_code).to.eq("01042")
     })
 
     it ("installs a resource in the runner's resource area", function(){
       let cardDouble = { code: "01042", type_code: "resource" }
 
-      expect(subject().installCard(runner, cardDouble).resources[0].card_code).to.eq("01042")
+      expect(subject().installCard(cardDouble, {}, runner).resources[0].card_code).to.eq("01042")
     })
 
     it ("installs a rezzed agenda on a corp's new remote server", function(){
@@ -227,7 +227,7 @@ describe("Mutations", function() {
 
       expect(corp.remote_servers.length).to.eq(0)
 
-      let res = subject().installCard(corp, cardDouble, { rezzed: true, server_id: 0 })
+      let res = subject().installCard(cardDouble, { rezzed: true, server_id: 0 }, corp)
 
       expect(res.remote_servers.length).to.eq(1)
       expect(res.remote_servers[0].cards[0].card_code).to.eq("01042")
@@ -239,7 +239,7 @@ describe("Mutations", function() {
 
       expect(corp.remote_servers.length).to.eq(0)
 
-      let res = subject().installCard(corp, cardDouble, { rezzed: false, server_id: 0 })
+      let res = subject().installCard(cardDouble, { rezzed: false, server_id: 0 }, corp)
 
       expect(res.remote_servers.length).to.eq(1)
       expect(res.remote_servers[0].cards[0].card_code).to.eq("01042")
@@ -252,7 +252,7 @@ describe("Mutations", function() {
 
       expect(corp.remote_servers.length).to.eq(1)
 
-      let res = subject().installCard(corp, cardDouble, { rezzed: true, server_id: 0 })
+      let res = subject().installCard(cardDouble, { rezzed: true, server_id: 0 }, corp)
 
       expect(res.remote_servers.length).to.eq(1)
       expect(res.remote_servers[0].cards.length).to.eq(1)
@@ -261,7 +261,7 @@ describe("Mutations", function() {
     it ("installs an ice on a corp's new remote server", function(){
       let cardDouble = { code: "01042", type_code: "ice" }
 
-      let res = subject().installCard(corp, cardDouble, { rezzed: true, server_id: 0 })
+      let res = subject().installCard(cardDouble, { rezzed: true, server_id: 0 }, corp)
 
       expect(res.remote_servers[0].ices.length).to.eq(1)
       expect(res.remote_servers[0].ices[0].card_code).to.eq("01042")

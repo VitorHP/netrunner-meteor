@@ -205,7 +205,7 @@ export const Mutations = {
     R.over(lens, R.append({ card_code: card.code }), player)
   ),
 
-  installCard(player, card, options) {
+  installCard: R.curry((card, options, player) => {
     const fns = {
       program: Mutations._installRunnerCard(programs),
       hardware: Mutations._installRunnerCard(hardware),
@@ -216,7 +216,7 @@ export const Mutations = {
     };
 
     return fns[card.type_code](card, player, options);
-  },
+  }),
 
 };
 
