@@ -24,6 +24,7 @@
   "devDependencies": {
     "eslint": "^2.7.0",
     "eslint-config-airbnb": "^6.2.0",
-    "eslint-plugin-meteor": "^3.4.0"
+    "eslint-plugin-meteor": "^3.4.0",
+    "sinon-as-promised": "^4.0.0"
   }
 }

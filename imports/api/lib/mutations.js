@@ -81,6 +81,8 @@ export const Mutations = {
     return R.over(L.hand, R.remove(targetIndex, 1), discarded);
   },
 
+  hasCredits: R.curry((amount, player) => R.gte(R.view(L.credits, player), amount)),
+
   receiveCredits: R.curry((amount, player) => R.over(L.credits, R.add(amount), player)),
 
   payCredits(amount, player) {
@@ -103,33 +105,30 @@ export const Mutations = {
     return !R.isNil(R.view(L.mulligan, (player || {})));
   },
 
-  removeCards: R.curry((collection, cards, player) => {
-    const removeCards = R.curry((cardsToRemove, collection) =>
+  removeCards: R.curry((collection, cardCodes, player) => {
+    const removeCards = R.curry((cardsToRemove, col) =>
       cardsToRemove.reduce((memo, card) => {
         const index = memo.indexOf(card);
         return R.remove(index, 1, memo);
-      }, collection)
+      }, col)
     );
 
-    return R.over(L[collection], removeCards(cards), player);
+    return R.over(L[collection], removeCards(cardCodes), player);
   }),
 
-  moveCards: R.curry((fromCollection, toCollection, cards, player) => {
-    const cardsRemoved = Mutations.removeCards(fromCollection, cards, player);
+  moveCards: R.curry((fromCollection, toCollection, cardCodes, player) => {
+    const cardsRemoved = Mutations.removeCards(fromCollection, cardCodes, player);
 
-    return R.over(L[toCollection], R.concat(cards), cardsRemoved);
+    return R.over(L[toCollection], R.concat(cardCodes), cardsRemoved);
   }),
 
-  removeFromHand(cards, player) {
-    return Mutations.removeCards('hand', cards, player);
-  },
+  removeFromHand: R.curry((cardCodes, player) =>
+    Mutations.removeCards('hand', cardCodes, player)
+  ),
 
-  returnToDeck: R.curry((cards, collection, player) => {
-    const cardCodes = R.is(Array, cards) ? cards : [cards];
-
-    return Mutations.moveCards('hand', 'deckCards', cardCodes, player);
-  }),
-
+  returnToDeck: R.curry((cardCodes, player) =>
+    Mutations.moveCards('hand', 'deckCards', cardCodes, player)
+  ),
 
   // Game
 
@@ -197,6 +196,7 @@ export const Mutations = {
     R.over(lens, R.append({ card_code: card.code }), player)
   ),
 
+  // TODO: Use only cardCodes instead of cards
   installCard: R.curry((card, options, player) => {
     const fns = {
       program: Mutations._installRunnerCard(L.programs),

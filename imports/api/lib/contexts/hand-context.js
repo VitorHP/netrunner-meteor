@@ -23,15 +23,13 @@ export const HandContext = [
         .then((d) => {
           server = d;
 
-          debugger
           return {
             player: R.pipe(
-              Mutations.removeFromHand(data.card),
+              Mutations.removeFromHand([data.card.code]),
               Mutations.installCard(data.card, {
                 rezzed: Boolean(rezzed) === true,
                 server_id: server,
-              }),
-              Mutations._updatePlayer
+              })
             )(data.player),
           };
         });
@@ -41,12 +39,17 @@ export const HandContext = [
     label: 'Install',
     alias: 'install-runner-card',
     requirement(data) {
-      return Mutations.isOfType(data.card, ['program', 'hardware', 'resource']);
+      return Mutations.isOfType(data.card, ['program', 'hardware', 'resource']) &&
+             Mutations.hasClicks(data.player) &&
+             Mutations.hasCredits(data.card.install_cost, data.player);
     },
     perform(data) {
-      Mutations.removeFromHand(data.player, data.card);
-      Mutations.installCard(data.player, data.card);
-      Mutations._updatePlayer(data.player);
+      return {
+        player: R.pipe(
+          Mutations.removeFromHand([data.card.code]),
+          Mutations.installCard(data.card, {})
+        )(data.player)
+      }
     },
   },
 ];

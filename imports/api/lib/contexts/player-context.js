@@ -35,7 +35,7 @@ export const PlayerContext = [
       return {
         player: R.pipe(
           Mutations.acceptMulligan(true),
-          Mutations.returnToDeck(data.player.hand, 'hand'),
+          Mutations.returnToDeck(data.player.hand),
           Mutations.shuffleDeck,
           Mutations.drawCard(5)
         )(data.player),

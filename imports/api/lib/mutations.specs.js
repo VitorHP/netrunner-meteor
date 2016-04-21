@@ -6,7 +6,7 @@ import '/imports/tests/support/spawns.js'
 
 import { Mutations } from "./mutations.js"
 
-describe.only("Mutations", function() {
+describe("Mutations", function() {
   var runner, game, corp, card;
 
   beforeEach(function() {
@@ -54,6 +54,10 @@ describe.only("Mutations", function() {
     expect(subject().trashFromHand(corp, "01003").hand).to.not.include("01003")
   })
 
+  it ("Mutations#hasCredits checks wether the player has the amount of credits specified", function() {
+    expect(subject().hasCredits(2, runner)).to.equal(false)
+  })
+
   it ("Mutations#receiveCredits increases the target credits by the amount specified", function() {
     expect(subject().receiveCredits(2, runner).credits).to.equal(3)
   })
@@ -64,13 +68,6 @@ describe.only("Mutations", function() {
 
       expect(subject().payCredits(2, runner).credits).to.equal(0)
     })
-  })
-
-  it ("Mutations#returnToDeck returns the passed card to the player's deck", function() {
-    let runner = Spawn.create("Runner", { hand: [1, 2], deck_cards: [3] })
-
-    expect(subject().returnToDeck(runner.hand, 'hand', runner).deck_cards).to.deep.equal([1, 2, 3])
-    expect(subject().returnToDeck(runner.hand, 'hand', runner).hand).to.deep.equal([])
   })
 
   it ("Mutations#ready sets the player as ready", function() {
@@ -125,6 +122,13 @@ describe.only("Mutations", function() {
     corp = subject().removeFromHand(['01002'], corp)
 
     expect(corp.hand).to.not.include("01002")
+  })
+
+  it ("Mutations#returnToDeck returns the passed card to the player's deck", function() {
+    let runner = Spawn.create("Runner", { hand: [1, 2], deck_cards: [3] })
+
+    expect(subject().returnToDeck(runner.hand, runner).deck_cards).to.deep.equal([1, 2, 3])
+    expect(subject().returnToDeck(runner.hand, runner).hand).to.deep.equal([])
   })
 
   // Game
