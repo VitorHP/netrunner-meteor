@@ -95,14 +95,15 @@ export const PlayerContext = [
     label: 'End Turn',
     alias: 'end-turn',
     requirement(data) {
-      return !Mutations.isReady(data.player) &&
-              Mutations.hasClicks(data.player) &&
-              Mutations.isTurnOwner(data.player, data.game);
+      return Mutations.didMulligan(data.player) &&
+             !Mutations.hasClicks(data.player) &&
+             Mutations.isTurnOwner(data.player, data.game);
     },
     perform(data) {
       return {
         game: R.pipe(
-          Mutations.shiftTurn
+          Mutations.shiftTurn,
+          Mutations.newTurn
         )(data.game),
 
         opponent: R.pipe(

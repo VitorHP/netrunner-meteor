@@ -159,7 +159,7 @@ describe('playerContext', function() {
     })
   })
 
-  describe('Actions.global#drawCard', function() {
+  describe('Actions.global#receiveCredit', function() {
     beforeEach(function() {
       player = Spawn.create('Runner', { clicks: 1, credits: 0 })
     });
@@ -181,6 +181,39 @@ describe('playerContext', function() {
 
       it('removes a click', function(){
         expect(player.clicks).to.eq(0)
+      })
+
+    })
+  })
+
+  describe('Actions.global#endTurn', function() {
+    beforeEach(function() {
+      player = Spawn.create('Runner', { clicks: 0, mulligan: true })
+      opponent = Spawn.create('Corp', { clicks: 0 })
+      game = Spawn.create('Game', { turn_owner: 'runner', turn: 1 })
+    });
+
+    describe('requirements', function(){
+      it('player did mulligan, does not have clicks and is the turn owner', function(){
+        expect(r('end-turn', subject, { player, game })).to.eq(true)
+      })
+    })
+
+    describe('perform', function(){
+      beforeEach(function(){
+        ({ opponent, game } = p('end-turn', subject, { opponent, game }))
+      })
+
+      it('advances turn', function(){
+        expect(game.turn).to.eq(2)
+      })
+
+      it('switches turn owner', function(){
+        expect(game.turn_owner).to.eq('corp')
+      })
+
+      it('fills the opponent\' clicks', function(){
+        expect(opponent.clicks).to.eq(opponent.max_clicks)
       })
 
     })

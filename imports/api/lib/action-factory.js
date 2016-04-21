@@ -1,7 +1,7 @@
 import { PlayerContext } from './contexts/player-context.js';
 import { corpContext } from './contexts/corp-context.js';
 import { runnerContext } from './contexts/runner-context.js';
-import { handContext } from './contexts/hand-context.js';
+import { HandContext } from './contexts/hand-context.js';
 
 import R from 'ramda';
 
@@ -97,7 +97,7 @@ export const ActionFactory = {
   },
 
   handActions(data) {
-    return this.allowedActions(handContext(), data);
+    return this.allowedActions(HandContext, data);
   },
 
 };
