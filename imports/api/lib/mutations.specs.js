@@ -6,7 +6,7 @@ import '/imports/tests/support/spawns.js'
 
 import { Mutations } from "./mutations.js"
 
-describe("Mutations", function() {
+describe.only("Mutations", function() {
   var runner, game, corp, card;
 
   beforeEach(function() {
@@ -101,12 +101,28 @@ describe("Mutations", function() {
     expect(subject().didMulligan(corp)).to.eq(false)
   })
 
+  it ("Mutations#removeCards removes a card from a player's collections", function(){
+    player = Spawn.create("Runner", { hand: ['01001'], deck_cards: [] })
+
+    player = subject().removeCards('hand', ['01001'], player)
+
+    expect(player.hand).not.to.include('01001')
+  })
+
+  it ("Mutations#moveCards moves a card between a player's collections", function(){
+    player = Spawn.create("Runner", { hand: ['01001'], deck_cards: [] })
+
+    player = subject().moveCards('hand', 'deckCards', ['01001'], player)
+
+    expect(player.deck_cards).to.include('01001')
+  })
+
   it ("Mutations#removeFromHand removes a card from the player's hand", function(){
     let cardDouble = { code: "01002" }
 
     expect(corp.hand).to.include("01002")
 
-    subject().removeFromHand(corp, cardDouble)
+    corp = subject().removeFromHand(['01002'], corp)
 
     expect(corp.hand).to.not.include("01002")
   })

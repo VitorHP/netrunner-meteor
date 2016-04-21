@@ -1,23 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import R from 'ramda';
 import { N } from './n.js';
-
-const deckCards = N.lensProp('deck_cards');
-const hand = N.lensProp('hand');
-const clicks = N.lensProp('clicks');
-const credits = N.lensProp('credits');
-const discard = N.lensProp('discard');
-const ready = N.lensProp('ready');
-const mulligan = N.lensProp('mulligan');
-const turnOwner = N.lensProp('turn_owner');
-const programs = N.lensProp('programs');
-const hardware = N.lensProp('hardware');
-const resources = N.lensProp('resources');
-const remoteServers = N.lensProp('remote_servers');
-const cards = N.lensProp('cards');
-const ices = N.lensProp('ices');
-const maxClicks = N.lensProp('max_clicks');
-const turn = N.lensProp('turn');
+import { L } from './lenses.js';
 
 export const Mutations = {
   // DB
@@ -72,82 +56,90 @@ export const Mutations = {
     return player.side_code === 'runner';
   },
 
-  click: R.curry((amount, player) => R.over(clicks, R.flip(R.subtract)(amount), player)),
+  click: R.curry((amount, player) => R.over(L.clicks, R.flip(R.subtract)(amount), player)),
 
   hasClicks(player) {
-    return R.gt(R.view(clicks, (player || {})), 0);
+    return R.gt(R.view(L.clicks, (player || {})), 0);
   },
 
   fillClicks(player) {
-    return R.over(clicks, R.add(R.view(maxClicks, (player || {}))), player);
+    return R.over(L.clicks, R.add(R.view(L.maxClicks, (player || {}))), player);
   },
 
   drawCard: R.curry((count, player) => {
-    const draw = R.view(deckCards, R.over(deckCards, R.take(count), player));
+    const draw = R.view(L.deckCards, R.over(L.deckCards, R.take(count), player));
 
-    return R.over(deckCards, R.drop(count), R.over(hand, R.concat(draw), player));
+    return R.over(L.deckCards, R.drop(count), R.over(L.hand, R.concat(draw), player));
   }),
 
   trashFromHand(player, cardCode) {
-    const targetIndex = R.indexOf(cardCode, R.view(hand, player));
-    const cardAtIndex = R.compose(hand, R.lensIndex(targetIndex));
+    const targetIndex = R.indexOf(cardCode, R.view(L.hand, player));
+    const cardAtIndex = R.compose(L.hand, R.lensIndex(targetIndex));
 
-    const discarded = R.over(discard, R.append(R.view(cardAtIndex, player)), player);
+    const discarded = R.over(L.discard, R.append(R.view(cardAtIndex, player)), player);
 
-    return R.over(hand, R.remove(targetIndex, 1), discarded);
+    return R.over(L.hand, R.remove(targetIndex, 1), discarded);
   },
 
-  receiveCredits: R.curry((amount, player) => R.over(credits, R.add(amount), player)),
+  receiveCredits: R.curry((amount, player) => R.over(L.credits, R.add(amount), player)),
 
   payCredits(amount, player) {
-    return R.over(credits, R.subtract(amount), player);
+    return R.over(L.credits, R.subtract(amount), player);
   },
 
-  returnToDeck: R.curry((cardsReturned, collection, player) => {
-    const removeFromCollection = R.curry((cardsToRemove, playerHand) =>
-      cardsToRemove.reduce((memo, card) => {
-        const index = memo.indexOf(card);
-        return R.remove(index, 1, memo);
-      }, playerHand)
-    );
-
-    const handWithoutCards =
-      R.over(hand, removeFromCollection(cardsReturned), player);
-
-    return R.over(deckCards, R.concat(cardsReturned), handWithoutCards);
-  }),
-
   ready(player) {
-    return R.set(ready, true, player);
+    return R.set(L.ready, true, player);
   },
 
   isReady(player) {
-    return R.view(ready, (player || {})) === true;
+    return R.view(L.ready, (player || {})) === true;
   },
 
   acceptMulligan: R.curry((accepted, player) =>
-    R.set(mulligan, accepted, player)
+    R.set(L.mulligan, accepted, player)
   ),
 
   didMulligan(player) {
-    return !R.isNil(R.view(mulligan, (player || {})));
+    return !R.isNil(R.view(L.mulligan, (player || {})));
   },
 
-  removeFromHand(player, card) {
-    const cardIndex = player.hand.indexOf(card.code);
+  removeCards: R.curry((collection, cards, player) => {
+    const removeCards = R.curry((cardsToRemove, collection) =>
+      cardsToRemove.reduce((memo, card) => {
+        const index = memo.indexOf(card);
+        return R.remove(index, 1, memo);
+      }, collection)
+    );
 
-    return player.hand.splice(cardIndex, 1);
+    return R.over(L[collection], removeCards(cards), player);
+  }),
+
+  moveCards: R.curry((fromCollection, toCollection, cards, player) => {
+    const cardsRemoved = Mutations.removeCards(fromCollection, cards, player);
+
+    return R.over(L[toCollection], R.concat(cards), cardsRemoved);
+  }),
+
+  removeFromHand(cards, player) {
+    return Mutations.removeCards('hand', cards, player);
   },
+
+  returnToDeck: R.curry((cards, collection, player) => {
+    const cardCodes = R.is(Array, cards) ? cards : [cards];
+
+    return Mutations.moveCards('hand', 'deckCards', cardCodes, player);
+  }),
+
 
   // Game
 
   shiftTurn(game) {
-    const nextTurnOwner = R.view(turnOwner, (game || {})) === 'corp' ? 'runner' : 'corp';
+    const nextTurnOwner = R.view(L.turnOwner, (game || {})) === 'corp' ? 'runner' : 'corp';
 
-    return R.set(turnOwner, nextTurnOwner, game);
+    return R.set(L.turnOwner, nextTurnOwner, game);
   },
 
-  newTurn: R.over(turn, R.inc),
+  newTurn: R.over(L.turn, R.inc),
 
   isTurnOwner(player, game) {
     return player && game && game.turn_owner === player.side_code;
@@ -160,7 +152,7 @@ export const Mutations = {
   // Deck
 
   shuffleDeck(player) {
-    return R.over(deckCards, N.shuffle, player);
+    return R.over(L.deckCards, N.shuffle, player);
   },
 
   // Cards
@@ -180,18 +172,18 @@ export const Mutations = {
   },
 
   _findOrInitializeServer(player, options) {
-    const server = R.compose(remoteServers,
+    const server = R.compose(L.remoteServers,
                            R.lensIndex(options.server_id));
 
     return R.view(server, player) !== undefined ?
       player :
-      R.over(remoteServers, R.append({ server_id: options.server_id,
+      R.over(L.remoteServers, R.append({ server_id: options.server_id,
                                        cards: [],
                                        ices: [] }), player);
   },
 
   _installCorpCard: R.curry((lens, card, player, options) => {
-    const target = R.compose(remoteServers,
+    const target = R.compose(L.remoteServers,
                            R.lensIndex(options.server_id),
                            lens);
 
@@ -207,12 +199,12 @@ export const Mutations = {
 
   installCard: R.curry((card, options, player) => {
     const fns = {
-      program: Mutations._installRunnerCard(programs),
-      hardware: Mutations._installRunnerCard(hardware),
-      resource: Mutations._installRunnerCard(resources),
+      program: Mutations._installRunnerCard(L.programs),
+      hardware: Mutations._installRunnerCard(L.hardware),
+      resource: Mutations._installRunnerCard(L.resources),
 
-      agenda: Mutations._installCorpCard(cards),
-      ice: Mutations._installCorpCard(ices),
+      agenda: Mutations._installCorpCard(L.cards),
+      ice: Mutations._installCorpCard(L.ices),
     };
 
     return fns[card.type_code](card, player, options);
