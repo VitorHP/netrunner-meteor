@@ -196,7 +196,6 @@ export const Mutations = {
     R.over(lens, R.append({ card_code: card.code }), player)
   ),
 
-  // TODO: Use only cardCodes instead of cards
   installCard: R.curry((card, options, player) => {
     const fns = {
       program: Mutations._installRunnerCard(L.programs),
