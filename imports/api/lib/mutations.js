@@ -32,7 +32,7 @@ export const Mutations = {
   },
 
   _updatePlayer(player) {
-    return player.identity().side_code === 'corp' ?
+    return player.type_code === 'corp' ?
       Mutations._updateCorp(player) :
       Mutations._updateRunner(player);
   },
@@ -126,9 +126,9 @@ export const Mutations = {
     return R.over(L[toCollection], R.concat(cardCodes), cardsRemoved);
   }),
 
-  removeFromHand: R.curry((cardCodes, player) =>
-    Mutations.removeCards('hand', cardCodes, player)
-  ),
+  removeFromHand: R.curry((cardCodes, player) => {
+    return Mutations.removeCards('hand', cardCodes, player)
+  }),
 
   returnToDeck: R.curry((cardCodes, player) =>
     Mutations.moveCards('hand', 'deckCards', cardCodes, player)
@@ -180,7 +180,7 @@ export const Mutations = {
 
   _findOrInitializeServer(player, options) {
     const server = R.compose(L.remoteServers,
-                           R.lensIndex(options.server_id));
+                          R.lensIndex(options.server_id));
 
     return R.view(server, player) !== undefined ?
       player :
@@ -191,8 +191,8 @@ export const Mutations = {
 
   _installCorpCard: R.curry((lens, card, player, options) => {
     const target = R.compose(L.remoteServers,
-                           R.lensIndex(options.server_id),
-                           lens);
+                          R.lensIndex(parseInt(options.server_id)),
+                          lens);
 
     return R.over(target, R.append({
       card_code: card.code,
