@@ -97,7 +97,8 @@ export const PlayerContext = [
     requirement(data) {
       return Mutations.didMulligan(data.player) &&
              !Mutations.hasClicks(data.player) &&
-             Mutations.isTurnOwner(data.player, data.game);
+             Mutations.isTurnOwner(data.player, data.game) &&
+             !Mutations.isAboveHandLimit(data.player);
     },
     perform(data) {
       return {

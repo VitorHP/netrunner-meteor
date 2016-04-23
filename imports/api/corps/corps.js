@@ -39,6 +39,7 @@ Corp.schema = new SimpleSchema({
   discard: { type: [String], defaultValue: [] },
   identity_card_code: { type: String, defaultValue: 0 },
   hand: { type: [String] },
+  max_hand_size: { type: Number, defaultValue: 5 },
   side_code: { type: String },
   mulligan: { type: Boolean, optional: true },
   ready: { type: Boolean, defaultValue: null },

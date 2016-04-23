@@ -17,4 +17,5 @@ export const L = {
   ices: N.lensProp('ices'),
   maxClicks: N.lensProp('max_clicks'),
   turn: N.lensProp('turn'),
+  maxHandSide: N.lensProp('max_hand_size'),
 };

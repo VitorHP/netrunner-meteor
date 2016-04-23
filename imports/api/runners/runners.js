@@ -36,6 +36,7 @@ Runner.schema = new SimpleSchema({
   deck_cards: { type: [String], defaultValue: [] },
   discard: { type: [String], defaultValue: [] },
   hand: { type: [String] },
+  max_hand_size: { type: Number, defaultValue: 5 },
   identity_card_code: { type: String, defaultValue: 0 },
   programs: { type: [Object], defaultValue: [] },
   hardware: { type: [Object], defaultValue: [] },

@@ -1,3 +1,3 @@
-import './hand.html'
+import './hand.html';
 
-import './hand-item.js'
+import './hand-item.js';

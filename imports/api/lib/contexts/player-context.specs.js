@@ -188,13 +188,13 @@ describe('playerContext', function() {
 
   describe('Actions.global#endTurn', function() {
     beforeEach(function() {
-      player = Spawn.create('Runner', { clicks: 0, mulligan: true })
+      player = Spawn.create('Runner', { clicks: 0, mulligan: true, max_hand_size: 1, hand: ['01001'] })
       opponent = Spawn.create('Corp', { clicks: 0 })
       game = Spawn.create('Game', { turn_owner: 'runner', turn: 1 })
     });
 
     describe('requirements', function(){
-      it('player did mulligan, does not have clicks and is the turn owner', function(){
+      it('player did mulligan, does not have clicks, is not above hand limit and is the turn owner', function(){
         expect(r('end-turn', subject, { player, game })).to.eq(true)
       })
     })

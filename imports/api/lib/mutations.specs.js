@@ -6,7 +6,7 @@ import '/imports/tests/support/spawns.js'
 
 import { Mutations } from "./mutations.js"
 
-describe.only("Mutations", function() {
+describe("Mutations", function() {
   var runner, game, corp, card;
 
   beforeEach(function() {
@@ -135,6 +135,13 @@ describe.only("Mutations", function() {
 
     expect(subject().returnToDeck(runner.hand, runner).deck_cards).to.deep.equal([1, 2, 3])
     expect(subject().returnToDeck(runner.hand, runner).hand).to.deep.equal([])
+  })
+
+  it ("Mutations#discard moves a card from the player's hand to the discard pile", function() {
+    let runner = Spawn.create("Runner", { hand: [1, 2], discard: [] })
+
+    expect(subject().discard([1], runner).hand).to.deep.equal([2])
+    expect(subject().discard([1], runner).discard).to.deep.equal([1])
   })
 
   // Game

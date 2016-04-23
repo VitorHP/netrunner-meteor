@@ -67,7 +67,7 @@ export const Mutations = {
   },
 
   isAboveHandLimit(player) {
-    return player.hand.length >= player.max_hand_size;
+    return player.hand.length > player.max_hand_size
   },
 
   drawCard: R.curry((count, player) => {
@@ -132,6 +132,10 @@ export const Mutations = {
 
   returnToDeck: R.curry((cardCodes, player) =>
     Mutations.moveCards('hand', 'deckCards', cardCodes, player)
+  ),
+
+  discard: R.curry((cardCodes, player) =>
+    Mutations.moveCards('hand', 'discard', cardCodes, player)
   ),
 
   // Game

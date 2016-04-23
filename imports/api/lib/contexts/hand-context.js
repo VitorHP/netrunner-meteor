@@ -8,7 +8,8 @@ export const HandContext = [
     label: 'Install',
     alias: 'install-corp-card',
     requirement(data) {
-      return Mutations.isOfType(data.card, ['agenda', 'ice']);
+      return Mutations.isOfType(data.card, ['agenda', 'ice']) &&
+             Mutations.hasClicks(data.player);
     },
     perform(data) {
       let rezzed;
@@ -48,8 +49,25 @@ export const HandContext = [
         player: R.pipe(
           Mutations.removeFromHand([data.card.code]),
           Mutations.installCard(data.card, {})
-        )(data.player)
-      }
+        )(data.player),
+      };
+    },
+  },
+
+  {
+    label: 'Discard',
+    alias: 'discard',
+    requirement(data) {
+      return Mutations.isTurnOwner(data.player, data.game) &&
+             !Mutations.hasClicks(data.player) &&
+             Mutations.isAboveHandLimit(data.player);
+    },
+    perform(data) {
+      return {
+        player: R.pipe(
+          Mutations.discard([data.card.code])
+        )(data.player),
+      };
     },
   },
 ];
