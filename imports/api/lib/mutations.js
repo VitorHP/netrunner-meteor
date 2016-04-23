@@ -66,6 +66,10 @@ export const Mutations = {
     return R.over(L.clicks, R.add(R.view(L.maxClicks, (player || {}))), player);
   },
 
+  isAboveHandLimit(player) {
+    return player.hand.length >= player.max_hand_size;
+  },
+
   drawCard: R.curry((count, player) => {
     const draw = R.view(L.deckCards, R.over(L.deckCards, R.take(count), player));
 

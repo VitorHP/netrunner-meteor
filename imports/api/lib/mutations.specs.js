@@ -6,7 +6,7 @@ import '/imports/tests/support/spawns.js'
 
 import { Mutations } from "./mutations.js"
 
-describe("Mutations", function() {
+describe.only("Mutations", function() {
   var runner, game, corp, card;
 
   beforeEach(function() {
@@ -38,6 +38,12 @@ describe("Mutations", function() {
     runner = Spawn.create("Runner", { clicks: 0 })
 
     expect(subject().fillClicks(runner).clicks).to.equal(4)
+  })
+
+  it ("Mutations#isAboveHandLimit returns true if the player has more cards in its hand than the limit", function() {
+    runner = Spawn.create("Runner", { hand: [1, 2, 3, 4, 5, 6], max_hand_size: 5 })
+
+    expect(subject().isAboveHandLimit(runner)).to.equal(true)
   })
 
   it ("Mutations#drawCard removes a card from the deck and places it on the runner's hand", function() {
