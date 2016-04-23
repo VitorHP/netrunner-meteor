@@ -22,6 +22,7 @@ seedData(Game, [{
   "corp_id" : "7MGuiovynhY2TgsbJ",
   "turn_owner" : "corp",
   "turn" : 0,
+  "type_code" : "game",
 }])
 
 // Decks
@@ -99,6 +100,7 @@ seedData(Runner, [{
   "hand" : [],
   "max_hand_size": 5,
   "side_code" : "runner",
+  "type_code": "runner",
   "ready" : false,
   "mulligan" : undefined,
   "identity_card_code" : '01001',
@@ -121,6 +123,7 @@ seedData(Corp, [{
   "hand" : [],
   "max_hand_size": 5,
   "side_code" : "corp",
+  "type_code": "corp",
   "ready" : false,
   "mulligan" : undefined,
   "identity_card_code" : "01054",

@@ -10,6 +10,7 @@ Spawn.register("Runner", {
   "hand" : [],
   "max_hand_size" : 5,
   "side_code" : "runner",
+  "type_code" : "runner",
   "ready" : false,
   "identity_card_code" : "01001",
   "programs" : [],
@@ -29,6 +30,7 @@ Spawn.register("Corp", {
   "hand" : ["01002", "01003"],
   "max_hand_size" : 5,
   "side_code" : "corp",
+  "type_code" : "corp",
   "ready" : false,
   "identity_card_code" : "01001",
   "remote_servers" : [],
@@ -40,6 +42,7 @@ Spawn.register("Game", {
   "corp_id" : "7MGuiovynhY2TgsbJ",
   "turn_owner" : "corp",
   "turn" : 0,
+  "type_code" : "game",
 })
 
 Spawn.register("Card", {

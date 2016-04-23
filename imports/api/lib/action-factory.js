@@ -69,14 +69,14 @@ export const ActionFactory = {
   },
 
   _updateContext: R.map((context) => {
-    switch (context.side_code) {
+    switch (context.type_code) {
       case 'corp':
         Mutations._updateCorp(context);
         break;
       case 'runner':
         Mutations._updateRunner(context);
         break;
-      default:
+      case 'game':
         Mutations._updateGame(context);
     }
 

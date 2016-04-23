@@ -42,6 +42,7 @@ Runner.schema = new SimpleSchema({
   hardware: { type: [Object], defaultValue: [] },
   resources: { type: [Object], defaultValue: [] },
   side_code: { type: String },
+  type_code: { type: String, defaultValue: 'runner' },
   mulligan: { type: Boolean, optional: true },
   ready: { type: Boolean, defaultValue: null },
   'programs.$.card_code': { type: String },

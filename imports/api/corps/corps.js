@@ -41,6 +41,7 @@ Corp.schema = new SimpleSchema({
   hand: { type: [String] },
   max_hand_size: { type: Number, defaultValue: 5 },
   side_code: { type: String },
+  type_code: { type: String, defaultValue: 'corp' },
   mulligan: { type: Boolean, optional: true },
   ready: { type: Boolean, defaultValue: null },
   'remote_servers.$.server_id': { type: Number },
