@@ -26,6 +26,7 @@ export const HandContext = [
 
           return {
             player: R.pipe(
+              Mutations.click(1),
               Mutations.removeFromHand([data.card.code]),
               Mutations.installCard(data.card, {
                 rezzed: Boolean(rezzed) === true,
@@ -47,6 +48,7 @@ export const HandContext = [
     perform(data) {
       return {
         player: R.pipe(
+          Mutations.click(1),
           Mutations.removeFromHand([data.card.code]),
           Mutations.installCard(data.card, {})
         )(data.player),
