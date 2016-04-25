@@ -1,3 +1,7 @@
+import { Template } from 'meteor/templating';
+
+import './modal-reveal.html';
+
 function wrapCards(cards, cardsToReveal) {
   return cards.map(function(c){
     return {

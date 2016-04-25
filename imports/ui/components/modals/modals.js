@@ -1,5 +1,7 @@
-import { Blaze } from 'meteor/kadira:blaze-layout';
+import { Blaze } from 'meteor/blaze';
 import { Template } from 'meteor/templating';
+
+import './templates/modal.js';
 
 function loadModal(data, callbacks = []) {
   return new Promise((resolve, reject) => {
@@ -34,15 +36,15 @@ export const Modals = {
     const choices = servers.reduce((memo, s, index) => {
       memo.unshift({ label: `Server #${index + 1}`, value: index });
       return memo;
-    }, [{ label: 'New Server', value: 'new-server' }]);
+    }, [{ label: 'New Server', value: servers.length }]);
 
     return this.choiceModal(choices);
   },
 
   cardSideModal() {
     const choices = [
-      { label: 'Rezzed', value: true },
       { label: 'Unrezzed', value: false },
+      { label: 'Rezzed', value: true },
     ];
 
     return this.choiceModal(choices);
