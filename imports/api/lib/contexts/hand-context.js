@@ -1,5 +1,3 @@
-import { Modals } from '../../../ui/components/modals/modals.js';
-
 import { Mutations } from '../mutations.js';
 import R from 'ramda';
 
@@ -12,29 +10,16 @@ export const HandContext = [
              Mutations.hasClicks(data.player);
     },
     perform(data) {
-      let rezzed;
-      let server;
-
-      return Modals.cardSideModal()
-        .then((d) => {
-          rezzed = d;
-
-          return Modals.serverChoiceModal(data.player.remote_servers);
-        })
-        .then((d) => {
-          server = d;
-
-          return {
-            player: R.pipe(
-              Mutations.click(1),
-              Mutations.removeFromHand([data.card.code]),
-              Mutations.installCard(data.card, {
-                rezzed: Boolean(rezzed) === true,
-                server_id: server,
-              })
-            )(data.player),
-          };
-        });
+      return {
+        player: R.pipe(
+          Mutations.click(1),
+          Mutations.removeFromHand([data.card.code]),
+          Mutations.installCard(data.card, {
+            rezzed: false,
+            server_id: data.options.serverId,
+          })
+        )(data.player),
+      };
     },
   },
   {

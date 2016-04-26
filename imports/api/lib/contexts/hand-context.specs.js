@@ -4,7 +4,6 @@ import * as sinon from 'sinon';
 import 'sinon-as-promised';
 import { requirement as r, perform as p } from './context-methods.specs.js';
 
-import { Modals } from '../../../ui/components/modals/modals.js';
 import { HandContext } from './hand-context.js';
 
 describe("HandContext", function() {
@@ -25,21 +24,10 @@ describe("HandContext", function() {
 
     describe("Perform", function(){
 
-      beforeEach(function(){
-        let cardSideModal = sinon.stub()
-        cardSideModal.resolves(true)
-        let serverChoiceModal = sinon.stub()
-        serverChoiceModal.resolves(0)
-
-        Modals.cardSideModal = cardSideModal
-        Modals.serverChoiceModal = serverChoiceModal
-      })
-
       it("Installs a card on a corp\'s server", function() {
-        p('install-corp-card', HandContext, { player, card })
-          .then(function(vals){
-            expect(vals.player.remote_servers.length).to.equal(1)
-          })
+        ({ player, card } = p('install-corp-card', HandContext, { player, card, options: { serverId: 0 } }))
+
+        expect(player.remote_servers.length).to.equal(1)
       })
     })
   })
