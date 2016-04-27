@@ -63,6 +63,11 @@ describe('playerContext', function() {
         ({ player, game, opponent } = p('mulligan', subject, { player, game, opponent }))
       })
 
+      it('returns cards to the deck', function(){
+        expect(player.deck_cards.length).to.eq(5)
+      })
+
+
       it('draws another 5 cards', function(){
         expect(R.equals(player.hand, [1, 2, 3, 4, 5])).to.eq(false)
       })
