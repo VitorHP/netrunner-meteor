@@ -1,8 +1,11 @@
-export const Decks = new Mongo.Collection('decks')
+import { Mongo } from 'meteor/mongo';
+import { SimpleSchema } from 'meteor/aldeed:simple-schema';
+
+export const Decks = new Mongo.Collection('decks');
 
 Decks.schema = new SimpleSchema({
   name: { type: String },
-  side_code: { type: String, allowedValues: ["corp", "runner"] },
+  side_code: { type: String, allowedValues: ['corp', 'runner'] },
   identity_card_code: { type: String },
-  cards: { type: Object, defaultValue: [] }
-})
+  cards: { type: Object, defaultValue: [] },
+});

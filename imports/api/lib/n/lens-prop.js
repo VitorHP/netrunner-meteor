@@ -1,6 +1,6 @@
-import { assoc } from "./assoc.js"
-import R from 'ramda'
+import { assoc } from './assoc.js';
+import R from 'ramda';
 
-export const lensProp = R.curry(function lensProp(prop) {
-  return R.lens(R.prop(prop), assoc(prop))
-})
+export const lensProp = R.curry((prop) =>
+  R.lens(R.prop(prop), assoc(prop))
+);

@@ -1,11 +1,13 @@
-import R from 'ramda'
+import R from 'ramda';
 
-export const assoc = R.curry(function assoc(prop, val, obj) {
-  var result = Object.create(Object.getPrototypeOf(obj))
-  var properties = Object.getOwnPropertyNames(obj)
+export const assoc = R.curry((prop, val, obj) => {
+  const result = Object.create(Object.getPrototypeOf(obj));
+  let i;
 
-  for (var i = 0; i < properties.length; i += 1) {
-    result[properties[i]] = obj[properties[i]]
+  const properties = Object.getOwnPropertyNames(obj);
+
+  for (i = 0; i < properties.length; i += 1) {
+    result[properties[i]] = obj[properties[i]];
   }
 
   result[prop] = val;
