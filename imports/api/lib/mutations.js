@@ -67,7 +67,7 @@ export const Mutations = {
   },
 
   isAboveHandLimit(player) {
-    return player.hand.length > player.max_hand_size
+    return player.hand.length > player.max_hand_size;
   },
 
   drawCard: R.curry((count, player) => {
@@ -126,9 +126,9 @@ export const Mutations = {
     return R.over(L[toCollection], R.concat(cardCodes), cardsRemoved);
   }),
 
-  removeFromHand: R.curry((cardCodes, player) => {
-    return Mutations.removeCards('hand', cardCodes, player)
-  }),
+  removeFromHand: R.curry((cardCodes, player) =>
+    Mutations.removeCards('hand', cardCodes, player)
+  ),
 
   returnToDeck: R.curry((cardCodes, player) =>
     Mutations.moveCards('hand', 'deckCards', cardCodes, player)
@@ -191,7 +191,7 @@ export const Mutations = {
 
   _installCorpCard: R.curry((lens, card, player, options) => {
     const target = R.compose(L.remoteServers,
-                          R.lensIndex(parseInt(options.server_id)),
+                          R.lensIndex(parseInt(options.server_id, 10)),
                           lens);
 
     return R.over(target, R.append({
