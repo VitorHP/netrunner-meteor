@@ -1,16 +1,13 @@
 <template name="actionDropdown">
-  <!-- <button class="btn btn-default js-action-btn"></button> -->
-  <!-- Single button -->
   <div class="btn-group">
     <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       {{ label }} <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-      <li role="separator" class="divider"></li>
-      <li><a href="#">Separated link</a></li>
+      {{#each option in input.options }}
+        <li><a class="js-action-dropdown-item" data-value="{{option.value}}" href="#">{{option.label}}</a></li>
+      {{/each }}
     </ul>
   </div>
 </template>
+

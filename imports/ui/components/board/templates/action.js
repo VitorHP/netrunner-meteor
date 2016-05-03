@@ -4,6 +4,6 @@ import './action.html';
 
 Template.action.events({
   'click .js-action-btn'() {
-    this.action.perform();
+    this.perform();
   },
 });

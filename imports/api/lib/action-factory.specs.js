@@ -1,5 +1,5 @@
 import { expect } from 'meteor/practicalmeteor:chai'
-import { stubs }  from 'meteor/practicalmeteor:sinon';
+import { stubs, sinon }  from 'meteor/practicalmeteor:sinon';
 import R from "ramda";
 import '/imports/tests/support/spawns.js'
 
@@ -20,7 +20,7 @@ describe('ActionFactory', function() {
         noRequirement = {
           label: 'No Requirement',
           alias: 'no-requirement',
-          perform(){},
+          perform(context){ return context; },
         };
 
     it('checks a requirement for an action', function(){
@@ -45,7 +45,7 @@ describe('ActionFactory', function() {
 
         action = ActionFactory.allowedActions([standardAction])[0]
 
-        action.perform()
+        action.perform({})
 
         expect(stubs.perform).to.have.been.calledWith()
       })
@@ -55,7 +55,7 @@ describe('ActionFactory', function() {
 
         action = ActionFactory.allowedActions([standardAction], { runner: runner })[0]
 
-        action.perform()
+        action.perform({})
 
         expect(stubs._updateRunner).to.have.been.calledWith(runner)
       })
@@ -79,9 +79,9 @@ describe('ActionFactory', function() {
 
         action = ActionFactory.allowedActions([actionWithHook, standardAction], {})[0]
 
-        action.perform()
+        action.perform({})
 
-        expect(stubs.hookPerform).to.have.been.calledWith({})
+        expect(stubs.hookPerform).to.have.been.calledWith({ options: {} })
       })
 
       it('beforePerform executes other actions before the current', function(){
@@ -97,11 +97,59 @@ describe('ActionFactory', function() {
 
         action = ActionFactory.allowedActions([actionWithHook, standardAction], {})[0]
 
-        action.perform()
+        action.perform({})
 
-        expect(stubs.hookPerform).to.have.been.calledWith({})
+        expect(stubs.hookPerform).to.have.been.calledWith({ options: {} })
       })
 
+    })
+
+    describe('allows options to be passed on the fly for the action', function(){
+      let action = {
+        label: 'Standard',
+        alias: 'standard',
+        requirement(context){ return true; },
+        perform(context){ context.options.spy(); return {}; },
+      };
+      let options = {
+        spy: sinon.spy()
+      };
+
+      it('passes the options down to the perform method of the action', function(){
+        action = ActionFactory.allowedActions([action], {})[0]
+
+        action.perform(options)
+
+        expect(options.spy).to.have.been.calledWith()
+      })
+    })
+
+    describe('dynamic input type', function(){
+      let action = {
+        label: 'Standard',
+        alias: 'standard',
+        requirement(context){ return true; },
+        perform(context){ context.options.spy(); return {}; },
+      };
+      let customInputAction = {
+        label: 'Standard',
+        alias: 'standard',
+        input: function(){ return { type: 'custom' } },
+        requirement(context){ return true; },
+        perform(context){ context.options.spy(); return {}; },
+      };
+
+      it('uses default input type if none specified', function(){
+        action = ActionFactory.allowedActions([action], {})[0]
+
+        expect(action.input.type).to.equal('action')
+      })
+
+      it('uses custom input type if specified', function(){
+        action = ActionFactory.allowedActions([customInputAction], {})[0]
+
+        expect(action.input.type).to.equal('custom')
+      })
     })
   })
 })

@@ -5,6 +5,20 @@ export const HandContext = [
   {
     label: 'Install',
     alias: 'install-corp-card',
+    input(data) {
+      return {
+        type: 'actionDropdown',
+        property: 'serverId',
+        options: data.player.remote_servers.reduce((memo, server) => {
+          memo.push({
+            value: server.server_id,
+            label: `Server #${server.server_id}`,
+          });
+
+          return memo;
+        }, [{ value: data.player.remote_servers.length, label: 'New Remote Server' }]),
+      };
+    },
     requirement(data) {
       return Mutations.isOfType(data.card, ['agenda', 'ice']) &&
              Mutations.hasClicks(data.player);

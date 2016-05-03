@@ -60,10 +60,11 @@ export const ActionFactory = {
     return {
       label: action.label,
       alias: action.alias,
-      perform() {
+      input: (action.input && action.input(data)) || this.defaultActionInput(),
+      perform(options) {
         return R.pipe(
           ...performs
-        )(data);
+        )(R.merge(data, { options }));
       },
     };
   },
@@ -78,10 +79,19 @@ export const ActionFactory = {
         break;
       case 'game':
         Mutations._updateGame(context);
+        break;
+      default:
+        break;
     }
 
     return true;
   }),
+
+  defaultActionInput() {
+    return {
+      type: 'action',
+    };
+  },
 
 
   corpActions(data) {
