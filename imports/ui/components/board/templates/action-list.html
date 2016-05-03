@@ -1,7 +1,7 @@
 <template name="actionList">
   <ul class="list-unstyled actionList">
     {{#each item in actions }}
-      <li>{{> action data=item }}</li>
+      <li>{{> Template.dynamic template=myTemplate data=item }}</li>
     {{/each }}
   </ul>
 </template>

@@ -6,7 +6,7 @@ import './action.js';
 import './action-dropdown.js';
 
 Template.actionList.helpers({
-  template() {
-    return 'action';
+  myTemplate() {
+    return 'actionDropdown';
   },
 });
