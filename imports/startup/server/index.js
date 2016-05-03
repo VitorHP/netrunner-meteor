@@ -1,2 +1,2 @@
-import './api.js'
-import './seeds.js'
+import './api.js';
+import './seeds.js';

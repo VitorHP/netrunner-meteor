@@ -1,2 +1,2 @@
-import '../../api/methods.js'
-import '../../api/publish.js'
+import '../../api/methods.js';
+import '../../api/publish.js';
