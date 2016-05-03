@@ -212,6 +212,8 @@ export const Mutations = {
 
       agenda: Mutations._installCorpCard(L.cards),
       ice: Mutations._installCorpCard(L.ices),
+      asset: Mutations._installCorpCard(L.cards),
+      upgrade: Mutations._installCorpCard(L.cards),
     };
 
     return fns[card.type_code](card, player, options);

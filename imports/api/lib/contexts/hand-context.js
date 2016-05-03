@@ -20,7 +20,7 @@ export const HandContext = [
       };
     },
     requirement(data) {
-      return Mutations.isOfType(data.card, ['agenda', 'ice']) &&
+      return Mutations.isOfType(data.card, ['agenda', 'ice', 'asset', 'upgrade']) &&
              Mutations.hasClicks(data.player);
     },
     perform(data) {
