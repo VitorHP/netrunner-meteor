@@ -44,7 +44,7 @@ export const ActionFactory = {
   },
 
   _wrapPerform(action, data, hooks) {
-    const trigger = R.curry(function (triggerAction, triggerData) {
+    const trigger = R.curry((triggerAction, triggerData) => {
       return triggerAction.requirement(triggerData) ?
         R.merge(triggerData, triggerAction.perform(triggerData)) :
         triggerData;
@@ -57,6 +57,7 @@ export const ActionFactory = {
       this._updateContext,
     ]);
 
+
     return {
       label: action.label,
       alias: action.alias,
@@ -64,7 +65,7 @@ export const ActionFactory = {
       perform(options) {
         return R.pipe(
           ...performs
-        )(R.merge(data, { options }));
+        )(R.merge(data, { options: options || {} }));
       },
     };
   },

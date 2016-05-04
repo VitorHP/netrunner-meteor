@@ -20,7 +20,9 @@ const _corpHelpers = {
     return this.remote_servers.reduce((memo, server) => {
       memo.push({
         ices: server.ices.map(serverCard),
-        cards: server.cards.map(serverCard),
+        upgrades: server.upgrades.map(serverCard),
+        card: Cards.findOne({ code: server.card_code }),
+        rezzed: server.rezzed,
       });
 
       return memo;
@@ -45,9 +47,11 @@ Corp.schema = new SimpleSchema({
   mulligan: { type: Boolean, optional: true },
   ready: { type: Boolean, defaultValue: null },
   'remote_servers.$.server_id': { type: Number },
-  'remote_servers.$.cards': { type: [Object] },
-  'remote_servers.$.cards.$.card_code': { type: String },
-  'remote_servers.$.cards.$.rezzed': { type: Boolean },
+  'remote_servers.$.card_code': { type: String, optional: true },
+  'remote_servers.$.rezzed': { type: Boolean, optional: true },
+  'remote_servers.$.upgrades': { type: [Object] },
+  'remote_servers.$.upgrades.$.card_code': { type: String },
+  'remote_servers.$.upgrades.$.rezzed': { type: Boolean },
   'remote_servers.$.ices': { type: [Object] },
   'remote_servers.$.ices.$.card_code': { type: String },
   'remote_servers.$.ices.$.rezzed': { type: Boolean },

@@ -25,6 +25,7 @@ export const Mutations = {
     }, (err) => {
       if (err) {
         // error
+        console.log(err);
       } else {
         // success
       }
@@ -185,11 +186,11 @@ export const Mutations = {
     return R.view(server, player) !== undefined ?
       player :
       R.over(L.remoteServers, R.append({ server_id: options.server_id,
-                                       cards: [],
+                                       upgrades: [],
                                        ices: [] }), player);
   },
 
-  _installCorpCard: R.curry((lens, card, player, options) => {
+  _installNonUniqueCorpCard: R.curry((lens, card, player, options) => {
     const target = R.compose(L.remoteServers,
                           R.lensIndex(parseInt(options.server_id, 10)),
                           lens);
@@ -198,6 +199,16 @@ export const Mutations = {
       card_code: card.code,
       rezzed: options.rezzed,
     }), Mutations._findOrInitializeServer(player, options));
+  }),
+
+  _installUniqueCorpCard: R.curry((card, player, options) => {
+    const targetServer = R.compose(L.remoteServers,
+                         R.lensIndex(parseInt(options.server_id, 10)));
+
+    return R.pipe(
+      R.set(R.compose(targetServer, L.cardCode), card.code),
+      R.set(R.compose(targetServer, L.rezzed), options.rezzed)
+    )(Mutations._findOrInitializeServer(player, options));
   }),
 
   _installRunnerCard: R.curry((lens, card, player) =>
@@ -210,10 +221,10 @@ export const Mutations = {
       hardware: Mutations._installRunnerCard(L.hardware),
       resource: Mutations._installRunnerCard(L.resources),
 
-      agenda: Mutations._installCorpCard(L.cards),
-      ice: Mutations._installCorpCard(L.ices),
-      asset: Mutations._installCorpCard(L.cards),
-      upgrade: Mutations._installCorpCard(L.cards),
+      agenda: Mutations._installUniqueCorpCard,
+      asset: Mutations._installUniqueCorpCard,
+      ice: Mutations._installNonUniqueCorpCard(L.ices),
+      upgrade: Mutations._installNonUniqueCorpCard(L.upgrades),
     };
 
     return fns[card.type_code](card, player, options);

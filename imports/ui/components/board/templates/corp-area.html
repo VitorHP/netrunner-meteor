@@ -62,7 +62,9 @@
       {{/each }}
     </ul>
     <ul class="list-unstyled remote-server__server">
-      {{#each item in server.cards }}
+      <li>{{> card card=server.card rezzed=server.rezzed }}</li>
+
+      {{#each item in server.upgrades }}
         <li>{{> card card=item.card rezzed=item.rezzed }}</li>
       {{/each }}
     </ul>
