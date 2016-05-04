@@ -34,6 +34,9 @@ Spawn.register("Corp", {
   "ready" : false,
   "identity_card_code" : "01001",
   "remote_servers" : [],
+  "hq" : { upgrades: [], ices: [] },
+  "rnd" : { upgrades: [], ices: [] },
+  "archives" : { upgrades: [], ices: [] },
 })
 
 Spawn.register("Game", {

@@ -1,6 +1,7 @@
 import { N } from './n.js';
 
 export const L = {
+  archives: N.lensProp('archives'),
   cardCode: N.lensProp('card_code'),
   cards: N.lensProp('cards'),
   clicks: N.lensProp('clicks'),
@@ -9,6 +10,7 @@ export const L = {
   discard: N.lensProp('discard'),
   hand: N.lensProp('hand'),
   hardware: N.lensProp('hardware'),
+  hq: N.lensProp('hq'),
   ices: N.lensProp('ices'),
   maxClicks: N.lensProp('max_clicks'),
   maxHandSide: N.lensProp('max_hand_size'),
@@ -18,6 +20,7 @@ export const L = {
   remoteServers: N.lensProp('remote_servers'),
   resources: N.lensProp('resources'),
   rezzed: N.lensProp('rezzed'),
+  rnd: N.lensProp('rnd'),
   turn: N.lensProp('turn'),
   turnOwner: N.lensProp('turn_owner'),
   upgrades: N.lensProp('upgrades'),

@@ -13,23 +13,55 @@
           </div>
           <div class="row">
             <div class="col-md-4">
-              <div class="identity">
-                {{> card card=(player.identity) }}
+              <div class="hq">
+                {{#let hq=(player.centralServerCards 'hq') }}
+                  <ul class="list-unstyled hq__ices">
+                    {{#each item in hq.ices }}
+                      <li class="ice">{{> card card=item.card rezzed=item.rezzed }}</li>
+                    {{/each }}
+                  </ul>
+                  {{> card card=(player.identity) }}
+                  <ul class="list-unstyled hq__root">
+                    {{#each item in hq.upgrades }}
+                      <li>{{> card card=item.card rezzed=item.rezzed }}</li>
+                    {{/each }}
+                  </ul>
+                {{/let }}
               </div>
               <div class="root">
               </div>
             </div>
             <div class="col-md-4">
               <div class="rnd">
-                {{> deck size=player.deckSize background=player.background_img_src }}
-              </div>
-              <div class="root">
+                {{#let rnd=(player.centralServerCards 'rnd') }}
+                  <ul class="list-unstyled rnd__ices">
+                    {{#each item in rnd.ices }}
+                      <li class="ice">{{> card card=item.card rezzed=item.rezzed }}</li>
+                    {{/each }}
+                  </ul>
+                  {{> deck size=player.deckSize background=player.background_img_src }}
+                  <ul class="list-unstyled rnd__root">
+                    {{#each item in rnd.upgrades }}
+                      <li>{{> card card=item.card rezzed=item.rezzed }}</li>
+                    {{/each }}
+                  </ul>
+                {{/let }}
               </div>
             </div>
             <div class="col-md-4">
               <div class="archives">
-              </div>
-              <div class="root">
+                {{#let archives=(player.centralServerCards 'archives') }}
+                  <ul class="list-unstyled rnd__ices">
+                    {{#each item in archives.ices }}
+                      <li class="ice">{{> card card=item.card rezzed=item.rezzed }}</li>
+                    {{/each }}
+                  </ul>
+                  <ul class="list-unstyled rnd__root">
+                    {{#each item in archives.upgrades }}
+                      <li>{{> card card=item.card rezzed=item.rezzed }}</li>
+                    {{/each }}
+                  </ul>
+                {{/let }}
               </div>
             </div>
           </div>

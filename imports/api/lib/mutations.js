@@ -179,21 +179,43 @@ export const Mutations = {
     return !Mutations.isCorpCard(card);
   },
 
+  _serverLensById(serverId) {
+    let server;
+
+    switch (serverId) {
+      case 'hq':
+        server = L.hq;
+        break;
+      case 'archives':
+        server = L.archives;
+        break;
+      case 'rnd':
+        server = L.rnd;
+        break;
+      default:
+        server = R.compose(L.remoteServers,
+          R.lensIndex(serverId));
+    }
+
+    return server;
+  },
+
   _findOrInitializeServer(player, options) {
-    const server = R.compose(L.remoteServers,
-                          R.lensIndex(options.server_id));
+    const server = Mutations._serverLensById(options.serverId);
 
     return R.view(server, player) !== undefined ?
       player :
-      R.over(L.remoteServers, R.append({ server_id: options.server_id,
-                                       upgrades: [],
-                                       ices: [] }), player);
+      R.over(L.remoteServers, R.append({ server_id: options.serverId,
+                                         upgrades: [],
+                                         ices: [] }),
+      player);
   },
 
   _installNonUniqueCorpCard: R.curry((lens, card, player, options) => {
-    const target = R.compose(L.remoteServers,
-                          R.lensIndex(parseInt(options.server_id, 10)),
-                          lens);
+    const target = R.compose(
+      Mutations._serverLensById(options.serverId),
+      lens
+    );
 
     return R.over(target, R.append({
       card_code: card.code,
@@ -202,8 +224,7 @@ export const Mutations = {
   }),
 
   _installUniqueCorpCard: R.curry((card, player, options) => {
-    const targetServer = R.compose(L.remoteServers,
-                         R.lensIndex(parseInt(options.server_id, 10)));
+    const targetServer = Mutations._serverLensById(options.serverId);
 
     return R.pipe(
       R.set(R.compose(targetServer, L.cardCode), card.code),
@@ -223,6 +244,7 @@ export const Mutations = {
 
       agenda: Mutations._installUniqueCorpCard,
       asset: Mutations._installUniqueCorpCard,
+
       ice: Mutations._installNonUniqueCorpCard(L.ices),
       upgrade: Mutations._installNonUniqueCorpCard(L.upgrades),
     };

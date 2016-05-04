@@ -8,15 +8,22 @@ import { Cards } from '../cards/cards.js';
 
 export const Corp = new Mongo.Collection('corp');
 
-const _corpHelpers = {
-  remoteServersCards() {
-    function serverCard(card) {
-      return {
-        card: Cards.findOne({ code: card.card_code }),
-        rezzed: card.rezzed,
-      };
-    }
+function serverCard(card) {
+  return {
+    card: Cards.findOne({ code: card.card_code }),
+    rezzed: card.rezzed,
+  };
+}
 
+const _corpHelpers = {
+  centralServerCards(name) {
+    return {
+      ices: this[name].ices.map(serverCard),
+      upgrades: this[name].upgrades.map(serverCard),
+    };
+  },
+
+  remoteServersCards() {
     return this.remote_servers.reduce((memo, server) => {
       memo.push({
         ices: server.ices.map(serverCard),
@@ -55,6 +62,18 @@ Corp.schema = new SimpleSchema({
   'remote_servers.$.ices': { type: [Object] },
   'remote_servers.$.ices.$.card_code': { type: String },
   'remote_servers.$.ices.$.rezzed': { type: Boolean },
+  'hq.ices.$.card_code': { type: String },
+  'hq.ices.$.rezzed': { type: Boolean },
+  'hq.upgrades.$.card_code': { type: String },
+  'hq.upgrades.$.rezzed': { type: Boolean },
+  'archives.ices.$.card_code': { type: String },
+  'archives.ices.$.rezzed': { type: Boolean },
+  'archives.upgrades.$.card_code': { type: String },
+  'archives.upgrades.$.rezzed': { type: Boolean },
+  'rnd.ices.$.card_code': { type: String },
+  'rnd.ices.$.rezzed': { type: Boolean },
+  'rnd.upgrades.$.card_code': { type: String },
+  'rnd.upgrades.$.rezzed': { type: Boolean },
 });
 
 Corp.helpers(R.merge(Players.commonHelpers, _corpHelpers));

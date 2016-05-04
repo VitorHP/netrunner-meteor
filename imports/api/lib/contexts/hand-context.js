@@ -1,6 +1,36 @@
 import { Mutations } from '../mutations.js';
 import R from 'ramda';
 
+function serversFor(card, player) {
+  const centralServers = [
+    { label: 'HQ', value: 'hq' },
+    { label: 'R&D', value: 'rnd' },
+    { label: 'Archives', value: 'archives' },
+  ];
+
+  const remoteServers = player.remote_servers.reduce((memo, server) => {
+    memo.push({
+      value: server.server_id,
+      label: `Server #${server.server_id}`,
+    });
+
+    return memo;
+  }, [{ value: player.remote_servers.length, label: 'New Remote Server' }]);
+
+  const allServers = R.concat(centralServers, remoteServers);
+
+  switch (card.type_code) {
+    case 'agenda':
+    case 'asset':
+      return remoteServers;
+    case 'ice':
+    case 'upgrade':
+      return allServers;
+    default:
+      return [];
+  }
+}
+
 export const HandContext = [
   {
     label: 'Install',
@@ -9,14 +39,7 @@ export const HandContext = [
       return {
         type: 'actionDropdown',
         property: 'serverId',
-        options: data.player.remote_servers.reduce((memo, server) => {
-          memo.push({
-            value: server.server_id,
-            label: `Server #${server.server_id}`,
-          });
-
-          return memo;
-        }, [{ value: data.player.remote_servers.length, label: 'New Remote Server' }]),
+        options: serversFor(data.card, data.player),
       };
     },
     requirement(data) {
@@ -30,7 +53,7 @@ export const HandContext = [
           Mutations.removeFromHand([data.card.code]),
           Mutations.installCard(data.card, {
             rezzed: false,
-            server_id: data.options.serverId,
+            serverId: data.options.serverId,
           })
         )(data.player),
       };

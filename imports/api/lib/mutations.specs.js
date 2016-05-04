@@ -260,7 +260,7 @@ describe("Mutations", function() {
 
       expect(corp.remote_servers.length).to.eq(0)
 
-      let res = subject().installCard(cardDouble, { rezzed: true, server_id: 0 }, corp)
+      let res = subject().installCard(cardDouble, { rezzed: true, serverId: 0 }, corp)
 
       expect(res.remote_servers.length).to.eq(1)
       expect(res.remote_servers[0].card_code).to.eq("01042")
@@ -272,7 +272,7 @@ describe("Mutations", function() {
 
       expect(corp.remote_servers.length).to.eq(0)
 
-      let res = subject().installCard(cardDouble, { rezzed: false, server_id: 0 }, corp)
+      let res = subject().installCard(cardDouble, { rezzed: false, serverId: 0 }, corp)
 
       expect(res.remote_servers.length).to.eq(1)
       expect(res.remote_servers[0].card_code).to.eq("01042")
@@ -285,7 +285,7 @@ describe("Mutations", function() {
 
       expect(corp.remote_servers.length).to.eq(1)
 
-      let res = subject().installCard(cardDouble, { rezzed: true, server_id: 0 }, corp)
+      let res = subject().installCard(cardDouble, { rezzed: true, serverId: 0 }, corp)
 
       expect(res.remote_servers.length).to.eq(1)
       expect(res.remote_servers[0].ices.length).to.eq(1)
@@ -294,7 +294,7 @@ describe("Mutations", function() {
     it ("installs an ice on a corp's new remote server", function(){
       let cardDouble = { code: "01042", type_code: "ice" }
 
-      let res = subject().installCard(cardDouble, { rezzed: true, server_id: 0 }, corp)
+      let res = subject().installCard(cardDouble, { rezzed: true, serverId: 0 }, corp)
 
       expect(res.remote_servers[0].ices.length).to.eq(1)
       expect(res.remote_servers[0].ices[0].card_code).to.eq("01042")
@@ -303,11 +303,71 @@ describe("Mutations", function() {
     it ("installs an upgrade on a corp's new remote server", function(){
       let cardDouble = { code: "01042", type_code: "upgrade" }
 
-      let res = subject().installCard(cardDouble, { rezzed: false, server_id: 0 }, corp)
+      let res = subject().installCard(cardDouble, { rezzed: false, serverId: 0 }, corp)
 
       expect(res.remote_servers[0].upgrades.length).to.eq(1)
       expect(res.remote_servers[0].upgrades[0].card_code).to.eq("01042")
       expect(res.remote_servers[0].upgrades[0].rezzed).to.eq(false)
+    })
+
+    it ("installs an upgrade on the corp's HQ", function(){
+      let cardDouble = { code: "01042", type_code: "upgrade" }
+
+      let res = subject().installCard(cardDouble, { rezzed: false, serverId: 'hq' }, corp)
+
+      expect(res.hq.upgrades.length).to.eq(1)
+      expect(res.hq.upgrades[0].card_code).to.eq("01042")
+      expect(res.hq.upgrades[0].rezzed).to.eq(false)
+    })
+
+    it ("installs an ice on the corp's HQ", function(){
+      let cardDouble = { code: "01042", type_code: "ice" }
+
+      let res = subject().installCard(cardDouble, { rezzed: false, serverId: 'hq' }, corp)
+
+      expect(res.hq.ices.length).to.eq(1)
+      expect(res.hq.ices[0].card_code).to.eq("01042")
+      expect(res.hq.ices[0].rezzed).to.eq(false)
+    })
+
+    it ("installs an upgrade on the corp's Archives", function(){
+      let cardDouble = { code: "01042", type_code: "upgrade" }
+
+      let res = subject().installCard(cardDouble, { rezzed: false, serverId: 'archives' }, corp)
+
+      expect(res.archives.upgrades.length).to.eq(1)
+      expect(res.archives.upgrades[0].card_code).to.eq("01042")
+      expect(res.archives.upgrades[0].rezzed).to.eq(false)
+    })
+
+    it ("installs an ice on the corp's Archives", function(){
+      let cardDouble = { code: "01042", type_code: "ice" }
+
+      let res = subject().installCard(cardDouble, { rezzed: false, serverId: 'archives' }, corp)
+
+      expect(res.archives.ices.length).to.eq(1)
+      expect(res.archives.ices[0].card_code).to.eq("01042")
+      expect(res.archives.ices[0].rezzed).to.eq(false)
+    })
+
+    it ("installs an upgrade on the corp's R&D", function(){
+      let cardDouble = { code: "01042", type_code: "upgrade" }
+
+      let res = subject().installCard(cardDouble, { rezzed: false, serverId: 'rnd' }, corp)
+
+      expect(res.rnd.upgrades.length).to.eq(1)
+      expect(res.rnd.upgrades[0].card_code).to.eq("01042")
+      expect(res.rnd.upgrades[0].rezzed).to.eq(false)
+    })
+
+    it ("installs an ice on the corp's R&D", function(){
+      let cardDouble = { code: "01042", type_code: "ice" }
+
+      let res = subject().installCard(cardDouble, { rezzed: false, serverId: 'rnd' }, corp)
+
+      expect(res.rnd.ices.length).to.eq(1)
+      expect(res.rnd.ices[0].card_code).to.eq("01042")
+      expect(res.rnd.ices[0].rezzed).to.eq(false)
     })
   })
 

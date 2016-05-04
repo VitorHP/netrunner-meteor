@@ -127,7 +127,10 @@ seedData(Corp, [{
   'ready' : false,
   'mulligan' : undefined,
   'identity_card_code' : '01054',
-  'remote_servers' : []
+  'remote_servers' : [],
+  "hq" : { upgrades: [], ices: [] },
+  "rnd" : { upgrades: [], ices: [] },
+  "archives" : { upgrades: [], ices: [] },
 }])
 
 // Cards
