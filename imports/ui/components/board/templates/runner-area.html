@@ -25,21 +25,21 @@
           </div>
         </div>
         <div class="rig col-md-6">
-          <div class="rig__program-row">
+          <ul class="list-unstyled rig__programs">
             {{#each program in player.programCards }}
-              {{> card card=program.card }}
+              <li class="program">{{> card card=program.card }}</li>
             {{/each}}
-          </div>
-          <div class="rig__hardware-row">
+          </ul>
+          <ul class="list-unstyled rig__hardware">
             {{#each hardware in player.hardwareCards }}
-              {{> card card=hardware.card }}
+              <li class="hardware">{{> card card=hardware.card }}</li>
             {{/each}}
-          </div>
-          <div class="rig__resource-row">
+          </ul>
+          <ul class="list-unstyled rig__resources">
             {{#each resource in player.resourceCards }}
-              {{> card card=resource.card }}
+              <li class="hardware">{{> card card=resource.card }}</li>
             {{/each}}
-          </div>
+          </ul>
         </div>
       </div>
     </div>
