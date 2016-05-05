@@ -90,9 +90,7 @@ export const Mutations = {
 
   receiveCredits: R.curry((amount, player) => R.over(L.credits, R.add(amount), player)),
 
-  payCredits(amount, player) {
-    return R.over(L.credits, R.subtract(amount), player);
-  },
+  payCredits: R.curry((amount, player) => R.over(L.credits, R.subtract(amount), player)),
 
   ready(player) {
     return R.set(L.ready, true, player);

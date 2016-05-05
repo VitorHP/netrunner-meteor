@@ -65,12 +65,13 @@ export const HandContext = [
     requirement(data) {
       return Mutations.isOfType(data.card, ['program', 'hardware', 'resource']) &&
              Mutations.hasClicks(data.player) &&
-             Mutations.hasCredits(data.card.install_cost, data.player);
+             Mutations.hasCredits(data.card.cost, data.player);
     },
     perform(data) {
       return {
         player: R.pipe(
           Mutations.click(1),
+          Mutations.payCredits(data.card.cost),
           Mutations.removeFromHand([data.card.code]),
           Mutations.installCard(data.card, {})
         )(data.player),

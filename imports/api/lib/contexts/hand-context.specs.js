@@ -13,7 +13,7 @@ describe("HandContext", function() {
   describe("HandContext#installCorpCard", function() {
     beforeEach(function(){
       player = Spawn.create("Corp", { hand: ['01001'], clicks: 1 });
-      card = Spawn.create("Card", { code: '01001', type_code: "agenda", install_cost: 1 });
+      card = Spawn.create("Card", { code: '01001', type_code: "agenda", cost: 1 });
     })
 
     describe("Requirements", function(){
@@ -35,7 +35,7 @@ describe("HandContext", function() {
   describe("HandContext#installRunnerCard", function() {
     beforeEach(function(){
       player = Spawn.create("Runner", { hand: ['01001'], credits: 2, clicks: 1 });
-      card = Spawn.create("Card", { code: '01001', type_code: "program", install_cost: 2 });
+      card = Spawn.create("Card", { code: '01001', type_code: "program", cost: 2 });
     })
 
     describe("Requirements", function(){
@@ -49,6 +49,18 @@ describe("HandContext", function() {
         ({ player, card } = p('install-runner-card', HandContext, { player, card }))
 
         expect(player.programs.length).to.equal(1)
+      })
+
+      it("Costs a click", function() {
+        ({ player, card } = p('install-runner-card', HandContext, { player, card }))
+
+        expect(player.clicks).to.equal(0)
+      })
+
+      it("Reduces the credits of the runner by the card's cost", function() {
+        ({ player, card } = p('install-runner-card', HandContext, { player, card }))
+
+        expect(player.credits).to.equal(0)
       })
     })
   })
