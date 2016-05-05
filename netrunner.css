@@ -45,8 +45,7 @@
   text-align: center;
 }
 
-.hand__item {
-  display: inline-block;
+.hand__card {
   vertical-align: top;
 }
 

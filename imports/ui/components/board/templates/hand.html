@@ -1,7 +1,9 @@
 <template name="hand">
-  <div class="hand">
-    {{#each card in player.handCards }}
-      {{> handItem card=card player=player game=game }}
-    {{/each }}
-  </div>
+  <ul class="list-inline hand">
+    {{#each item in player.handCards }}
+      <li class="hand__card">
+        {{> card card=item rezzed=true context='hand' game=game player=player }}
+      </li>
+    {{/each}}
+  </ul>
 </template>

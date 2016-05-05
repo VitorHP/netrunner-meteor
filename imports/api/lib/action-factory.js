@@ -61,7 +61,7 @@ export const ActionFactory = {
     return {
       label: action.label,
       alias: action.alias,
-      input: (action.input && action.input(data)) || this.defaultActionInput(),
+      input: (action.input && action.input(data)) || this._defaultActionInput(),
       perform(options) {
         return R.pipe(
           ...performs
@@ -88,27 +88,23 @@ export const ActionFactory = {
     return true;
   }),
 
-  defaultActionInput() {
+  _defaultActionInput() {
     return {
       type: 'action',
     };
   },
 
-
-  corpActions(data) {
-    const player = 'corp';
-
-    return this.allowedActions(PlayerContext.concat(corpContext(player)), data);
-  },
-
-  runnerActions(data) {
-    const player = 'runner';
-
-    return this.allowedActions(PlayerContext.concat(runnerContext(player)), data);
-  },
-
-  handActions(data) {
-    return this.allowedActions(HandContext, data);
+  actions(context, data) {
+    switch (context) {
+      case 'hand':
+        return this.allowedActions(HandContext, data);
+      case 'corp':
+        return this.allowedActions(PlayerContext.concat(corpContext()), data);
+      case 'runner':
+        return this.allowedActions(PlayerContext.concat(runnerContext()), data);
+      default:
+        return [];
+    }
   },
 
 };
