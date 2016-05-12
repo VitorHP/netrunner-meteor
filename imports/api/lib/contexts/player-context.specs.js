@@ -116,8 +116,8 @@ describe('playerContext', function() {
 
   describe('Actions.global#startGame', function() {
     beforeEach(function(){
-      player = Spawn.create("Runner", { mulligan: true }),
-      opponent = Spawn.create("Corp", { mulligan: false, clicks: 0 }),
+      player = Spawn.create("Runner", { mulligan: true, credits: 0 }),
+      opponent = Spawn.create("Corp", { mulligan: false, clicks: 0, credits: 0 }),
       game = Spawn.create("Game", { turn: 0 })
     })
 
@@ -133,6 +133,13 @@ describe('playerContext', function() {
 
         expect(opponent.clicks).to.eq(3)
         expect(game.turn).to.eq(1)
+      })
+
+      it('gives both the corp and runner 5 credits', function(){
+        ({ player, opponent, game } = p('start-game', subject, { player, opponent, game }))
+
+        expect(opponent.credits).to.eq(5)
+        expect(player.credits).to.eq(5)
       })
     })
   })

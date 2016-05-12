@@ -78,12 +78,14 @@ export const PlayerContext = [
              !Mutations.gameStarted(data.game);
     },
     perform(data) {
-      const corp = data.player.side_code === 'corp' ? 'player' : 'opponent';
-
       return {
-        [corp]: R.pipe(
+        opponent: R.pipe(
+          Mutations.receiveCredits(5),
           Mutations.fillClicks
-        )(data[corp]),
+        )(data.opponent),
+        player: R.pipe(
+          Mutations.receiveCredits(5),
+        )(data.player),
         game: R.pipe(
           Mutations.newTurn
         )(data.game),
