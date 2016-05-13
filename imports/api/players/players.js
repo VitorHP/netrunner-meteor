@@ -1,30 +1,28 @@
-import { Cards } from '../cards/cards.js'
+import { Cards } from '../cards/cards.js';
 
-export const Players = {}
+export const Players = {};
 
-function cardList(card_codes) {
-  let cards = Cards.find({ code: { "$in": card_codes } }).fetch()
+function cardList(cardCodes) {
+  const cards = Cards.find({ code: { $in: cardCodes } }).fetch();
 
-  return card_codes.map(function(card_code){
-    return cards.find(function(card){ return card.code === card_code })
-  })
+  return cardCodes.map((cardCode) => cards.find((card) => card.code === cardCode));
 }
 
 Players.commonHelpers = {
   deckCards() {
-    return cardList(this.deck_cards)
+    return cardList(this.deck_cards);
   },
 
   identity() {
-    return Cards.findOne({ code: this.identity_card_code })
+    return Cards.findOne({ code: this.identity_card_code });
   },
 
   deckSize() {
-    return this.deck_cards.length
+    return this.deck_cards.length;
   },
 
   handCards() {
-    return cardList(this.hand)
+    return cardList(this.hand);
   },
 
-}
+};
