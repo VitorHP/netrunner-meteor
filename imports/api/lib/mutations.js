@@ -155,6 +155,12 @@ export const Mutations = {
     return game.turn > 0;
   },
 
+  wait: R.curry((action, game) => R.assoc('wait', action, game)),
+
+  isWaiting(game) {
+    return R.isEmpty(game.wait || '');
+  },
+
   // Deck
 
   shuffleDeck(player) {

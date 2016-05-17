@@ -177,6 +177,16 @@ describe("Mutations", function() {
     expect(subject().gameStarted(game)).to.equal(false)
   })
 
+  it ("Mutations#wait", function(){
+    game = Spawn.create("Game")
+    expect(subject().wait('pre-install', game).wait).to.equal('pre-install');
+  })
+
+  it ("Mutations#isWaiting", function(){
+    game = Spawn.create("Game", { wait: 'pre-install' })
+    expect(subject().isWaiting(game)).to.equal(false);
+  })
+
   // Deck
 
   it ("Mutations#shuffleDeck shuffles the player deck", function() {
