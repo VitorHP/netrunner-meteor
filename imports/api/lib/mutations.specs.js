@@ -179,12 +179,26 @@ describe("Mutations", function() {
 
   it ("Mutations#wait", function(){
     game = Spawn.create("Game")
-    expect(subject().wait('pre-install', game).wait).to.equal('pre-install');
+    expect(subject().wait('discard-from-table', game).wait).to.equal('discard-from-table');
+  })
+
+  it ("Mutations#isWaitingFor", function(){
+    game = Spawn.create("Game", { wait: 'discard-from-table' })
+    expect(subject().isWaitingFor('discard-from-table', game)).to.equal(true);
+    game = Spawn.create("Game", { wait: '' })
+    expect(subject().isWaitingFor('discard-from-table', game)).to.equal(false);
   })
 
   it ("Mutations#isWaiting", function(){
-    game = Spawn.create("Game", { wait: 'pre-install' })
+    game = Spawn.create("Game", { wait: 'discard-from-table' })
+    expect(subject().isWaiting(game)).to.equal(true);
+    game = Spawn.create("Game", { wait: '' })
     expect(subject().isWaiting(game)).to.equal(false);
+  })
+
+  it ("Mutations#clearWait", function(){
+    game = Spawn.create("Game", { wait: 'discard-from-table' })
+    expect(subject().clearWait(game).wait).to.equal('');
   })
 
   // Deck

@@ -157,8 +157,12 @@ export const Mutations = {
 
   wait: R.curry((action, game) => R.assoc('wait', action, game)),
 
-  isWaiting(game) {
-    return R.isEmpty(game.wait || '');
+  isWaitingFor: R.curry((action, game) => game.wait === action),
+
+  isWaiting: R.curry((game) => !R.isEmpty(game.wait)),
+
+  clearWait(game) {
+    return R.set(L.wait, '', game);
   },
 
   // Deck
