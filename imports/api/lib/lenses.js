@@ -24,4 +24,5 @@ export const L = {
   turn: N.lensProp('turn'),
   turnOwner: N.lensProp('turn_owner'),
   upgrades: N.lensProp('upgrades'),
+  wait: N.lensProp('wait'),
 };
