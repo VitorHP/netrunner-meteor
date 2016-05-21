@@ -146,18 +146,19 @@ describe('playerContext', function() {
 
   describe('Actions.global#drawCard', function() {
     beforeEach(function() {
+      game = Spawn.create('Game')
       player = Spawn.create('Runner', { clicks: 1, hand: [] })
     });
 
     describe('requirements', function(){
-      it('player has clicks', function(){
-        expect(r('draw-card', subject, { player: player })).to.eq(true)
+      it('player has clicks and game is not on wait', function(){
+        expect(r('draw-card', subject, { player, game })).to.eq(true)
       })
     })
 
     describe('perform', function(){
       beforeEach(function(){
-        ({ player } = p('draw-card', subject, { player }))
+        ({ player, game } = p('draw-card', subject, { player, game }))
       })
 
       it('adds a card to the player\'s hand', function(){
@@ -173,18 +174,19 @@ describe('playerContext', function() {
 
   describe('Actions.global#receiveCredit', function() {
     beforeEach(function() {
+      game = Spawn.create('Game')
       player = Spawn.create('Runner', { clicks: 1, credits: 0 })
     });
 
     describe('requirements', function(){
-      it('player has clicks', function(){
-        expect(r('receive-credit', subject, { player: player })).to.eq(true)
+      it('player has clicks and game is not on wait', function(){
+        expect(r('receive-credit', subject, { player, game })).to.eq(true)
       })
     })
 
     describe('perform', function(){
       beforeEach(function(){
-        ({ player } = p('receive-credit', subject, { player }))
+        ({ player, game } = p('receive-credit', subject, { player, game }))
       })
 
       it('adds a credit to the player\'s account', function(){
