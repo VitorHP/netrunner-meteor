@@ -51,12 +51,11 @@ export const ActionFactory = {
         triggerData;
     });
 
-    const performs = R.flatten([
-      R.map(trigger, hooks.before),
-      trigger(action),
-      R.map(trigger, hooks.after),
-      this._updateContext,
-    ]);
+    const performs = R.pipe(
+      R.flatten,
+      R.map(trigger),
+      R.append(this._updateContext)
+    )([hooks.before, action, hooks.after]);
 
     return {
       label: action.label,

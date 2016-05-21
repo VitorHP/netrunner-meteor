@@ -23,7 +23,7 @@ describe('ActionFactory', function() {
           perform(context){ return context; },
         };
 
-    it('checks a requirement for an action', function(){
+    it ('checks a requirement for an action', function(){
       stubs.create('requirement', standardAction, 'requirement')
       stubs.requirement.returns(true)
 
