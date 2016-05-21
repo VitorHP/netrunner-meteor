@@ -23,6 +23,7 @@ seedData(Game, [{
   'turn_owner' : 'corp',
   'turn' : 0,
   'type_code' : 'game',
+  'wait' : '',
 }])
 
 // Decks

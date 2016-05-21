@@ -2,6 +2,7 @@ import { PlayerContext } from './contexts/player-context.js';
 import { corpContext } from './contexts/corp-context.js';
 import { runnerContext } from './contexts/runner-context.js';
 import { HandContext } from './contexts/hand-context.js';
+import { TableContext } from './contexts/table-context.js';
 
 import R from 'ramda';
 
@@ -57,7 +58,6 @@ export const ActionFactory = {
       this._updateContext,
     ]);
 
-
     return {
       label: action.label,
       alias: action.alias,
@@ -102,6 +102,8 @@ export const ActionFactory = {
         return this.allowedActions(PlayerContext.concat(corpContext()), data);
       case 'runner':
         return this.allowedActions(PlayerContext.concat(runnerContext()), data);
+      case 'table':
+        return this.allowedActions(TableContext, data);
       default:
         return [];
     }

@@ -5,7 +5,7 @@
       <div class="corp-area {{active(game.turn_owner)}} row">
         <div class="remote-servers col-md-6">
           {{#each server in player.remoteServersCards }}
-            {{> remoteServer server=server }}
+            {{> remoteServer server=server player=player game=game }}
           {{/each }}
         </div>
         <div class="central-servers col-md-6">
@@ -17,13 +17,15 @@
                 {{#let hq=(player.centralServerCards 'hq') }}
                   <ul class="list-unstyled hq__ices">
                     {{#each item in hq.ices }}
-                      <li class="ice">{{> card card=item.card rezzed=item.rezzed }}</li>
+                      <li class="ice">{{> card card=item.card rezzed=item.rezzed
+                      player=player game=game context='table' }}</li>
                     {{/each }}
                   </ul>
                   {{> card card=(player.identity) }}
                   <ul class="list-unstyled hq__root">
                     {{#each item in hq.upgrades }}
-                      <li>{{> card card=item.card rezzed=item.rezzed }}</li>
+                      <li>{{> card card=item.card rezzed=item.rezzed 
+                        player=player game=game context='table' }}</li>
                     {{/each }}
                   </ul>
                 {{/let }}
@@ -34,13 +36,15 @@
                 {{#let rnd=(player.centralServerCards 'rnd') }}
                   <ul class="list-unstyled rnd__ices">
                     {{#each item in rnd.ices }}
-                      <li class="ice">{{> card card=item.card rezzed=item.rezzed }}</li>
+                      <li class="ice">{{> card card=item.card rezzed=item.rezzed
+                      player=player game=game context='table' }}</li>
                     {{/each }}
                   </ul>
                   {{> deck size=player.deckSize background=player.background_img_src }}
                   <ul class="list-unstyled rnd__root">
                     {{#each item in rnd.upgrades }}
-                      <li>{{> card card=item.card rezzed=item.rezzed }}</li>
+                      <li>{{> card card=item.card rezzed=item.rezzed
+                      player=player game=game context='table' }}</li>
                     {{/each }}
                   </ul>
                 {{/let }}
@@ -88,14 +92,19 @@
   <div class="remote-server">
     <ul class="list-unstyled remote-server__ices">
       {{#each item in server.ices }}
-        <li class="ice">{{> card card=item.card rezzed=item.rezzed }}</li>
+        <li class="ice">{{> card card=item.card rezzed=item.rezzed player=player game=game
+        context='table'}}</li>
       {{/each }}
     </ul>
     <ul class="list-unstyled remote-server__server">
-      <li>{{> card card=server.card rezzed=server.rezzed }}</li>
+      {{#if server.card }}
+        <li>{{> card card=server.card rezzed=server.rezzed player=player game=game
+          context='table'}}</li>
+      {{/if }}
 
       {{#each item in server.upgrades }}
-        <li>{{> card card=item.card rezzed=item.rezzed }}</li>
+        <li>{{> card card=item.card rezzed=item.rezzed player=player game=game
+        context='table' }}</li>
       {{/each }}
     </ul>
   </div>

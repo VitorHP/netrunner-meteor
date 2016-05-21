@@ -27,17 +27,20 @@
         <div class="rig col-md-6">
           <ul class="list-unstyled rig__programs">
             {{#each program in player.programCards }}
-              <li class="program">{{> card card=program.card }}</li>
+              <li class="program">{{> card card=program.card rezzed=true
+              context='table' game=game player=player }}</li>
             {{/each}}
           </ul>
           <ul class="list-unstyled rig__hardware">
             {{#each hardware in player.hardwareCards }}
-              <li class="hardware">{{> card card=hardware.card }}</li>
+              <li class="hardware">{{> card card=hardware.card rezzed=true
+              context='table' game=game player=player }}</li>
             {{/each}}
           </ul>
           <ul class="list-unstyled rig__resources">
             {{#each resource in player.resourceCards }}
-              <li class="hardware">{{> card card=resource.card }}</li>
+              <li class="hardware">{{> card card=resource.card rezzed=true
+              context='table' game=game player=player }}</li>
             {{/each}}
           </ul>
         </div>

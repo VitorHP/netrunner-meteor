@@ -34,6 +34,23 @@ function serversFor(card, player) {
 export const HandContext = [
   {
     label: 'Install',
+    alias: 'pre-install',
+    requirement(data) {
+      return !Mutations.isWaiting(data.game) &&
+             Mutations.isOfType(data.card,
+                 ['agenda', 'ice', 'asset', 'upgrade', 'program', 'hardware', 'resource']) &&
+             Mutations.hasClicks(data.player);
+    },
+    perform(data) {
+      return {
+        game: R.pipe(
+          Mutations.wait('discard-from-table')
+        )(data.game),
+      };
+    },
+  },
+  {
+    label: 'Install on',
     alias: 'install-corp-card',
     input(data) {
       return {
@@ -43,7 +60,8 @@ export const HandContext = [
       };
     },
     requirement(data) {
-      return Mutations.isOfType(data.card, ['agenda', 'ice', 'asset', 'upgrade']) &&
+      return Mutations.isWaitingFor('discard-from-table', data.game) &&
+             Mutations.isOfType(data.card, ['agenda', 'ice', 'asset', 'upgrade']) &&
              Mutations.hasClicks(data.player);
     },
     perform(data) {
@@ -56,6 +74,9 @@ export const HandContext = [
             serverId: data.options.serverId,
           })
         )(data.player),
+        game: R.pipe(
+          Mutations.clearWait
+        )(data.game),
       };
     },
   },
@@ -63,7 +84,8 @@ export const HandContext = [
     label: 'Install',
     alias: 'install-runner-card',
     requirement(data) {
-      return Mutations.isOfType(data.card, ['program', 'hardware', 'resource']) &&
+      return Mutations.isWaitingFor('discard-from-table', data.game) &&
+             Mutations.isOfType(data.card, ['program', 'hardware', 'resource']) &&
              Mutations.hasClicks(data.player) &&
              Mutations.hasCredits(data.card.cost, data.player);
     },
@@ -75,13 +97,17 @@ export const HandContext = [
           Mutations.removeFromHand([data.card.code]),
           Mutations.installCard(data.card, {})
         )(data.player),
+
+        game: R.pipe(
+          Mutations.clearWait
+        )(data.game),
       };
     },
   },
 
   {
     label: 'Discard',
-    alias: 'discard',
+    alias: 'discard-from-hand',
     requirement(data) {
       return Mutations.isTurnOwner(data.player, data.game) &&
              !Mutations.hasClicks(data.player) &&

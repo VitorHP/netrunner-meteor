@@ -10,55 +10,90 @@ describe("HandContext", function() {
   let player;
   let card;
 
+  describe("HandContext#preInstall", function() {
+    beforeEach(function(){
+      game = Spawn.create("Game")
+      player = Spawn.create("Corp", { hand: ['01001'], clicks: 1 });
+      card = Spawn.create("Card", { code: '01001', type_code: "agenda", cost: 1 });
+    })
+
+    describe("Requirements", function(){
+      it ("Requires a click", function(){
+        expect(r('pre-install', HandContext, { player, card, game })).to.eq(true)
+      })
+    })
+
+    describe("Perform", function(){
+      it("Changes wait state to 'discard-from-table'", function() {
+        ({ game } = p('pre-install', HandContext, { game }))
+        expect(game.wait).to.equal('discard-from-table')
+      })
+    })
+  })
+
   describe("HandContext#installCorpCard", function() {
     beforeEach(function(){
+      game = Spawn.create("Game", { wait: 'discard-from-table' })
       player = Spawn.create("Corp", { hand: ['01001'], clicks: 1 });
       card = Spawn.create("Card", { code: '01001', type_code: "agenda", cost: 1 });
     })
 
     describe("Requirements", function(){
       it("Requires a click", function(){
-        expect(r('install-corp-card', HandContext, { card, player })).to.eq(true)
+        expect(r('install-corp-card', HandContext, { game, card, player })).to.eq(true)
       })
     })
 
     describe("Perform", function(){
 
       it("Installs a card on a corp\'s server", function() {
-        ({ player, card } = p('install-corp-card', HandContext, { player, card, options: { serverId: 0 } }))
+        ({ player, card, game } = p('install-corp-card', HandContext, { player, card, game, options: { serverId: 0 } }))
 
         expect(player.remote_servers.length).to.equal(1)
+      })
+
+      it("Clears waiting state", function() {
+        ({ player, card, game } = p('install-corp-card', HandContext, { player, card, game, options: { serverId: 0 } }))
+
+        expect(game.wait).to.equal('')
       })
     })
   })
 
   describe("HandContext#installRunnerCard", function() {
     beforeEach(function(){
+      game = Spawn.create("Game", { wait: 'discard-from-table' })
       player = Spawn.create("Runner", { hand: ['01001'], credits: 2, clicks: 1 });
       card = Spawn.create("Card", { code: '01001', type_code: "program", cost: 2 });
     })
 
     describe("Requirements", function(){
       it("Requires a click and enought credits", function(){
-        expect(r('install-runner-card', HandContext, { player, card })).to.eq(true)
+        expect(r('install-runner-card', HandContext, { game, player, card })).to.eq(true)
       })
     })
 
     describe("Perform", function(){
+      it("Clears waiting state", function() {
+        ({ player, card, game } = p('install-runner-card', HandContext, { player, card, game }))
+
+        expect(game.wait).to.equal('')
+      })
+
       it("Installs a card on a runner's grid", function() {
-        ({ player, card } = p('install-runner-card', HandContext, { player, card }))
+        ({ player, card, game } = p('install-runner-card', HandContext, { player, card, game }))
 
         expect(player.programs.length).to.equal(1)
       })
 
       it("Costs a click", function() {
-        ({ player, card } = p('install-runner-card', HandContext, { player, card }))
+        ({ player, card, game } = p('install-runner-card', HandContext, { player, card, game }))
 
         expect(player.clicks).to.equal(0)
       })
 
       it("Reduces the credits of the runner by the card's cost", function() {
-        ({ player, card } = p('install-runner-card', HandContext, { player, card }))
+        ({ player, card, game } = p('install-runner-card', HandContext, { player, card, game }))
 
         expect(player.credits).to.equal(0)
       })
@@ -74,13 +109,13 @@ describe("HandContext", function() {
 
     describe("Requirements", function(){
       it("Is player's turn, he has no more clicks and is above hand limit", function(){
-        expect(r('discard', HandContext, { player, game })).to.eq(true)
+        expect(r('discard-from-hand', HandContext, { player, game })).to.eq(true)
       })
     })
 
     describe("Perform", function(){
       it("Discards a card from the Runner's hand", function() {
-        ({ player, card } = p('discard', HandContext, { player, card }))
+        ({ player, card } = p('discard-from-hand', HandContext, { player, card }))
 
         expect(player.discard).to.include('01001')
         expect(player.hand).to.not.include('01001')

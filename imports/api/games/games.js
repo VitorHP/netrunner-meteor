@@ -10,4 +10,5 @@ Game.schema = new SimpleSchema({
   corp_id: { type: String },
   type_code: { type: String, defaultValue: 'game' },
   turn: { type: Number, defaultValue: 0 },
+  wait: { type: String, defaultValue: '' },
 });

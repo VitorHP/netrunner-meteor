@@ -46,6 +46,7 @@ Spawn.register("Game", {
   "turn_owner" : "corp",
   "turn" : 0,
   "type_code" : "game",
+  "wait" : "",
 })
 
 Spawn.register("Card", {

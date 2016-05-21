@@ -119,7 +119,8 @@ export const PlayerContext = [
     label: 'Draw card',
     alias: 'draw-card',
     requirement(data) {
-      return Mutations.hasClicks(data.player);
+      return Mutations.hasClicks(data.player) &&
+             !Mutations.isWaiting(data.game);
     },
     perform(data) {
       return {
@@ -135,7 +136,8 @@ export const PlayerContext = [
     label: 'Receive 1 Credit',
     alias: 'receive-credit',
     requirement(data) {
-      return Mutations.hasClicks(data.player);
+      return Mutations.hasClicks(data.player) &&
+             !Mutations.isWaiting(data.game);
     },
     perform(data) {
       return {
